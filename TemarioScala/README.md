@@ -21,5 +21,3 @@ Todo lo necesario para aprobar Programacion Avanzada II
 ### Monitores
 -BloquesSinc+ VarCondicion/Locks -> Aqui son 2 formas para hacerlo(Recomendo Locks)
 ### Cómeme el CULO qué PAPU
--JIJIJIJA SUPER DONDE (TONTO)
-a
