@@ -26,9 +26,11 @@ Son anidables y pueden no necesitar cierre-->
         <!-- <script src="script.js" defer></script> -->    <!--enlace a un archivo de javascript, defer hace que se ejecute despues de cargar el html, evitando errores-->
     </head>
     
+    
     <body>              <!--Cuerpo: lo que se muestra en el navegador-->
         <h1>Encabezado 1</h1>  <!--título, de h2 a h6 subtitulos, van en negrita y en orden-->
         <p>This is my page</p>  <!--parrafo, el texto se muestra en una nueva linea y con un espacio antes y despues-->
+        <a href="enlace">Enlace</a> <!--enlace a otro documento o sitio web, pueden usar rutas relativas para no romper cambios de dir(sin https://)-->
         <br>                    <!--salto de linea-->
         <hr>                    <!--linea horizontal-->
 
@@ -41,15 +43,18 @@ Son anidables y pueden no necesitar cierre-->
             <mark>Resaltar</mark><br>
             <u>Subrayado</u><br>
             <b>Negrita</b><br>
+            <sup>superindice</sup> a <sub>subindice</sub><br>
             <abbr title="Hipertext Markup Language">HTML</abbr></p> <!--Abreviatura, el texto con un subrayado punteado y al pasar el raton muestra title-->
         </p>
 
         <pre><!--El texto dentro de pre se muestra tal cual, respetando espacios y saltos de linea-->
             texto
-            aaaa
+            <code>public static Stings args(main[] void){ <!--Para representar código de programación-->
+                Holamundo("System.out.println")
+            }</code>
         </pre>
 
-        <!--Listas-->
+        <!--Listas, se pueden anidar-->
         <ol>    <!--Lista ordenada, con numeros-->
             <li>elemento</li>
         </ol>
@@ -61,6 +66,9 @@ Son anidables y pueden no necesitar cierre-->
             <dd>definicion</dd>
         </dl>
 
+        <!--Fechas, datetime da el formato legible por la máquina hay muchos-->
+        <time datetime="2016-01-20T18:00:00.145">20 de enero 2016</time>
+
         <!--Citas, se puede añade atributo cite="enlace"-->
         <!--Sin css y js no enlace, =>  <a href="enlace"> <cite>Text</cite></a> para poder usarlo-->
         <p>Cita: <q>Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
@@ -70,7 +78,11 @@ Son anidables y pueden no necesitar cierre-->
             Cuando acaba el dia, te das cuenta q es denoche.
         </blockquote>
 
+        <!--Divisiones, se usan para agrupar elementos y aplicar estilos o scripts-->
+        <div class="clase">
+            <p> Esto es un párrafo </p>
+        </div>
         
+
     </body>
 </html>
-
