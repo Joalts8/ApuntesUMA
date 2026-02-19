@@ -1,0 +1,76 @@
+<!--Si usas html:5 crea la plantilla por defecto menos idioma, link:css y script:src para css y js-->
+
+<!DOCTYPE html> <!--comentario-->
+<!--Un elemento HTML se compone, en la mayor parte de los casos, de una etiqueta de apertura, el texto del contenido del 
+elemento, y la etiqueta de cierre(</>). Las etiquetas pueden tener atributos (con valores) que definen detalles del elemento.
+Son anidables y pueden no necesitar cierre-->
+
+<html lang="es-ES">     <!--inicio html e idioma en español(tambien se puede en p)-->
+    <head>              <!--Cabezera: metadatos, no se visualizan-->
+        <meta charset="utf-8" /> <!--codificacion de caracteres, utf-8 es la mas comun. Antes(y para poner codigo html):
+&lt;	<
+&gt;	>
+&amp;	&
+&quot;	”
+&apos;	’
+&aacute;	á
+&eacute;	é
+&iacute;	í
+&oacute;	ó
+&uacute;	ú
+&ntilde;	ñ
+&iquest;	¿-->
+        <meta name="author" content="nombre autor" />       <!--Metadato de la appweb-->
+        <title>My test page</title>                         <!--titulo de la pagina, se muestra en la pestaña del navegador-->
+        <!-- <link rel="stylesheet" href="style.css"> -->   <!--enlace a una hoja de estilos css-->
+        <!-- <script src="script.js" defer></script> -->    <!--enlace a un archivo de javascript, defer hace que se ejecute despues de cargar el html, evitando errores-->
+    </head>
+    
+    <body>              <!--Cuerpo: lo que se muestra en el navegador-->
+        <h1>Encabezado 1</h1>  <!--título, de h2 a h6 subtitulos, van en negrita y en orden-->
+        <p>This is my page</p>  <!--parrafo, el texto se muestra en una nueva linea y con un espacio antes y despues-->
+        <br>                    <!--salto de linea-->
+        <hr>                    <!--linea horizontal-->
+
+        <!--Formato-->
+        <p>
+            <strong>Importante</strong><br>
+            <em>Enfasis</em><br>
+            <!--Los de abajo hacen lo mismo(b i)-->
+            <i>Cursiva</i><br>
+            <mark>Resaltar</mark><br>
+            <u>Subrayado</u><br>
+            <b>Negrita</b><br>
+            <abbr title="Hipertext Markup Language">HTML</abbr></p> <!--Abreviatura, el texto con un subrayado punteado y al pasar el raton muestra title-->
+        </p>
+
+        <pre><!--El texto dentro de pre se muestra tal cual, respetando espacios y saltos de linea-->
+            texto
+            aaaa
+        </pre>
+
+        <!--Listas-->
+        <ol>    <!--Lista ordenada, con numeros-->
+            <li>elemento</li>
+        </ol>
+        <ul>    <!--Lista desordenada, con viñetas-->
+            <li>elemento</li>
+        </ul>
+        <dl>    <!--Lista de definiciones, con terminos y definiciones-->
+            <dt>termino</dt>
+            <dd>definicion</dd>
+        </dl>
+
+        <!--Citas, se puede añade atributo cite="enlace"-->
+        <!--Sin css y js no enlace, =>  <a href="enlace"> <cite>Text</cite></a> para poder usarlo-->
+        <p>Cita: <q>Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
+        <!--La cita se puede poner en un bloque aparte con blockquote-->
+        <p>Cita:</p>
+        <blockquote>
+            Cuando acaba el dia, te das cuenta q es denoche.
+        </blockquote>
+
+        
+    </body>
+</html>
+
