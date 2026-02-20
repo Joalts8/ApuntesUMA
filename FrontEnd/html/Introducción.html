@@ -1,15 +1,19 @@
-<!--Si usas html:5 crea la plantilla por defecto menos idioma, link:css y script:src para css y js-->
+<!--Si usas html:5 crea la plantilla por defecto menos idioma, link:css y script:src para css y js. link:favicon img de la pg-->
 
 <!--Diferencia entre class e id-> id es único y permite los enlaces entre partes del doc. Ambos para css y js y son 
-globales para todos los elementos dentro de body-->
+globales para todos los elementos dentro de body. Title tambien es global, da una descripción-->
 
-<!DOCTYPE html> <!--comentario-->
+<!DOCTYPE html>
 <!--Un elemento HTML se compone, en la mayor parte de los casos, de una etiqueta de apertura, el texto del contenido del 
 elemento, y la etiqueta de cierre(</>). Las etiquetas pueden tener atributos (con valores) que definen detalles del elemento.
 Son anidables y pueden no necesitar cierre-->
 
 <html lang="es-ES">     <!--inicio html e idioma en español(tambien se puede en p)-->
     <head>              <!--Cabezera: metadatos, no se visualizan-->
+        <title>Introducción</title>                                     <!--titulo de la pagina, se muestra en la pestaña del navegador-->
+        <link rel="shortcut icon" href="ejemplo.jpg" type="image/jpg">  <!--icono de la pagina, se muestra en la pestaña del navegador, con type el formato-->
+
+        <meta name="author" content="nombre autor" />       <!--Metadato de la appweb-->
         <meta charset="utf-8" /> <!--codificacion de caracteres, utf-8 es la mas comun. Antes(y para poner codigo html):
 &lt;    < 
 &gt;	>
@@ -23,57 +27,61 @@ Son anidables y pueden no necesitar cierre-->
 &uacute;	ú
 &ntilde;	ñ
 &iquest;	¿ -->
-        <meta name="author" content="nombre autor" />       <!--Metadato de la appweb-->
-        <title>Introducción</title>                         <!--titulo de la pagina, se muestra en la pestaña del navegador-->
+
         <!-- <link rel="stylesheet" href="style.css"> -->   <!--enlace a una hoja de estilos css-->
         <!-- <script src="script.js" defer></script> -->    <!--enlace a un archivo de javascript, defer hace que se ejecute despues de cargar el html, evitando errores-->
     </head>
     
     
+
     <body>              <!--Cuerpo: lo que se muestra en el navegador-->
-        <h1>Encabezado 1</h1>  <!--título, de h2 a h6 subtitulos, van en negrita y en orden-->
+        <h1>Encabezado 1</h1>   <!--título, de h2 a h6 subtitulos, van en negrita y en orden-->
         <p>This is my page</p>  <!--parrafo, el texto se muestra en una nueva linea y con un espacio antes y despues-->
         <br>                    <!--salto de linea-->
         <hr>                    <!--linea horizontal-->
 
-        <!--Enlaces, con target definimos deonde se abre
-        _blank: se abre en una nueva pestaña
-        _self: se abre en la misma pestaña (por defecto)
-        _parent: se abre en el marco padre
-        _top: se abre en la ventana principal
-        Framename: en una ventana con ese nombre-->
-        <a href="enlace">Enlace</a><br>          <!--enlace a otro documento o sitio web, pueden usar rutas relativas para no romper cambios de dir(sin https://)-->
-        <a id= "nombre"></a>                     <!--enlace a una parte del documento, se crea con id en el elemento al que apunta-->
-        <a href="#nombre">ir a nombre</a><br>    <!--enlace a una parte del documento, con # seguido del id del elemento al que apunta-->
+        <pre>                   <!--El texto dentro de pre se muestra tal cual, respetando espacios y saltos de linea-->
+            texto
+            <code>public static Stings args(main[] void){ <!--Para representar código de programación-->
+                Holamundo("System.out.println")
+            }</code>
+        </pre>
+        
+        <time datetime="2016-01-20T18:00:00.145">20 de enero 2016</time>     <!--Fechas, datetime da el formato legible por la máquina hay muchos-->
 
-        <!--Imagenes-->
-        <img src="ejemplo.jpg" alt="Descripción" width="300" height=""> <!--src: ruta, alt: texto alternativo si no carga, width y height: para tamaño(normalmente solo 1 y escala auto)-->
-        <!--Video--> <!--Audio es igual, pero <audio> y formatos mp3,ogg y wav-->
-        <video src="ejemplo.mp4"> <!--controls: da barra de control, autoplay: reproduce auto, loop, tamaño(como img) -->
-            <!--Para varios, en vez src, se usa enntre las etiquetas video <source src="src" type="video/mp4(o webm)" />-->
-            <p>Esto es como alt en img</p>
-        </video>
+        <div class="clase">     <!--Divisiones, agrupan elementos y aplicar css/js(con class), con span solo afecta al texto-->
+            <p> Esto es un párrafo </p>
+        </div>
+        <!--En vez div, se puede usar header, nav, footer, main(section, article, aside). Necesitan css para no estar vertical-->
 
         <!--Formato-->
         <p>
             <strong>Importante</strong><br>
             <em>Enfasis</em><br>
             <!--Los de abajo hacen lo mismo(b i)-->
+            <b>Negrita</b><br>
             <i>Cursiva</i><br>
             <mark>Resaltar</mark><br>
             <u>Subrayado</u><br>
-            <b>Negrita</b><br>
+            <del>Tachado</del><br>
+            <tt>Monoespacio</tt>
+            <big>Grande</big><br>
+            <small>Pequeño</small><br>
             <sup>superindice</sup> a <sub>subindice</sub><br>
         <!--Cosas variadas-->
             <abbr title="Hipertext Markup Language">HTML</abbr> <!--Abreviatura, el texto con un subrayado punteado y al pasar el raton muestra title-->
         </p>
 
-        <pre><!--El texto dentro de pre se muestra tal cual, respetando espacios y saltos de linea-->
-            texto
-            <code>public static Stings args(main[] void){ <!--Para representar código de programación-->
-                Holamundo("System.out.println")
-            }</code>
-        </pre>
+
+        <!--Citas, se puede añade atributo cite="enlace"-->
+        <!--Sin css y js no enlace, =>  <a href="enlace"> <cite>Text</cite></a> para poder usarlo-->
+        <p>Cita: <q>Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
+        <!--La cita se puede poner en un bloque aparte con blockquote-->
+        <p>Cita:</p>
+        <blockquote>
+            Cuando acaba el dia, te das cuenta q es denoche.
+        </blockquote>
+
 
         <!--Listas, se pueden anidar-->
         <ol>    <!--Lista ordenada, con numeros-->
@@ -87,30 +95,12 @@ Son anidables y pueden no necesitar cierre-->
             <dd>definicion</dd>
         </dl>
 
-        <!--Fechas, datetime da el formato legible por la máquina hay muchos-->
-        <time datetime="2016-01-20T18:00:00.145">20 de enero 2016</time>
-
-        <!--Citas, se puede añade atributo cite="enlace"-->
-        <!--Sin css y js no enlace, =>  <a href="enlace"> <cite>Text</cite></a> para poder usarlo-->
-        <p>Cita: <q>Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
-        <!--La cita se puede poner en un bloque aparte con blockquote-->
-        <p>Cita:</p>
-        <blockquote>
-            Cuando acaba el dia, te das cuenta q es denoche.
-        </blockquote>
-
-        <!--Divisiones, se usan para agrupar elementos y aplicar estilos o scripts(con class)-->
-        <div class="clase">
-            <p> Esto es un párrafo </p>
-        </div>
-        <!--En vez div, se puede usar header, nav, footer, main(section, article, aside). Necesitan css para no estar vertical-->
-
         <!--Tablas, si no cabecera/pie no hace falta etiqueda tbody-->
         <!--Para fusionar celdas col o filas, se usa colspan="n" o rowspan="n" en td/th-->
-        <table>
+        <table><!--border="1" para borde, width y height para tamaño, align para alineacion-->
             <caption>Título</caption>
             <thead> <!--cabecera de la tabla, con th-->
-                <tr>
+                <tr><!--fila de la tabla, se puede alinear: align=""-->
                     <th>Columna 1</th>
                 </tr>
             </thead>
@@ -126,11 +116,27 @@ Son anidables y pueden no necesitar cierre-->
             </tfoot>
         </table>
 
-        <!--Iframes, para mostrar otra pagina dentro de la actual, con src la url de la pagina a mostrar-->
-        <iframe
-            title="Inline Frame Example"
-            width="300"
-            src="https://www.youtube.com/watch?v=F5P2H_Udu64">
-        </iframe>
+
+        <!--Enlaces, con target definimos deonde se abre
+        _blank: se abre en una nueva pestaña
+        _self: se abre en la misma pestaña (por defecto)
+        _parent: se abre en el marco padre
+        _top: se abre en la ventana principal
+        Framename: en una ventana con ese nombre-->
+        <a href="enlace">Enlace</a><br>          <!--enlace a otro documento o sitio web, pueden usar rutas relativas para no romper cambios de dir(sin https://)-->
+        <a id= "nombre"></a>                     <!--enlace a una parte del documento, se crea con id en el elemento al que apunta-->
+        <a href="#nombre">ir a nombre</a><br>    <!--enlace a una parte del documento, con # seguido del id del elemento al que apunta-->
+
+        <!--Imagenes, sirven gifs y dentro de enlaces-->
+        <img src="ejemplo.jpg" alt="Descripción" width="300" height=""> <!--src: ruta, alt: texto alternativo si no carga, width y height: para tamaño(normalmente solo 1 y escala auto)-->
+
+        <!--Video--> <!--Audio es igual, pero <audio> y formatos mp3,ogg y wav-->
+        <video src="ejemplo.mp4"> <!--controls: da barra de control, autoplay: reproduce auto, loop, tamaño(como img) -->
+            <!--Para varios, en vez src, se usa enntre las etiquetas video <source src="src" type="video/mp4(o webm)" />-->
+            <p>Esto es como alt en img</p>
+        </video>
+
+        <!--Iframes, para mostrar otra pagina dentro de la actual, con src la url de la pagina a mostrar y tam como img-->
+        <iframe width="600" src="https://www.youtube.com/watch?v=F5P2H_Udu64"> </iframe>
     </body>
 </html>
