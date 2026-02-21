@@ -13,13 +13,17 @@
         <form action="ej.php" method="post">
             <!--label: pone un texto a un input, for: relaciona el label con el input con su id-->
             <!--input: datos, type: tipo de input(salen las opciones), id, name: nombre del input al enviar-->
-            <!--Atributos: required: obligatorio. value: valor predeterminado(o nombre boton). placeholder: valor de fondo(ejemplo)-->
+            <!--Atributos: required: obligatorio. value: valor predeterminado(o nombre boton). placeholder: valor de fondo(ejemplo). patern: da los valores permitidos-->
             <label for="id">Nombre:</label>
             <input type="text" id="id" name="nombre"><br>
 
-            <!--radio comparte name para seleccion unica(igual color)-->
-            <input type="radio" name="radio1" value="radio1">Radio 1<br>
-            <input type="radio" name="radio1" value="radio2">Radio 2<br>
+            <!--fieldset agrupa elementos y legend da una descripción-->
+            <fieldset>
+                <legend>Selecciona una opción:</legend>
+                <!--radio comparte name para seleccion unica(igual color)-->
+                <input type="radio" name="radio1" value="radio1">Radio 1<br>
+                <input type="radio" name="radio1" value="radio2">Radio 2<br>
+            </fieldset>
 
             <!--lista de seleccion, con optgroup se agrupan varias opciones-->
             <select name="select1">
@@ -29,6 +33,10 @@
 
             <!--textarea: area de texto, cols: ancho, rows: alto-->
             <textarea name="textarea1" cols="30" rows="10"></textarea><br>
+
+            <!--range: barra de desplazamiento. Output da el valor pero necesita js-->
+            <input type="range" name="price" id="price" min="500" max="5000" step="50" value="2500"/>
+            <output class="price-output" for="price"></output><br>
 
             <!--botones de envio y reset-->
             <input type="submit" value="Enviar">
