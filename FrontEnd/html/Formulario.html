@@ -7,8 +7,32 @@
     </head>
     
     <body>
-        
+        <!--Formulario, action dice a donde van los datos, method como se envian-->
+        <!--action puede ser: php, email("mailto: dir" y enctype="text/plain")-->
+        <!--method puede ser: post: datos en la petición, get: datos en la url-->
+        <form action="ej.php" method="post">
+            <!--label: pone un texto a un input, for: relaciona el label con el input con su id-->
+            <!--input: datos, type: tipo de input(salen las opciones), id, name: nombre del input al enviar-->
+            <!--Atributos: required: obligatorio. value: valor predeterminado(o nombre boton). placeholder: valor de fondo(ejemplo)-->
+            <label for="id">Nombre:</label>
+            <input type="text" id="id" name="nombre"><br>
 
+            <!--radio comparte name para seleccion unica(igual color)-->
+            <input type="radio" name="radio1" value="radio1">Radio 1<br>
+            <input type="radio" name="radio1" value="radio2">Radio 2<br>
 
+            <!--lista de seleccion, con optgroup se agrupan varias opciones-->
+            <select name="select1">
+                <option value="uno">Opcion 1</option>
+                <option value="dos">Opcion 2</option>
+            </select><br>
+
+            <!--textarea: area de texto, cols: ancho, rows: alto-->
+            <textarea name="textarea1" cols="30" rows="10"></textarea><br>
+
+            <!--botones de envio y reset-->
+            <input type="submit" value="Enviar">
+            <input type="reset" value="Borrar"><!--Ya no suele usarse-->
+        </form>
     </body>
 </html>
