@@ -1,5 +1,5 @@
 # ForntEnd
-Todo lo necesario para aprobar esta asignatura donde se da  html, css, javascript y react.
+Todo lo necesario para aprobar esta asignatura donde se da html, css, javascript y react.
 
 ---
 ## HTML
