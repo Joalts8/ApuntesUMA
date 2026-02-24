@@ -1,0 +1,27 @@
+/*css ejemplo. selector { declaración }*/
+/*Selector puede ser universal, tipo, clase o id y se pueden agrupar*/
+
+/*Si antes del . o # hay tipo, solo a ese tipo se aplica el estilo */
+/*Si una clase tiene espacio, sustituir por .*/
+
+/*De atributos a[atrib], solo sitiene el atributo, se puede [a="tal"], puede ser ^= empieza por la cadena; 
+$= termina por la cadena; *= contiene la cadena*/
+/*Pseudoclases a:clase, segun el estado del elemento, como a:visited, enlace vistitado*/
+
+* {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1 {
+    color: blue;
+}
+
+.clase, .clase2 {/*Se aplica a elementos con clase "clase" o "clase2"*/
+    color: red;
+}
+
+p#id {/*Solo se aplica si el elemento es un párrafo con id "id"*/
+    color: green;
+}
+
+

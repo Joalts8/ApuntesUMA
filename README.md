@@ -13,5 +13,5 @@ IDE-> vscode
 
 ---
 ## [BackEnd](./BackEnd)
-Apuntes de la asignatura Tecnologías del Servidor para Aplicaciones Web, contiene html, css , js y react.
+Apuntes de la asignatura Tecnologías del Servidor para Aplicaciones Web, contiene SpringBoot.
 IDE-> InteliJ Ultimate-> licencia con github education
