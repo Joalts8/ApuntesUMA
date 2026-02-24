@@ -1,12 +1,13 @@
 /*css ejemplo. selector { declaración }*/
-/*Selector puede ser universal, tipo, clase o id y se pueden agrupar*/
+/*Selector puede ser universal, tipo, clase o id y se pueden agrupar(ejemplo con clase)*/
 
 /*Si antes del . o # hay tipo, solo a ese tipo se aplica el estilo */
 /*Si una clase tiene espacio, sustituir por .*/
 
 /*De atributos a[atrib], solo sitiene el atributo, se puede [a="tal"], puede ser ^= empieza por la cadena; 
 $= termina por la cadena; *= contiene la cadena*/
-/*Pseudoclases a:clase, segun el estado del elemento, como a:visited, enlace vistitado*/
+/*Pseudoclases a:clase, segun el estado de a, como a:visited, enlace vistitado*/
+/*Pseudoelementos a::elemento, elemento de a, como a::first-letter, solo la 1a letra*/
 
 * {
     font-family: Arial, Helvetica, sans-serif;
@@ -20,8 +21,28 @@ h1 {
     color: red;
 }
 
-p#id {/*Solo se aplica si el elemento es un párrafo con id "id"*/
+#id {
     color: green;
 }
 
 
+/*Combinadores*/
+p.clase2 {/*Solo se aplica si el elemento es un párrafo de "clase2", funciona para id tambien*/
+    background-color: rgb(28, 0, 128);
+}
+
+.clase p{/*Descendente, para todos los parrafo dentro de "clase"*/
+    background-color: rgb(83, 128, 82);
+}
+
+ul > li {/*Hijo, solo para los hijos directos*/
+    background-color: rgb(0, 255, 191);
+}
+
+h2 + p {/*Adyacente/1er hermano, solo para el primer hermano siguiente*/
+    background-color: rgb(191, 255, 0);
+}
+
+h2 ~ p {/*General, para todos los hermanos siguientes*/
+    font: 1.2em sans-serif;
+}
