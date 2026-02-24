@@ -1,5 +1,6 @@
 # ForntEnd
 Todo lo necesario para aprobar esta asignatura donde se da html, css, javascript y react.
+IDE-> vscode
 
 ---
 ## HTML

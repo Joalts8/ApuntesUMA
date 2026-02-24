@@ -1,7 +1,7 @@
 # Scala
 Holiwi
 
-Todo lo necesario para aprobar Programacion Avanzada II
+Todo lo necesario para aprobar Programacion Avanzada II. IDE-> InteliJ
 
 ---
 ## Funcional
