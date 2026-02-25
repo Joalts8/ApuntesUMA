@@ -10,25 +10,45 @@ $= termina por la cadena; *= contiene la cadena*/
 /*Pseudoelementos a::elemento, elemento de a, como a::first-letter, solo la 1a letra*/
 
 * {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;  /*Tipo de letra */
+    font-weight: bold;                          /*Grosor de letra*/
+    text-align: center;                         /*Alineación del texto*/
+    line-height: normal;                        /*Altura de línea*/
+    overflow: hidden;                           /*Controla el desbordamiento del contenido*/
+    text-decoration: underline;                 /*Decoración del texto*/
+    text-transform: none;                       /*Transformación del texto*/
 }
 
 h1 {
-    color: blue;
+    color: rgb(255, 0, 183);                  /*Da color a las letras*/
+    font-size: 19px;                /*Tamaño de letra*/
+    margin: 20px;                   /*Margen, espacio fuera del borde*/
+    padding: 10px;                  /*Relleno, espacio dentro del borde*/
+    border: 1px solid black;      /*Borde, con ancho, estilo y color*/
+    border-radius: 8px;             /*Bordes redondeados, con radio de 8px*/
+    cursor:pointer;                 /*Cambiar el cursor al pasar sobre el elemento*/
+    background-image: url("../html/ejemplo.jpg");   /*Imagen de fondo, con la ruta de la imagen*/
+    background-size: cover;                          /*Tamaño de fondo*/   
 }
 
 .clase, .clase2 {/*Se aplica a elementos con clase "clase" o "clase2"*/
-    color: red;
+    background-color: rgb(28, 0, 128);          /*Color de fondo, con formato RGB*/
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);     /*Sombra, con desplazamiento horizontal, vertical, desenfoque y color RGBA*/
+    transition: all 0.3s ease;          /*?*/     /*Transición, con propiedades a animar, duración y función de tiempo*/
 }
 
 #id {
-    color: green;
+    width: 300px;   /*Ancho del elemento*/
+    height: 200px;  /*Alto del elemento*/
+    right: 20px;    /*Posición desde la parte derecha del contenedor, esta top left y bottom*/
+    opacity: 0.8;   /*Opacidad, valor entre 0 (transparente) y 1 (opaco)*/
 }
+
 
 
 /*Combinadores*/
 p.clase2 {/*Solo se aplica si el elemento es un párrafo de "clase2", funciona para id tambien*/
-    background-color: rgb(28, 0, 128);
+    color: red;
 }
 
 .clase p{/*Descendente, para todos los parrafo dentro de "clase"*/
@@ -44,5 +64,5 @@ h2 + p {/*Adyacente/1er hermano, solo para el primer hermano siguiente*/
 }
 
 h2 ~ p {/*General, para todos los hermanos siguientes*/
-    font: 1.2em sans-serif;
+    font: 1.2em sans-serif; /*ajusta todo de font*/
 }
