@@ -1,17 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login</title>
-</head>
-<body>
-<form action="/login" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="user"><br><br>
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="pwd"><br><br>
-    <input type="submit" value="Login">
-</form>
 
-</body>
+<!--HTML básico con un formulario para ejemplo de envío-->
+<html lang="es-ES">
+    <head>
+        <meta charset="UTF-8">
+        <title>Login</title>
+    </head>
+    <body>
+        <form action="/login" method="post"><!--action dice q usara del controlador(puede ponerse directamente un .tal) y method como se pasan los datos(IGUAL A CONTROLADOR(normalmente post))-->>
+            <h1>Login</h1>
+
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="user">
+            <br><br>
+        
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="pwd">
+            <br><br>
+
+            <input type="submit" value="Login">
+        </form>
+
+    </body>
 </html>
