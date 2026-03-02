@@ -9,6 +9,10 @@ $= termina por la cadena; *= contiene la cadena*/
 /*Pseudoclases a:clase, segun el estado de a, como a:visited, enlace vistitado*/
 /*Pseudoelementos a::elemento, elemento de a, como a::first-letter, solo la 1a letra*/
 
+/*Div de base es display:block y span inline, es decir afecta en bloque o en línea(este ignora tamaño)
+Puntomedio, inline-block, que permite tamaño y esta en una linea
+box-sizing: border-box hace q weith tenga dentro los bordes y padding*/
+
 * {
     font-family: Arial, Helvetica, sans-serif;  /*Tipo de letra */
     font-weight: bold;                          /*Grosor de letra*/
