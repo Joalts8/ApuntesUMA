@@ -9,9 +9,18 @@ $= termina por la cadena; *= contiene la cadena*/
 /*Pseudoclases a:clase, segun el estado de a, como a:visited, enlace vistitado*/
 /*Pseudoelementos a::elemento, elemento de a, como a::first-letter, solo la 1a letra*/
 
+
 /*Div de base es display:block y span inline, es decir afecta en bloque o en línea(este ignora tamaño)
 Puntomedio, inline-block, que permite tamaño y esta en una linea
 box-sizing: border-box hace q weith tenga dentro los bordes y padding*/
+
+/*Position: 
+static: posición por defecto, sigue el flujo normal del documento
+relative: posición relativa al elemento padre, con desplazamiento respecto a su posición original
+absolute: posición absoluta respecto al elemento padre más cercano que tenga position diferente de static
+fixed: posición fija respecto a la ventana del navegador
+sticky: posición que cambia entre relative y fixed según la posición en la pantalla*/
+/*z-index: controla la capa de un elemento en la pantalla*/
 
 * {
     font-family: Arial, Helvetica, sans-serif;  /*Tipo de letra */
@@ -46,6 +55,7 @@ h1 {
     height: 200px;  /*Alto del elemento*/
     right: 20px;    /*Posición desde la parte derecha del contenedor, esta top left y bottom*/
     opacity: 0.8;   /*Opacidad, valor entre 0 (transparente) y 1 (opaco)*/
+    float: left;    /*Flotación, para posicionar el elemento al lado del contenedor, right, left, none, inline-start(o end) y both*/
 }
 
 
