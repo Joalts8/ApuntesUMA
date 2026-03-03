@@ -80,3 +80,60 @@ h2 + p {/*Adyacente/1er hermano, solo para el primer hermano siguiente*/
 h2 ~ p {/*General, para todos los hermanos siguientes*/
     font: 1.2em sans-serif; /*ajusta todo de font*/
 }
+
+
+/*Flexbox*/
+section {
+    display: flex;
+    flex-wrap: wrap;                 /*Establece el comportamiento de envoltura, se da tamaño mínimo y máximo y sino cabe salta a la siguiente línea*/
+    flex-direction: column;         /*Dirección de los elementos flexibles, row, column, row-reverse y column-reverse*/
+    justify-content: space-around;  /*Alineación horizontal, flex-start, flex-end, center, space-between, space-around y space-evenly*/
+    align-content: center;             /*Alineación vertical, flex-start, flex-end, center, space-between, space-around y space-evenly*/
+    column-gap: 30px;                      /*Espacio entre columnas*/
+    row-gap: 20px;                         /*Espacio entre filas*/
+}
+
+article-wrapped {
+    min-width: 200px;
+    max-width: 600px;
+}
+
+article-flex-sizing {
+    background: aqua;
+    flex: 1;                            /*Proporción de espacio que ocupa el elemento*/
+}
+article-flex-sizing:nth-of-type(2) {    /*Elemento que es el 2 hijo de su contenedor, a el se le aplica flex 2*/
+    background: rgb(8, 148, 129);
+    flex: 2;
+}
+
+/*Grid*/
+section-grid{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);      /*Define el número de columnas y su tamaño, con repeat se repite el patrón(se puede auto-fit y auto-fill), 1fr es una fracción del espacio disponible*/
+    grid-template-rows: 2fr, 200px, 5fr;        /*Define el número de filas y su tamaño, igual que las columnas, existe auto y , minmax(min, max) */
+    gap: 20px;                                  /*Espacio entre filas y columnas*/
+}
+article-grid {
+    grid-row: 1 / 3;                            /*Posición de la fila, con start / end o span para ocupar n filas la ultima no entra*/
+    grid-column: 2 / 4;                         /*Posición de la columna, igual que la fila*/
+    grid-area: 1 / 2 / 3 / 4;                                /*Área de la cuadrícula, con nombre o start / end para filas y columnas(hace lo mismo que grid-row y grid-column)*/       
+}
+
+/*Web adaptativa*/
+img, video {        /*Estilo para imágenes y videos sin romper el diseño*/
+    max-width: 100%;    /* Nunca seas más ancha que tu contenedor */
+    height: auto;       /* Mantén la proporción */
+}
+
+@media screen and (width >= 80rem){/*If se muestra en pantalla y cumple x; si cumple se usa esa regla*/
+    .container{
+        margin: 1em 2em;
+        column-count: 2;        /*Número de columnas para dividir el contenido*/
+        column-width: 50px;     /*Ancho ideal de las columnas, si no cabe se ajusta el número de columnas*/
+        column-gap: 5px;        /*Espacio entre columnas*/
+        column-rule: 1px solid #ccc;  /*Regla entre columnas, como un borde*/
+        column-span: all;       /*Indica si un elemento debe abarcar todas las columnas, con none o all*/
+        break-inside: avoid;     /*Controla el salto de página dentro de columnas, evita q se corte*/
+    }
+}
