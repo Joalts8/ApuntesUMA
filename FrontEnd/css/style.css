@@ -26,7 +26,7 @@ sticky: posición que cambia entre relative y fixed según la posición en la pa
     font-family: Arial, Helvetica, sans-serif;  /*Tipo de letra */
     font-weight: bold;                          /*Grosor de letra*/
     text-align: center;                         /*Alineación del texto*/
-    line-height: normal;                        /*Altura de línea*/
+    line-height: normal !important;             /*Altura de línea*/ /*Important, da prioridad a esta regla, poco usado*/
     overflow: hidden;                           /*Controla el desbordamiento del contenido*/
     text-decoration: underline;                 /*Decoración del texto*/
     text-transform: none;                       /*Transformación del texto*/
