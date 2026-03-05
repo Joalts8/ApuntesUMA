@@ -1,7 +1,10 @@
 # BackEnd
-Todo lo necesario para aprobar esta asignatura donde se da Spring boot, JSP. Todo dentro de un proyecto esqueleto dado.
-html esta en [FrontEnd](../FrontEnd). De jsp, lo que sea diferente a html esta aqui.
+Todo lo necesario para aprobar esta asignatura donde se da Spring boot, JSP. 
+
+Html esta en [FrontEnd](../FrontEnd). De jsp, lo que sea diferente a html esta aqui.
+
 Cada carpeta es un proyecto distinto que se abre y ejecuta individualmente.
+
 IDE-> InteliJ Ultimate-> licencia con github education
 
 ---
