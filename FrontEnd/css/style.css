@@ -6,7 +6,7 @@
 
 /*De atributos a[atrib], solo sitiene el atributo, se puede [a="tal"], puede ser ^= empieza por la cadena; 
 $= termina por la cadena; *= contiene la cadena*/
-/*Pseudoclases a:clase, segun el estado de a, como a:visited, enlace vistitado*/
+/*Pseudoclases a:clase, segun el estado de a, como a:visited, enlace vistitado, a:first-child, a:nth-of-type(n)(ejemplo en flexbox), not:*/
 /*Pseudoelementos a::elemento, elemento de a, como a::first-letter, solo la 1a letra*/
 
 
@@ -69,8 +69,8 @@ p.clase2 {/*Solo se aplica si el elemento es un párrafo de "clase2", funciona p
     background-color: rgb(83, 128, 82);
 }
 
-ul > li {/*Hijo, solo para los hijos directos*/
-    background-color: rgb(0, 255, 191);
+.clase3 > ul {/*Hijo, solo para los hijos directos*/
+    list-style: none;       /* Elimina los puntos de la lista */
 }
 
 h2 + p {/*Adyacente/1er hermano, solo para el primer hermano siguiente*/
