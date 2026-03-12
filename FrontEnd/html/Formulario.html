@@ -11,20 +11,20 @@
         <!--action puede ser: php, email("mailto: dir" y enctype="text/plain"), etc (mirar Backend)-->
         <!--method puede ser: post: datos en la petición, get: datos en la url-->
         <form action="ej.php" method="post">
-            <!--label: pone un texto a un input, for: relaciona el label con el input con su id-->
+            <!--label: pone un texto a un input/select, for: relaciona el label con el input con su id-->
             <!--input: datos, type: tipo de input(salen las opciones), id, name: nombre del input al enviar-->
             <!--Atributos: required: obligatorio. value: valor predeterminado(o nombre boton). placeholder: valor de fondo(ejemplo). patern: da los valores permitidos-->
             <label for="id">Nombre:</label>
             <input type="text" id="id" name="nombre"><br>
 
-            <!--fieldset agrupa elementos y legend da una descripción-->
+            <!--fieldset agrupa elementos y legend da una descripción, misma pregunta-->
             <fieldset>
                 <legend>Selecciona una opción:</legend>
                 <!--radio comparte name para seleccion unica(igual color)-->
                 <label for="radio1">R1</label>
                 <label for="radio2">R2</label>
-                <input type="radio" name="radio1" value="radio1"><br>
-                <input type="radio" name="radio1" value="radio2"><br>
+                <input type="radio" name="radio1" value="radio1" id="radio1"><br>
+                <input type="radio" name="radio1" value="radio2" id="radio2"><br>
             </fieldset>
 
             <!--lista de seleccion, con optgroup se agrupan varias opciones-->

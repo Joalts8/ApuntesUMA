@@ -74,11 +74,11 @@ Son anidables y pueden no necesitar cierre-->
 
         <!--Citas, se puede añade atributo cite="enlace"-->
         <!--Sin css y js no enlace, =>  <a href="enlace"> <cite>Text</cite></a> para poder usarlo-->
-        <p>Cita: <q>Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
+        <p>Cita: <q cite="enlace">Cuando acaba el dia, te das cuenta q es denoche</q>.</p>
         <!--La cita se puede poner en un bloque aparte con blockquote-->
         <p>Cita:</p>
-        <blockquote>
-            Cuando acaba el dia, te das cuenta q es denoche.
+        <blockquote cite="enlace">
+            <p>Cuando acaba el dia, te das cuenta q es denoche.</p>
         </blockquote>
 
 
@@ -103,6 +103,7 @@ Son anidables y pueden no necesitar cierre-->
                     <th>Columna 1</th>
                 </tr>
             </thead>
+            
             <tbody> <!--cuerpo de la tabla, con td-->
                 <tr>
                     <td>Dato 1</td>
