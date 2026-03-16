@@ -9,8 +9,9 @@ const constante = "Hola";        // declaracion de variable constante, no se pue
 
 
 let tipo = typeof variable;                         // tipo de dato de la variable
-console.log(variable, `del tipo ${tipo}`);          //muestra por consola. Uso de tilde invertida para mostrar con ${}
+let formato = variable.toFixed(2);                  // formato de numero a 2 decimales
 variable=Math.floor(Math.random()*(10-1+1))+1;      //Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
+console.log(variable, `del tipo ${tipo}`);          //muestra por consola. Uso de tilde invertida para mostrar con ${}
 
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
 variable= array[0];                            // acceso a elemento del array por indice 0...n-1
