@@ -12,6 +12,7 @@ let tipo = typeof variable;                         // tipo de dato de la variab
 let formato = variable.toFixed(2);                  // formato de numero a 2 decimales
 variable=Math.floor(Math.random()*(10-1+1))+1;      //Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
 console.log(variable, `del tipo ${tipo}`);          //muestra por consola. Uso de tilde invertida para mostrar con ${}
+setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo.
 
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
 variable= array[0];                            // acceso a elemento del array por indice 0...n-1
@@ -30,11 +31,21 @@ arr2= arr.filter(ejemplo)                      // devuelve un nuevo array con lo
 arr2= arr.reduce(ejemplo)                      // aplica la funcion a cada elemento acumulando el resultado. El primer parametro es el acumulador, el segundo es el elemento actual. El valor inicial del acumulador 
                                                // es el primer elemento del array, o se puede especificar como segundo parametro de reduce()
 
+let fecha= new Date(2033, 11);              // fecha y hora actual. Parametros: año, mes(1-12), dia(1-31), hora(0-23), minuto(0-59), segundo(0-59), milisegundo(0-999). Si se omite=actual. Si solo un param es ms, varios pones los retantes a 0.
+
+
+// Destructuracion 
+let a=4, b=1;
+[a,b]=[b,a];                                      // Intercambia los valores
+[array[0], array[1]] = [array[1], array[3]];      // Intercambia los valores de un array
+let [x, y] = array;                               // Asigna los valores del array a las variables, desde [0], con {} para objetos usando las propiedades como claves
+
 
 // Definicion de funcion. 
 // Parametros puede ser ... name, recibe cualquier cantidad de argumentos y los convierte en un array; si llama a name muestra el array, si llama a ... name muestra los argumentos separados por coma. 
 // Se puede tener callback como parametro, se pasa una funcion a la q se le llama dentro de esta.
 // Puede declararse al ejecutarse con function(){}
+// Se puede pasar un objeto y poner {parametros}, accediendo a ellos(desestructuracion)
 function ejemplo(Parametro) {
     return Parametro;       // Valor de retorno, no es obligatorio.
 }
