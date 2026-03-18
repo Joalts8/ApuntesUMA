@@ -14,7 +14,9 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 
 ---
 ## CSS
-style-> Incluye lo basico de CSS, combinadores, flexbox, grid y web adaptativa.
+- style-> Incluye lo basico de CSS, combinadores, flexbox, grid y web adaptativa.
 
 ## JS
-script-> Incluye lo basico de JS.
+- js_basico-> Incluye lo basico de JS.
+- poo-> Explica las clases y los objetos en JS.
+- script-> Interactua con un HTML mediante el DOM.
