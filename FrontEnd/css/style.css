@@ -1,7 +1,6 @@
 /*css ejemplo. selector { declaración }*/
 /*Selector puede ser universal, tipo, clase o id y se pueden agrupar(ejemplo con clase)*/
 
-/*Si antes del . o # hay tipo, solo a ese tipo se aplica el estilo */
 /*Si una clase tiene espacio, sustituir por .*/
 
 /*De atributos a[atrib], solo sitiene el atributo, se puede [a="tal"], puede ser ^= empieza por la cadena; 
