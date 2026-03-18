@@ -30,3 +30,11 @@ Este proyecto se centra en obtener información de una bd, mediante un repositor
 - MoviesControler.java-> Ejemplo de uso del repositorio.
 - MoviesRepository.java-> Ejemplo de creación de un repositorio.
 - Genres.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
+
+
+---
+Hacer: en jsp, enlace de edicar con href "/editar?id=%getid%"
+
+Controlador con get con requestparam para /editar con Peli=repositorio.findbyID(id), añade peli como atributo y return jsp de edit
+
+nuevo jsp_edit q coge la peli en el head; formulario con titulo, campo de texto con value el normal+ acabar formulario
