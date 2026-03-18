@@ -29,7 +29,8 @@ Este proyecto esta decicado a la base, donde se explican controladores y jsp con
 Este proyecto se centra en obtener información de una bd, mediante un repositorio y entidades.
 - MoviesControler.java-> Ejemplo de uso del repositorio.
 - MoviesRepository.java-> Ejemplo de creación de un repositorio.
-- Genres.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
+- GenreEntity.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
+- MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre.
 
 
 ---
