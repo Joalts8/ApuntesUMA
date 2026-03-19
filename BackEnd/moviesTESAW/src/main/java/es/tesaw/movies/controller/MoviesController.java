@@ -1,7 +1,7 @@
 package es.tesaw.movies.controller;
 
 import es.tesaw.movies.dao.MoviesRepository;
-import es.tesaw.movies.entity.Movies;
+import es.tesaw.movies.entity.MovieEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,19 +12,19 @@ import java.util.List;
 @Controller
 public class MoviesController {
 
-    @Autowired
+    @Autowired // Conecta el repositorio con el controlador para poder acceder a la BD
     protected MoviesRepository moviesRepository;
-    /* Tambien se puede hacer con un constructor.
-    protected MoviesRepository moviesRepository;
+    // También se puede hacer con un constructor.
+
+    /*protected MoviesRepository moviesRepository;
     public MoviesController(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
-    }
-     */
+    }*/
 
     @GetMapping("/")
     public String doInit (Model model) {
 
-        List< Movies> pelis = this.moviesRepository.findAll();
+        List<MovieEntity> pelis = this.moviesRepository.findAll();
         model.addAttribute("pelis", pelis);
         return "movies";
     }

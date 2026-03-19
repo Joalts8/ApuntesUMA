@@ -1,5 +1,5 @@
-<%@ page import="es.tesaw.movies.entity.Movies" %>
 <%@ page import="java.util.List" %>
+<%@ page import="es.tesaw.movies.entity.MovieEntity" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <%
-    List<Movies> peliculas =  (List<Movies>) request.getAttribute("pelis");
+    List<MovieEntity> peliculas =  (List<MovieEntity>) request.getAttribute("pelis");
 %>
 <body>
 <h1>Lista de películas</h1>
@@ -22,7 +22,7 @@
         <th>RELEASE DATE</th>
     </tr>
 <%
-    for (Movies peli: peliculas) {
+    for (MovieEntity peli: peliculas) {
 %>
     <tr>
 
