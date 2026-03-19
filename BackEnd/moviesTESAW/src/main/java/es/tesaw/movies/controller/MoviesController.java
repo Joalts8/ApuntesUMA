@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -24,6 +27,20 @@ public class MoviesController {
     @GetMapping("/")
     public String doInit (Model model) {
 
+        List<MovieEntity> pelis = this.moviesRepository.findAll();
+        model.addAttribute("pelis", pelis);
+        return "movies";
+    }
+
+    @GetMapping("/editar")
+    public String editar(Model model, @RequestParam("id")int id) {
+        MovieEntity peli = this.moviesRepository.findById(id).get();
+        model.addAttribute("peli", peli);
+        return "edit_movie";
+    }
+
+    @PostMapping("/actualizar")
+    public String actualizar(Model model) {
         List<MovieEntity> pelis = this.moviesRepository.findAll();
         model.addAttribute("pelis", pelis);
         return "movies";

@@ -32,6 +32,7 @@
         <td><%= peli.getRuntime() %> </td>
         <td><%= peli.getOverview() %> </td>
         <td><%= peli.getReleaseDate() %> </td>
+        <td><a href="/editar?id=<%= peli.getId() %>">Editar</a></td>
     </tr>
 <%
     }
@@ -41,3 +42,8 @@
 
 </body>
 </html>
+Hacer: en jsp, enlace de edicar con href "/editar?id=%getid%"
+
+Controlador con get con requestparam para /editar con Peli=repositorio.findbyID(id), añade peli como atributo y return jsp de edit
+
+nuevo jsp_edit q coge la peli en el head; formulario con titulo, campo de texto con value el normal+ acabar formulario
