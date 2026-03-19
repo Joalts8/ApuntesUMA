@@ -1,3 +1,7 @@
+// En caso de ser tipo modulo en el html, se puede importar funciones o variables de otros JS(export let ejemplo)
+// import {ejemplo} from "./modulo.js";    
+
+
 let variable = 10;               // declaracion de variable y asignacion de valor
 const constante = "Hola";        // declaracion de variable constante, no se puede reasignar valor. Usado para elementos html(document.get)
 // tipos de datos: number, string, boolean, object, undefined, null, para envolver un valor primitivo en un objeto: Number(), String(), Boolean(), Object()
@@ -10,9 +14,9 @@ const constante = "Hola";        // declaracion de variable constante, no se pue
 
 let tipo = typeof variable;                         // tipo de dato de la variable
 let formato = variable.toFixed(2);                  // formato de numero a 2 decimales
-variable=Math.floor(Math.random()*(10-1+1))+1;      //Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
-console.log(variable, `del tipo ${tipo}`);          //muestra por consola. Uso de tilde invertida para mostrar con ${}
-setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo.
+variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
+console.log(variable, `del tipo ${tipo}`);          // muestra por consola. Uso de tilde invertida para mostrar con ${}
+setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo. Lo posterior se ejecuta antes de la funcion(Asincrono).
 
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
 variable= array[0];                            // acceso a elemento del array por indice 0...n-1
@@ -47,5 +51,15 @@ let [x, y] = array;                               // Asigna los valores del arra
 // Puede declararse al ejecutarse con function(){}
 // Se puede pasar un objeto y poner {parametros}, accediendo a ellos(desestructuracion)
 function ejemplo(Parametro) {
+    console.log(Parametro);
     return Parametro;       // Valor de retorno, no es obligatorio.
+}
+
+
+//Captura de errores
+try {// codigo que puede generar un error
+    throw new Error("Mensaje de error"); // lanza un error con un mensaje personalizado
+} catch (error) {// codigo para manejar el error
+    console.error(error.message); // muestra el mensaje de error por consola
+} finally {// codigo que se ejecuta siempre, haya o no error
 }

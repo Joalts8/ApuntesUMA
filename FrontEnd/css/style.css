@@ -116,7 +116,7 @@ section-grid{
 article-grid {
     grid-row: 1 / 3;                            /*Posición de la fila, con start / end o span para ocupar n filas la ultima no entra*/
     grid-column: 2 / 4;                         /*Posición de la columna, igual que la fila*/
-    grid-area: 1 / 2 / 3 / 4;                                /*Área de la cuadrícula, con nombre o start / end para filas y columnas(hace lo mismo que grid-row y grid-column)*/       
+    grid-area: 1 / 2 / 3 / 4;                     /*Área de la cuadrícula, con nombre o start / end para filas y columnas(hace lo mismo que grid-row y grid-column)*/       
 }
 
 /*Web adaptativa*/

@@ -9,7 +9,7 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 - Introducción-> Incluye todo lo basico de html.
 - Formulario-> Incluye mas funcionalidades de html para crear formularios.
 - Css-> HTML auxilir para el tema de css.
-- Js-> HTML auxilir para el tema de js.
+- Js-> HTML auxilir para el tema de js. Explica las 2 formas de importar JS.
 
 
 ---
