@@ -19,4 +19,4 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 ## JS
 - js_basico-> Incluye lo basico de JS.
 - poo-> Explica las clases y los objetos en JS.
-- script-> Interactua con un HTML mediante el DOM.
+- script-> Interactua con un HTML mediante el DOM. Para las funciones al interactuar, usar EventListener, ignorando el onclick tanto en el elemnto como para html.
