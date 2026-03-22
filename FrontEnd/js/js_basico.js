@@ -1,5 +1,5 @@
 // En caso de ser tipo modulo en el html, se puede importar funciones o variables de otros JS(export let ejemplo)
-// import {ejemplo} from "./modulo.js";    
+// import {ejemplo} from "./modulo.js";   
 
 
 let variable = 10;               // declaracion de variable y asignacion de valor
@@ -17,7 +17,9 @@ let formato = variable.toFixed(2);                  // formato de numero a 2 dec
 variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
 console.log(variable, `del tipo ${tipo}`);          // muestra por consola. Uso de tilde invertida para mostrar con ${}
 setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo. Lo posterior se ejecuta antes de la funcion(Asincrono).
+//Para seguir orden, callback hell-> funciones dentro de funcion que espera. Ahora se usan promesas y async await para evitarlo.
 
+//Array
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
 variable= array[0];                            // acceso a elemento del array por indice 0...n-1
 variable= array.indexOf(3);                    // indice del elemento en el array, -1 si no se encuentra
@@ -62,4 +64,50 @@ try {// codigo que puede generar un error
 } catch (error) {// codigo para manejar el error
     console.error(error.message); // muestra el mensaje de error por consola
 } finally {// codigo que se ejecuta siempre, haya o no error
+}
+
+
+// Promesas-> para manejar operaciones asincronas. 
+function promesa() {
+    return new Promise(function(resolve, reject)  { //Define una nueva promesa, con una funcion que recibe dos parametros
+        let exito = true; // Simula una condicion de exito o fracaso
+        if (exito) {
+            resolve("Operacion exitosa"); // Resuelve la promesa y devuelve uno o varios valores
+        } else {
+            reject("Operacion fallida"); // Rechaza la promesa con un motivo
+        }
+    });
+}
+promesa().then(ejemplo).catch(function(error) {         // Maneja el resultado de la promesa, con then para exito y catch para error. Si varias, funcion en then hace return de otra funcion. Solo 1 catch, pero 1 then por cada promesa.
+    console.error(error); 
+});
+
+// Async/Await-> para manejar operaciones asincronas de forma mas legible
+async function asincrona() {            // Define una funcion asincrona, que devuelve una promesa
+    try {
+        let resultado = await promesa();        // Espera a que la promesa se resuelva y asigna el resultado a la variable
+        ejemplo(resultado);                     // Lo que se haga en el then, si varias promesas, se hace await con cada una.
+    } catch (error) {                           // maneja el reject
+        console.error(error); 
+    }   
+}
+asincrona();
+
+
+// Json-> formato de datos, con clave-valor.
+// Fetch-> para hacer peticiones a servidores y obtener datos(o json local). Promesa. Exito devuelve un objeto Response, convertible a JS Object, si no se resuelve con un error.
+async function fetchData() {
+    try {
+        const response = await fetch("json.json");          // Hace la peticion al servidor, parametro{opciones}, como Method, por defecto GET.
+        if (!response.ok) {                                 // Si la respuesta no es exitosa, lanza un error con el status
+            throw new Error("Error en la peticion: " + response.status);
+        }
+        let data = await response.json();                   // Convierte la respuesta a un objeto JS, devuelve una promesa que se resuelve con el objeto
+
+        let datajson = JSON.stringify(data);                // Convierte el objeto a una cadena JSON, para enviarlo a un servidor o guardarlo en un archivo
+        let dataobj = JSON.parse(datajson);                 // Convierte la cadena JSON a un objeto JS, para manipularlo en el codigo
+
+    } catch (error) {
+        console.error(error);
+    }
 }

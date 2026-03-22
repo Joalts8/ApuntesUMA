@@ -17,6 +17,7 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 - style-> Incluye lo basico de CSS, combinadores, flexbox, grid y web adaptativa.
 
 ## JS
-- js_basico-> Incluye lo basico de JS.
+- js_basico-> Incluye lo basico de JS. Puede iniciarse normal con defer o con type module.
 - poo-> Explica las clases y los objetos en JS.
-- script-> Interactua con un HTML mediante el DOM. Para las funciones al interactuar, usar EventListener, ignorando el onclick tanto en el elemnto como para html.
+- script-> Interactua con un HTML mediante el DOM. Para las funciones al interactuar, usar EventListener, ignorando el onclick tanto en el elemento como para html.
+- json-> ejemplo de archivo json para un objeto basico. Puede usarse con varios objetos([{},{}]) o varios valores [valor1, valor2].

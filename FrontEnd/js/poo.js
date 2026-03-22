@@ -24,7 +24,7 @@ class Clase {
 
     static metodo() {}
 
-    // Getters y setters, para acceder a las propiedades de forma controlada. Se definen con get y set, y se acceden como propiedades(ver abajo)
+    // Getters y setters, para acceder a las propiedades de forma controlada. Se definen con get y set, y se acceden como propiedades(ver abajo). Se sulen usar para poner restricciones. Afectan en el constructor. 
     get propiedad() {
         return this._propiedad;
     }
@@ -37,3 +37,5 @@ class Clase {
 let e = new Clase("valor");
 e.propiedad;                     // accede a la propiedad con el getter
 e.propiedad = "nuevo valor";     // asigna un nuevo valor a la propiedad con el setter
+
+objeto.metodo2 = function() {};       // se pueden añadir metodos a los objetos despues de su creacion. Util con objetos de json
