@@ -4,20 +4,24 @@
 
 let variable = 10;               // declaracion de variable y asignacion de valor
 const constante = "Hola";        // declaracion de variable constante, no se puede reasignar valor. Usado para elementos html(document.get)
-// tipos de datos: number, string, boolean, object, undefined, null, para envolver un valor primitivo en un objeto: Number(), String(), Boolean(), Object()
+// tipos de datos: number, bigint, string, boolean, object, symbol, undefined, null, para envolver un valor primitivo en un objeto: Number(), String(), Boolean(), Object(), Symbol(), BigInt().
 // operadores aritmeticos: +, -, *, /, % (modulo), 
 // operadores de asignacion: =, +=, -=, *=, /=, ++, -- 
 // operadores de comparacion: ==, ===(=estricto, valor y tipo), !=, !==, >, <, >=, <=
 // ifelse, switch(case pueden ser cond), bucles igual a java(-foreach es for of*)
 // operador ternario->  condicion ? valor_si_verdadero : valor_si_falso
+// in, indica si un elemento en un array/objeto
 
 
 let tipo = typeof variable;                         // tipo de dato de la variable
 let formato = variable.toFixed(2);                  // formato de numero a 2 decimales
-variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con funciones matematicas, como random(), trunca(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
+variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con funciones matematicas, como random(), trunc(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
 console.log(variable, `del tipo ${tipo}`);          // muestra por consola. Uso de tilde invertida para mostrar con ${}
 setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo. Lo posterior se ejecuta antes de la funcion(Asincrono).
 //Para seguir orden, callback hell-> funciones dentro de funcion que espera. Ahora se usan promesas y async await para evitarlo.
+setInterval(ejemplo, 1000);                         // ejecuta la funcion cada cierto tiempo especificado en milisegundos,
+let intervalId = setInterval(ejemplo, 1000);        // Ejecuta la funcion cada cierto tiempo especificado en milisegundos
+clearInterval(intervalId);                          // Detener la ejecucion de una funcion con setInterval
 
 //Array
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
@@ -78,11 +82,11 @@ function promesa() {
         }
     });
 }
-promesa().then(ejemplo).catch(function(error) {         // Maneja el resultado de la promesa, con then para exito y catch para error. Si varias, funcion en then hace return de otra funcion. Solo 1 catch, pero 1 then por cada promesa.
+promesa().then(ejemplo).catch(function(error) {         // Maneja el resultado de la promesa, con then para exito y catch para error. Si varias, funcion en then coge value(resolve) y hace return de otra funcion con promesa. Solo 1 catch y 1 finally, pero 1 then por cada promesa.
     console.error(error); 
-});
+}).finally();                                           //Igual que catch, se ejecuta siempre.
 
-// Async/Await-> para manejar operaciones asincronas de forma mas legible
+// Async/Await-> para manejar operaciones asincronas de forma mas legible y elimina callback
 async function asincrona() {            // Define una funcion asincrona, que devuelve una promesa
     try {
         let resultado = await promesa();        // Espera a que la promesa se resuelva y asigna el resultado a la variable

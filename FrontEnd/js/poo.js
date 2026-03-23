@@ -17,6 +17,7 @@ function Const(parametro) {
 // Herencia como java, con extends y super llama al padre.
 class Clase {
     static PI= 3.14;
+    #variablePrivada=1;        // variable privada, solo accesible dentro de la clase
 
     constructor(parametro) {
         this.propiedad = parametro;
