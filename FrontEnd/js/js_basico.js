@@ -19,7 +19,6 @@ variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con fun
 console.log(variable, `del tipo ${tipo}`);          // muestra por consola. Uso de tilde invertida para mostrar con ${}
 setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo. Lo posterior se ejecuta antes de la funcion(Asincrono).
 //Para seguir orden, callback hell-> funciones dentro de funcion que espera. Ahora se usan promesas y async await para evitarlo.
-setInterval(ejemplo, 1000);                         // ejecuta la funcion cada cierto tiempo especificado en milisegundos,
 let intervalId = setInterval(ejemplo, 1000);        // Ejecuta la funcion cada cierto tiempo especificado en milisegundos
 clearInterval(intervalId);                          // Detener la ejecucion de una funcion con setInterval
 
@@ -102,6 +101,7 @@ asincrona();
 // Fetch-> para hacer peticiones a servidores y obtener datos(o json local). Promesa. Exito devuelve un objeto Response, convertible a JS Object, si no se resuelve con un error.
 // Parametros del cuerpo(post)-> body: JSON.stringify({ nombreusuario: "ejemplo" }) y headers: { "Content-Type": "application/json" } para indicar que se envia un json.
 // Parametros url(get) const params = new URLSearchParams(); params.append("nombreusuario", "ejemplo"); fetch(`url?${params}`);
+// Credentials-> para enviar cookies o autenticacion- Include para enviar cookies en peticiones a otros dominios, same-origin para enviar cookies solo a su mismo dominio, omit para no enviar cookies.
 const controler= new AbortController();        // Creacion de un controlador para abortar la peticion. Parametro en fetch(ver en request)
 async function fetchData() {
     try {
