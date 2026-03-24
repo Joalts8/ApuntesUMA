@@ -94,15 +94,23 @@ async function asincrona() {            // Define una funcion asincrona, que dev
 asincrona();
 
 
-// Json-> formato de datos, con clave-valor.
+// Json-> formato de datos, con clave-valor. Ejemplo abajo
 // Fetch-> para hacer peticiones a servidores y obtener datos(o json local). Promesa. Exito devuelve un objeto Response, convertible a JS Object, si no se resuelve con un error.
+// Parametros del cuerpo(post)-> body: JSON.stringify({ nombreusuario: "ejemplo" }) y headers: { "Content-Type": "application/json" } para indicar que se envia un json.
+// Parametros url(get) const params = new URLSearchParams(); params.append("nombreusuario", "ejemplo"); fetch(`url?${params}`);
+const controler= new AbortController();        // Creacion de un controlador para abortar la peticion. Parametro en fetch(ver en request)
 async function fetchData() {
     try {
-        const response = await fetch("json.json");          // Hace la peticion al servidor, parametro{opciones}, como Method, por defecto GET.
+        const response = await fetch("json.json");          // Hace la peticion al servidor, parametro, {opciones}, como Method, por defecto GET(post o  head).
+        const headres = response.headers;                   // Cabeceras de la respuesta, con metodos como get("Content-Type") para obtener el valor de una cabecera especifica, o forEach para recorrer todas las cabeceras.
         if (!response.ok) {                                 // Si la respuesta no es exitosa, lanza un error con el status
             throw new Error("Error en la peticion: " + response.status);
         }
         let data = await response.json();                   // Convierte la respuesta a un objeto JS, devuelve una promesa que se resuelve con el objeto
+        //let data = await response.text();                 // Convierte la respuesta a texto, devuelve una promesa que se resuelve con el texto
+        //let data = await response.blob();                 // Convierte la respuesta a binario, devuelve una promesa que se resuelve con el blob
+        //let data = await response.arrayBuffer();         // Convierte la respuesta a un array de bytes, devuelve una promesa que se resuelve con el array buffer
+        //let data = await response.formData();             // Convierte la respuesta a un objeto FormData, devuelve una promesa que se resuelve con el FormData
 
         let datajson = JSON.stringify(data);                // Convierte el objeto a una cadena JSON, para enviarlo a un servidor o guardarlo en un archivo
         let dataobj = JSON.parse(datajson);                 // Convierte la cadena JSON a un objeto JS, para manipularlo en el codigo
@@ -110,4 +118,14 @@ async function fetchData() {
     } catch (error) {
         console.error(error);
     }
+}
+
+// Request-> para crear una peticion personalizada, parametros como fetch. Despues se hace fetch(peticion), response, etc.  
+const miPeticion = new Request("url", {
+    method: "POST",
+    body: JSON.stringify({ nombresusario: "ejemplo" }),
+    signal: controler.signal        // Agrega la señal del controlador para poder abortar la peticion
+});
+function abortar() {
+    controler.abort();              // Aborta la peticion, se resuelve con un error DOMException con el nombre "AbortError"
 }
