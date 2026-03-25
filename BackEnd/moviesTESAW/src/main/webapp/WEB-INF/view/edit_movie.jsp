@@ -10,6 +10,7 @@
     </head>
     <body>
         <form action="/actualizar" method="post">
+            <input type="hidden" name="id" value="<%=peli.getId()%>">
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" value="<%= peli.getTitle() %>">
             <br><br>
