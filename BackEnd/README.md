@@ -11,7 +11,7 @@ IDE-> InteliJ Ultimate-> licencia con github education
 ## Estructura
 Todo esta en src/main.
 - Resources-> aqui están las propiedades de la app y en /static los html.
-- webappp-> páginas dinámicas(jsp), capaces de cargar variables y tener codigo java. en /WEB-INF va el contenido enaccesible desde el navehador.
+- webappp-> páginas dinámicas(jsp), capaces de cargar variables y tener codigo java. en /WEB-INF va el contenido inaccesible desde el navegador.
 - java/.../controller-> en esta carpeta estaran los controladores.
 - java/.../dao-> aqui estarán los repositorios.
 - java/.../entity-> aqui tendremos las entidades de la bd.
@@ -31,3 +31,4 @@ Este proyecto se centra en obtener información de una bd, mediante un repositor
 - MoviesRepository.java-> Ejemplo de creación de un repositorio.
 - GenreEntity.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
 - MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre.
+- application.propierties-> Ejemplo del uso de este archivo para configurar el proyecto 
