@@ -20,6 +20,7 @@ public class Controlador {
     @GetMapping("/")
     public String doInicio(){
         return "login.html";        //Ruta a devolver asumiendo que esta en la carpeta static(o webapp para los jsp).
+        //return redirect:/login    Redirigir a otra ruta del controlador, en ese caso a /login, 
     }
 
 

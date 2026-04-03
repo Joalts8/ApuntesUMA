@@ -40,9 +40,35 @@ public class MoviesController {
     }
 
     @PostMapping("/actualizar")
-    public String actualizar(Model model) {
-        List<MovieEntity> pelis = this.moviesRepository.findAll();
-        model.addAttribute("pelis", pelis);
-        return "movies";
+    public String actualizar(@RequestParam("id") Integer id,
+                            @RequestParam("title") String titulo,
+                            @RequestParam("plot") String sinopsis,
+                            @RequestParam("titulo_orig")  String originalTitle,
+                            @RequestParam("releaseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate releaseDate,
+                            @RequestParam("duration") Float runtime,
+                            @RequestParam("budget") Long budget,
+                            @RequestParam("revenue") Long revenue,
+                            @RequestParam("status") String status,
+                            @RequestParam("tagline") String tagline,
+                            @RequestParam("popularity") Float popularity,
+                            @RequestParam("rating") Float voteAverage,
+                            @RequestParam("voteCount") Integer voteCount,
+                            @RequestParam("homepage") String homepage) {
+        MovieEntity pelicula = this.moviesRepository.findById(id).get();
+        pelicula.setTitle(titulo);
+        pelicula.setOriginalTitle(originalTitle);
+        pelicula.setOverview(sinopsis);
+        pelicula.setReleaseDate(releaseDate);
+        pelicula.setRuntime(runtime);
+        pelicula.setBudget(budget);
+        pelicula.setRevenue(revenue);
+        pelicula.setStatus(status);
+        pelicula.setTagline(tagline);
+        pelicula.setPopularity(popularity);
+        pelicula.setVoteAverage(voteAverage);
+        pelicula.setVoteCount(voteCount);
+        pelicula.setHomepage(homepage);
+        this.moviesRepository.save(pelicula);
+        return "redirect:/";
     }
 }
