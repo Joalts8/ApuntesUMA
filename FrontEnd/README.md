@@ -22,3 +22,6 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 - script-> Interactua con un HTML mediante el DOM. Para las funciones al interactuar, usar EventListener, ignorando el onclick tanto en el elemento como para html.
 - alm_cliente-> Tiene informacion sobre las cookies, y web storange.
 - json-> ejemplo de archivo json para un objeto basico. Puede usarse con varios objetos([{},{}]) o varios valores [valor1, valor2].
+
+## React
+Proyecto con lo basico de REact, .jsx.
