@@ -16,6 +16,7 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 ## CSS
 - style-> Incluye lo basico de CSS, combinadores, flexbox, grid y web adaptativa.
 
+---
 ## JS
 - js_basico-> Incluye lo basico de JS. Puede iniciarse normal con defer o con type module.
 - poo-> Explica las clases y los objetos en JS.
@@ -23,5 +24,24 @@ Nombres de los archivos en minuscula(me dio pereza cambiarlo)
 - alm_cliente-> Tiene informacion sobre las cookies, y web storange.
 - json-> ejemplo de archivo json para un objeto basico. Puede usarse con varios objetos([{},{}]) o varios valores [valor1, valor2].
 
+---
 ## React
-Proyecto con lo basico de REact, .jsx.
+Proyecto con lo basico de REact, .jsx. Se crea con la plantilla para react y js.
+
+### Creación
+- npm create vite@latest .
+- npm install
+- npm run dev
+
+### Estructura
+- node_modules
+- public
+- src
+ - assets
+ - 
+
+
+index
+main
+app
+Componente
