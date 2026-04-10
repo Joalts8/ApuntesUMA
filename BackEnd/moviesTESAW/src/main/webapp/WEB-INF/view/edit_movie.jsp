@@ -1,13 +1,21 @@
 <%@ page import="es.tesaw.movies.entity.MovieEntity" %>
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="es.tesaw.movies.entity.SpokenLanguageEntity" %>
+<%@ page import="java.util.List" %>
+<%@ page import="es.tesaw.movies.entity.GenreEntity" %>
 <!DOCTYPE html>
 <html lang="es-ES">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Edicion de película</title>
+        <%
+            MovieEntity peli = (MovieEntity) request.getAttribute("pelicula");
+            List<SpokenLanguageEntity> idiomas = (List<SpokenLanguageEntity>) request.getAttribute("idiomas");
+            List<GenreEntity> generos = (List<GenreEntity>) request.getAttribute("generos");
+        %>
+        <title><%=(peli.getId()!=null?"Editar":"Crear")%> película</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet">
     </head>
-    <%MovieEntity peli= ((MovieEntity) request.getAttribute("peli"));%>
     <body>
         <form action="/actualizar" method="post">
 
@@ -65,7 +73,36 @@
             <input type="text" id="homepage" size="100" maxlength="100" name="homepage" value="<%= peli.getHomepage() %>"/>
             <br/> <br>
 
-            <input type="submit" value="Actualizar">
+            <label for="idioma">Idioma:</label>
+            <select name="idioma" id="idioma">
+            <%
+                for (SpokenLanguageEntity idioma: idiomas) {
+                    String selected = "";
+                    if (peli.getId()!= null && idioma.getId() == peli.getOriginalLanguage().getId())
+                        selected = "selected";
+            %>
+                    <option value="<%= idioma.getId() %>" <%= selected %> ><%= idioma.getName()%></option>
+            <%
+                }
+            %>
+            </select>
+            <br/><br>
+            
+            <label for="generos">Géneros: </label>
+            <%
+                for (GenreEntity genero: generos) {
+                    String checked = "";
+                    if (peli.getId()!= null && peli.getGenres().contains(genero))
+                        checked = "checked";
+            %>
+
+            <input type="checkbox" id="generos" <%= checked %> name="generos" value="<%= genero.getId() %>"><%= genero.getName() %>
+
+            <%
+                }
+            %>
+
+            <input type="submit" value="Guardar">
         </form>
 
     </body>

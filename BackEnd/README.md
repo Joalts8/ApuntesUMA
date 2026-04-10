@@ -20,14 +20,13 @@ Todo esta en src/main.
 ## demo_2026
 Este proyecto esta decicado a la base, donde se explican controladores y jsp con una página básica html.
 - Controlador.java-> ejemplo de controlador
-- login.html-> formulario usado para el ejemplo.
-- test.jsp-> ejmplo de pg dinámica
-- login.html-> ejemplo de envio de formulario.
+- login.html-> formulario usado para el ejemplo, solo indica como se manda el form.
+- test.jsp-> ejemplo de pg dinámica
 
 ---
 ## movies_TESAW
 Este proyecto se centra en obtener información de una bd, mediante un repositorio y entidades.
-- MoviesControler.java-> Ejemplo de uso del repositorio.
+- MoviesControler.java-> Ejemplo de uso del repositorio, lo demás de controlador en demo.
 - MoviesRepository.java-> Ejemplo de creación de un repositorio.
 - GenreEntity.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
 - MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre.
