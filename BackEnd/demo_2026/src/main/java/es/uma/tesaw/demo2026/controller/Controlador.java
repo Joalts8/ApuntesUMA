@@ -26,7 +26,7 @@ public class Controlador {
 
     /* @PostMapping lanzara su método cuando se reciba una solicitud POST en (""). Recibe los parámetros de la solicitud y el modelo para pasar datos a la vista. Realiza las operaciones necesarias y devuelve la página a mostrar.
         Puede hacerse con get, pero los datos se mostrarían en la URL, lo que no es seguro para información sensible. */
-    // @RequestParam se utiliza para extraer los parámetros de la solicitud HTTP, mismos nombres "" que en el formulario. Se pueden añadir opciones como required, defaultValue, etc.
+    // @RequestParam se utiliza para extraer los parámetros de la solicitud HTTP, mismos nombres "" que en el formulario. Se pueden añadir opciones como required, defaultValue, etc. Entonces habria q añadir name/value=""
     @PostMapping("/login")
     public String doLogin(@RequestParam("user")String usuario, @RequestParam(name="pwd", required=false)String password, Model model) {
         String respuesta="";

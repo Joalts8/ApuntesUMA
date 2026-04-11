@@ -2,6 +2,8 @@ package es.tesaw.movies.controller;
 
 import es.tesaw.movies.dao.*;
 import es.tesaw.movies.entity.MovieEntity;
+import es.tesaw.movies.entity.GenreEntity;
+import es.tesaw.movies.entity.SpokenLanguageEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -33,6 +35,7 @@ public class MoviesController {
     protected SpokenLanguageRepository spokenLanguageRepository;
 
 
+
     @GetMapping("/")
     public String doInit (Model model) {
 
@@ -41,29 +44,39 @@ public class MoviesController {
         return "movies";
     }
 
+
     @GetMapping("/editar")
     public String editar(Model model, @RequestParam("id")int id) {
-        MovieEntity peli = this.moviesRepository.findById(id).get();
-        model.addAttribute("peli", peli);
-        return "edit_movie";
+        return this.editarCrear(id, model);
     }
 
+
+    @PostMapping("/anadir")
+    public String anadir(Model model) {
+        return this.editarCrear(null, model);
+    }
+
+
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam("id") Integer id,
-                            @RequestParam("title") String titulo,
-                            @RequestParam("plot") String sinopsis,
-                            @RequestParam("titulo_orig")  String originalTitle,
-                            @RequestParam("releaseDate") @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate releaseDate,
-                            @RequestParam("duration") Float runtime,
-                            @RequestParam("budget") Long budget,
-                            @RequestParam("revenue") Long revenue,
-                            @RequestParam("status") String status,
-                            @RequestParam("tagline") String tagline,
-                            @RequestParam("popularity") Float popularity,
-                            @RequestParam("rating") Float voteAverage,
-                            @RequestParam("voteCount") Integer voteCount,
-                            @RequestParam("homepage") String homepage) {
-        MovieEntity pelicula = this.moviesRepository.findById(id).get();
+    public String actualizar(@RequestParam(value = "id", required = false) Integer id,
+                            @RequestParam(value = "title", required = false) String titulo,
+                            @RequestParam(value ="plot", required = false) String sinopsis,
+                            @RequestParam(value ="titulo_orig", required = false)  String originalTitle,
+                            @RequestParam(value ="releaseDate", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate releaseDate,
+                            @RequestParam(value ="duration", required = false) Float runtime,
+                            @RequestParam(value ="budget", required = false) Long budget,
+                            @RequestParam(value ="revenue", required = false) Long revenue,
+                            @RequestParam(value ="status", required = false) String status,
+                            @RequestParam(value ="tagline", required = false) String tagline,
+                            @RequestParam(value ="popularity", required = false) Float popularity,
+                            @RequestParam(value ="rating", required = false) Float voteAverage,
+                            @RequestParam(value = "voteCount", required = false) Integer voteCount,
+                            @RequestParam(value = "homepage", required = false) String homepage,
+                            @RequestParam("idioma") Integer OriginalIdioma,
+                            @RequestParam(value = "generos", required = false) List<Integer> generosIDs) {
+
+        MovieEntity pelicula = this.buscarPelicula(id);
+
         pelicula.setTitle(titulo);
         pelicula.setOriginalTitle(originalTitle);
         pelicula.setOverview(sinopsis);
@@ -77,7 +90,37 @@ public class MoviesController {
         pelicula.setVoteAverage(voteAverage);
         pelicula.setVoteCount(voteCount);
         pelicula.setHomepage(homepage);
+
+        SpokenLanguageEntity idioma = this.spokenLanguageRepository.findById(OriginalIdioma).get();
+        pelicula.setOriginalLanguage(idioma);
+
+        if (generosIDs != null) {
+            List<GenreEntity> genres = this.genreRepository.findAllById(generosIDs);
+            pelicula.setGenres(genres);
+        }
+        
         this.moviesRepository.save(pelicula);
         return "redirect:/";
+    }
+
+
+    protected String editarCrear(Integer id, Model model) {
+        MovieEntity peli = buscarPelicula(id);
+        model.addAttribute("pelicula", peli);
+        List<GenreEntity> generos = this.genreRepository.findAll();
+        model.addAttribute("generos", generos);
+        List<SpokenLanguageEntity> idiomas = this.spokenLanguageRepository.findAll();
+        model.addAttribute("idiomas", idiomas);
+        return "edit_movie";
+    }
+
+    protected MovieEntity buscarPelicula(Integer id) {
+        MovieEntity pelicula = null;
+        if (id == null) {
+            pelicula = new MovieEntity();
+        } else {
+            pelicula = this.moviesRepository.findById(id).get();
+        }
+        return pelicula;
     }
 }

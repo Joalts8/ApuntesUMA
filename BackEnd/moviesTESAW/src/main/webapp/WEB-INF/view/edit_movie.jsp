@@ -2,6 +2,7 @@
 <%@ page import="es.tesaw.movies.entity.SpokenLanguageEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="es.tesaw.movies.entity.GenreEntity" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <!DOCTYPE html>
 <html lang="es-ES">
     <head>
@@ -17,9 +18,18 @@
         rel="stylesheet">
     </head>
     <body>
-        <form action="/actualizar" method="post">
 
-            <input type="hidden" name="id" value="<%=peli.getId()%>" size="100" maxlength="100">
+        <H1><%=(peli.getId()!=null?"Editar":"Crear")%> película </H1>
+
+        <form action="/actualizar" method="post">
+            <%
+                if(peli.getId()!=null){
+            %>
+                    <input type="hidden" name="id" value="<%=peli.getId()%>" size="100" maxlength="100">
+            <%
+                }
+            %>
+
             
             <label for="title">Título:</label>
             <input type="text" id="title" name="title" value="<%= peli.getTitle() %>">
@@ -86,7 +96,7 @@
                 }
             %>
             </select>
-            <br/><br>
+            <br><br>
             
             <label for="generos">Géneros: </label>
             <%
@@ -101,6 +111,7 @@
             <%
                 }
             %>
+            <br><br>
 
             <input type="submit" value="Guardar">
         </form>
