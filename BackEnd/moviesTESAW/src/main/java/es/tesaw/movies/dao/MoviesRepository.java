@@ -10,7 +10,7 @@ import java.util.List;
 public interface MoviesRepository extends JpaRepository<MovieEntity, Integer> {
 
     // Creacion de consultas personalizadas a la base de datos, sirve para evitar tener que hacer consultas a mano y SQL INJECTION
-    @Query("SELECT m FROM MovieEntity m WHERE m.originalTitle LIKE concat('%', :cadena, '%') or m.overview LIKE concat('%', :cadena, '%')")
+    @Query("SELECT m FROM MovieEntity m WHERE LOWER(m.originalTitle) LIKE LOWER(concat('%', :cadena, '%')) or LOWER(m.overview) LIKE LOWER(concat('%', :cadena, '%'))")
     public List<MovieEntity> filtroPorPalabra(@Param("cadena") String filtro);
 }
 
