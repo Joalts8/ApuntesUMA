@@ -57,6 +57,21 @@ public class MoviesController {
     }
 
 
+    @GetMapping("/borrar")
+    public String borrar(Model model, @RequestParam("id")int id) {
+        this.moviesRepository.deleteById(id);
+        return "redirect:/";
+    }
+
+
+    @PostMapping("/filtrar")
+    public String filtrar(Model model, @RequestParam("filtro") String filtro) {
+        List<MovieEntity> pelis = this.moviesRepository.filtroPorPalabra(filtro);
+        model.addAttribute("pelis", pelis);
+        return "movies";
+    }
+
+
     @PostMapping("/actualizar")
     public String actualizar(@RequestParam(value = "id", required = false) Integer id,
                             @RequestParam(value = "title", required = false) String titulo,
@@ -102,6 +117,7 @@ public class MoviesController {
         this.moviesRepository.save(pelicula);
         return "redirect:/";
     }
+
 
 
     protected String editarCrear(Integer id, Model model) {

@@ -13,5 +13,7 @@
         
         <h1><%= respuesta %></h1> <!--<%= %> es una forma de mostrar el valor de una variable sin necesidad de escribir un bloque java, es como un println pero sin terminal-->
 
+        <jsp:include page="test2.jsp" /> <!--Incluir otra jsp dentro de esta, se puede usar para reutilizar código como el header o el footer-->
+
     </body>
 </html>
