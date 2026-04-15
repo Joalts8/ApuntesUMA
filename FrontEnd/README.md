@@ -41,17 +41,17 @@ Proyecto con lo basico de REact, .jsx. Se crea con la plantilla para react y js.
 - node_modules-> dependencias, se ignorar en el git.
 - public-> archivos estáticos públicos.
 - src -> todo el código fuente de la aplicación.
- - assets-> assets utilizados.
- - api/services-> llamadas a API y acceso a datos.
- - components-> componentes reutilizables, como botones, cards, navbars o formularios.
- - pages-> cada página principal de la app, normalmente una por ruta.
- - routes-> configuración de React Router para cargar cada página.
- - hooks-> hooks personalizados para reutilizar lógica.
- - context-> estado global compartido, como autenticación o tema.
- - utils-> funciones auxiliares y constantes.
- - styles->estilos globales, variables y temas.
- - `main.jsx`-> punto de entrada de React.
- - `App.jsx`-> componente raíz de la aplicación.
- - `App.css`-> estilos específicos de la app.
- - `index.css`-> estilos globales.
+    - assets-> assets utilizados.
+    - api/services-> llamadas a API y acceso a datos.
+    - components-> componentes reutilizables, como botones, cards, navbars o formularios.
+    - pages-> cada página principal de la app, normalmente una por ruta.
+    - routes-> configuración de React Router para cargar cada página.
+    - hooks-> hooks personalizados para reutilizar lógica.
+    - context-> estado global compartido, como autenticación o tema.
+    - utils-> funciones auxiliares y constantes.
+    - styles->estilos globales, variables y temas.
+    - `main.jsx`-> punto de entrada de React.
+    - `App.jsx`-> componente raíz de la aplicación.
+    - `App.css`-> estilos específicos de la app.
+    - `index.css`-> estilos globales.
 - `index.html`-> página principal que carga main.
