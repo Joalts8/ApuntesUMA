@@ -11,7 +11,7 @@ function App() {
 
 
   // Return del componente, html y componentes hijos(<Component />). Entre <> y </> se pueden incluir varios elementos.
-  // Si se usa js dentro del html, se debe usar {}. 
+  // Si se usa js dentro del html, se debe usar {}. Parametros distintos a string, se pasan entre {}. 
   // class esta reservado en js, por lo que se usa className para asignar clases a los elementos html.
   return (
     <>
