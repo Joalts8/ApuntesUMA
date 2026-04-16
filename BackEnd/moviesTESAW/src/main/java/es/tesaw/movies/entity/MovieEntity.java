@@ -64,4 +64,26 @@ public class MovieEntity {
 
     @OneToMany(mappedBy = "movie")
     private List<MovieCrewEntity> crew = new ArrayList<>();
+
+    //Metodos para borarr si relacion Many to many
+    public void deleteGeneres() {
+        for (GenreEntity genre : this.genres) {
+            genre.getMovies().remove(this);
+        }
+        this.genres.clear();
+    }
+
+    public void deleteProductionCompanies() {
+        for (ProductionCompanyEntity company : this.productionCompanies) {
+            company.getMovies().remove(this);
+        }
+        this.productionCompanies.clear();
+    }
+
+    public void deleteSpokenLanguages() {
+        for (SpokenLanguageEntity spokenLanguage : this.spokenLanguages) {
+            spokenLanguage.getMovies().remove(this);
+        }
+        this.spokenLanguages.clear();
+    }
 }

@@ -59,7 +59,11 @@ public class MoviesController {
 
     @GetMapping("/borrar")
     public String borrar(Model model, @RequestParam("id")int id) {
-        this.moviesRepository.deleteById(id);
+        MovieEntity pelicula = this.moviesRepository.findById(id).get();
+        pelicula.deleteGeneres();
+        pelicula.deleteProductionCompanies();
+        pelicula.deleteSpokenLanguages();
+        this.moviesRepository.delete(pelicula);
         return "redirect:/";
     }
 

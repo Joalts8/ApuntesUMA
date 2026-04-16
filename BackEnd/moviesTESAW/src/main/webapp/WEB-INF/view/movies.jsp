@@ -12,8 +12,9 @@
     <input type="submit" value="Filtrar" id ="filtrar">
 </form>
 
-<jsp:include page="movies_table.jsp" />
-
+<div id="tabla">
+    <jsp:include page="movies_table.jsp" />
+</div>
 
 
 <form method="POST" action="/anadir">
