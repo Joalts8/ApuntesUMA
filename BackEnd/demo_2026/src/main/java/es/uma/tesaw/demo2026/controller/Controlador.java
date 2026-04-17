@@ -20,7 +20,7 @@ public class Controlador {
     @GetMapping("/")
     public String doInicio(){
         return "login.html";        //Ruta a devolver asumiendo que esta en la carpeta static(o webapp para los jsp).
-        //return "redirect:/login";    // Redirigir a otra ruta del controlador, en ese caso a /login, 
+        //return "redirect:/login";    // Redirigir a otra ruta del controlador, en ese caso a /login.
     }
 
 
@@ -39,5 +39,11 @@ public class Controlador {
 
         model.addAttribute("respuesta", respuesta); // Agrega el atributo "respuesta" al modelo, que se podrá acceder en la vista para mostrar el resultado.
         return "test.jsp";
+    }
+
+    @GetMapping("/filtro")
+    public String doFiltro() {
+        // supon q se filtra en la base de datos (ver en movies) y solo actualiza la parte de la página con la tabla
+        return "aaux.jsp";
     }
 }

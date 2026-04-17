@@ -1,0 +1,1 @@
+<H1>Imagina q tienes una tabla de películas y que cada vez que se filtra, se recarga solo esa parte de la página</H1>

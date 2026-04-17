@@ -38,9 +38,10 @@ public class MoviesController {
 
     @GetMapping("/")
     public String doInit (Model model) {
-
         List<MovieEntity> pelis = this.moviesRepository.findAll();
         model.addAttribute("pelis", pelis);
+        List<GenreEntity> generos = this.genreRepository.findAll();
+        model.addAttribute("generos", generos);
         return "movies";
     }
 
@@ -67,12 +68,21 @@ public class MoviesController {
         return "redirect:/";
     }
 
-
+//Ejemplo de consulta custom
     @PostMapping("/filtrar")
-    public String filtrar(Model model, @RequestParam("filtro") String filtro) {
-        List<MovieEntity> pelis = this.moviesRepository.filtroPorPalabra(filtro);
+    public String filtrar(Model model, @RequestParam("filtro") String filtro,
+                          @RequestParam(value = "generos", required = false) List<Integer> generosIds) {
+        List<MovieEntity> pelis;
+        if (filtro.equals("") && generosIds == null) {
+            pelis = this.moviesRepository.findAll();
+        } else if (generosIds == null) {
+            pelis = this.moviesRepository.filtroPorPalabra(filtro);
+        } else {
+            pelis = this.moviesRepository.filtrarPorPalabraYGeneros(filtro,
+                    generosIds);
+        }
         model.addAttribute("pelis", pelis);
-        return "movies";
+        return "movies_table";
     }
 
 
