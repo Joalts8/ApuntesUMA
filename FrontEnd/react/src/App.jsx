@@ -1,8 +1,12 @@
-import { useState } from 'react'
+import { createContext } from 'react'
 import './App.css'
 import Component from './Componente.jsx'
+import Manejadores from './Manejadores.jsx'
 
 // Componente principal de la aplicacion.
+
+//Contexto, se puede usar para compartir datos entre componentes sin necesidad de pasar props manualmente en cada nivel.
+export const TemaContext = createContext("claro");
 
 // Creacion del componente App
 function App() {
@@ -19,6 +23,10 @@ function App() {
         <p>Hola</p>
       </div>
       <Component gente={gente} />
+      {/*Uso del contexto para compartir datos entre componentes*/}
+      <TemaContext.Provider value="oscuro">
+        <Manejadores />
+      </TemaContext.Provider>
     </>
   )
 }

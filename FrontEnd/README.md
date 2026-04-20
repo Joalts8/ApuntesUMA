@@ -31,6 +31,7 @@ Proyecto con lo basico de REact, .jsx. Se crea con la plantilla para react y js.
 - main.jsx-> ejemplo de carga de la app
 - App.jsx-> Ejemplo de componente principal de la app web, realmente llamaria a las rutas y cargaria la página que sea.
 - Componente.jsx-> Otro ejemplo de componente para otras funciones.
+- Manejadores.jsx-> Ejempos de uso de hooks y manejadores
 
 ### Creación
 - npm create vite@latest .
