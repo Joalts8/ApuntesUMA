@@ -37,7 +37,7 @@ public class MoviesController {
 
 
     @GetMapping("/")
-    public String doInit (@SessionAttribute(name = "user", required = false) UserEditorEntity user, Model model, HttpSession session) {
+    public String doInit (@SessionAttribute(name = "user", required = false) UserEditorEntity user, Model model) {
         if (user == null) {
             return "redirect:/";
         } else {
@@ -63,7 +63,7 @@ public class MoviesController {
 
     @PostMapping("/anadir")
     public String doAnadir(@SessionAttribute(name = "user", required = false) UserEditorEntity user,
-                           Model model) {
+                        Model model) {
         if (user == null) {
             return "redirect:/";
         } else {
@@ -74,7 +74,7 @@ public class MoviesController {
 
     @GetMapping("/borrar")
     public String doBorrar(@SessionAttribute(name = "user", required = false) UserEditorEntity user,
-                           @RequestParam("id") Integer id) {
+                        @RequestParam("id") Integer id) {
         if (user == null) {
             return "redirect:/";
         } else {
@@ -90,7 +90,7 @@ public class MoviesController {
     //Ejemplo de consulta custom
     @PostMapping("/filtrar")
     public String filtrar(Model model, @RequestParam("filtro") String filtro,
-                          @RequestParam(value = "generos", required = false) List<Integer> generosIds) {
+                        @RequestParam(value = "generos", required = false) List<Integer> generosIds) {
         List<MovieEntity> pelis;
         if (filtro.equals("") && generosIds == null) {
             pelis = this.moviesRepository.findAll();

@@ -27,6 +27,7 @@ public class AutenticaController {
                                @RequestParam("password") String password,
                                HttpSession session,
                                Model model) {
+        // Autentica al usuario, creando una sesion y añadiendo un atributo del usuario a la sesion
         UserEditorEntity editor = this.userEditorRepository.autheticate(username, password);
         if (editor == null) {
             model.addAttribute("error", "Usuario no encontrado o error de autenticación");
@@ -39,6 +40,7 @@ public class AutenticaController {
 
     @GetMapping("/salir")
     public String doSalir (HttpSession session) {
+        // Anula la sesion actual
         session.invalidate();
         return "redirect:/";
     }

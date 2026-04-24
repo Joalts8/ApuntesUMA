@@ -3,6 +3,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <%
+    // sesion permite acceder a los datos de la sesión actual, atributo solo al llamar el jsp en esa petición.
+    // Con getId, da id del usuario; con getCreationTime, da fecha de creación de la sesión; con getTimeout, da tiempo de expiración de la sesión.
     UserEditorEntity editor = (UserEditorEntity) session.getAttribute("user");
 %>
 
