@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="es.tesaw.movies.entity.GenreEntity" %>
+<%@ page import="es.tesaw.movies.entity.UserEditorEntity" %>
 <%@ page import="java.util.List" %>
 <html>
 <head>
@@ -10,6 +11,9 @@
 <%
     List<GenreEntity> generos = (List<GenreEntity>) request.getAttribute("generos");
 %>
+
+<jsp:include page="header.jsp" />
+
 <h1>Lista de películas</h1>
 
 <form id="form_filtrado">
@@ -31,7 +35,7 @@
 </div>
 
 
-<form method="POST" action="/anadir">
+<form method="POST" action="/movies/anadir">
     <button type="submit" class="btn btn-primary">Nueva película</button>
 </form>
 
@@ -52,7 +56,7 @@
             params.append("generos", genero);
         });
 
-        fetch("/filtrar", {
+        fetch("/movies/filtrar", {
             method: "POST",
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"

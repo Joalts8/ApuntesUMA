@@ -4,19 +4,19 @@ import es.tesaw.movies.dao.*;
 import es.tesaw.movies.entity.MovieEntity;
 import es.tesaw.movies.entity.GenreEntity;
 import es.tesaw.movies.entity.SpokenLanguageEntity;
+import es.tesaw.movies.entity.UserEditorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestAttribute;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.time.LocalDate;
 import java.util.List;
 
 @Controller
+@RequestMapping("/movies")
 public class MoviesController {
 
     @Autowired // Conecta el repositorio con el controlador para poder acceder a la BD
@@ -37,38 +37,57 @@ public class MoviesController {
 
 
     @GetMapping("/")
-    public String doInit (Model model) {
-        List<MovieEntity> pelis = this.moviesRepository.findAll();
-        model.addAttribute("pelis", pelis);
-        List<GenreEntity> generos = this.genreRepository.findAll();
-        model.addAttribute("generos", generos);
-        return "movies";
+    public String doInit (@SessionAttribute(name = "user", required = false) UserEditorEntity user, Model model, HttpSession session) {
+        if (user == null) {
+            return "redirect:/";
+        } else {
+            List<MovieEntity> pelis = this.moviesRepository.findAll();
+            model.addAttribute("pelis", pelis);
+            List<GenreEntity> generos = this.genreRepository.findAll();
+            model.addAttribute("generos", generos);
+            return "movies";
+        }
     }
 
 
     @GetMapping("/editar")
-    public String editar(Model model, @RequestParam("id")int id) {
-        return this.editarCrear(id, model);
+    public String doEditar (@SessionAttribute(name = "user", required = false) UserEditorEntity user,
+                            @RequestParam("id") Integer id, Model model) {
+        if (user == null) {
+            return "redirect:/";
+        } else {
+            return this.editarCrear(id, model);
+        }
     }
 
 
     @PostMapping("/anadir")
-    public String anadir(Model model) {
-        return this.editarCrear(null, model);
+    public String doAnadir(@SessionAttribute(name = "user", required = false) UserEditorEntity user,
+                           Model model) {
+        if (user == null) {
+            return "redirect:/";
+        } else {
+            return this.editarCrear(null, model);
+        }
     }
 
 
     @GetMapping("/borrar")
-    public String borrar(Model model, @RequestParam("id")int id) {
-        MovieEntity pelicula = this.moviesRepository.findById(id).get();
-        pelicula.deleteGeneres();
-        pelicula.deleteProductionCompanies();
-        pelicula.deleteSpokenLanguages();
-        this.moviesRepository.delete(pelicula);
-        return "redirect:/";
+    public String doBorrar(@SessionAttribute(name = "user", required = false) UserEditorEntity user,
+                           @RequestParam("id") Integer id) {
+        if (user == null) {
+            return "redirect:/";
+        } else {
+            MovieEntity pelicula = this.moviesRepository.findById(id).get();
+            pelicula.deleteGeneres();
+            pelicula.deleteProductionCompanies();
+            pelicula.deleteSpokenLanguages();
+            this.moviesRepository.delete(pelicula);
+            return "redirect:/movies/";
+        }
     }
 
-//Ejemplo de consulta custom
+    //Ejemplo de consulta custom
     @PostMapping("/filtrar")
     public String filtrar(Model model, @RequestParam("filtro") String filtro,
                           @RequestParam(value = "generos", required = false) List<Integer> generosIds) {
@@ -87,7 +106,8 @@ public class MoviesController {
 
 
     @PostMapping("/actualizar")
-    public String actualizar(@RequestParam(value = "id", required = false) Integer id,
+    public String actualizar(@SessionAttribute(name = "user", required = false) UserEditorEntity user,
+                            @RequestParam(value = "id", required = false) Integer id,
                             @RequestParam(value = "title", required = false) String titulo,
                             @RequestParam(value ="plot", required = false) String sinopsis,
                             @RequestParam(value ="titulo_orig", required = false)  String originalTitle,
@@ -103,6 +123,10 @@ public class MoviesController {
                             @RequestParam(value = "homepage", required = false) String homepage,
                             @RequestParam("idioma") Integer OriginalIdioma,
                             @RequestParam(value = "generos", required = false) List<Integer> generosIDs) {
+
+        if (user == null) {
+            return "redirect:/";
+        }
 
         MovieEntity pelicula = this.buscarPelicula(id);
 
@@ -127,11 +151,14 @@ public class MoviesController {
             List<GenreEntity> genres = this.genreRepository.findAllById(generosIDs);
             pelicula.setGenres(genres);
         }
-        
-        this.moviesRepository.save(pelicula);
-        return "redirect:/";
-    }
 
+        if (pelicula.getUserEditor() == null) {
+            pelicula.setUserEditor(user);
+        }
+
+        this.moviesRepository.save(pelicula);
+        return "redirect:/movies/";
+    }
 
 
     protected String editarCrear(Integer id, Model model) {

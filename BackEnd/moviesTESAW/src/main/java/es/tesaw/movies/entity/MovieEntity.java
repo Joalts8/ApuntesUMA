@@ -65,6 +65,11 @@ public class MovieEntity {
     @OneToMany(mappedBy = "movie")
     private List<MovieCrewEntity> crew = new ArrayList<>();
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "editor_id")
+    private UserEditorEntity userEditor;
+
+
     //Metodos para borarr si relacion Many to many
     public void deleteGeneres() {
         for (GenreEntity genre : this.genres) {
