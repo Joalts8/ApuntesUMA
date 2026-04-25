@@ -7,11 +7,12 @@ import {useContext, useEffect, useRef, useState } from "react";
 import { TemaContext } from "./App.jsx";
 
 function Manejadores() {
+	//*Hooks*: nunca en if/bucles, siempre en el nivel superior del componente
     // useContext: usar variables de otro componente sin necesidad de pasar props. Se usa con un contexto creado con createContext y un Provider que lo envuelve en el componente padre.
 	const tema = useContext(TemaContext);
 
-	// useState: se usa para manejar estados en componentes, tiene un valor y una funcion set para actualizarlo. se da el valor inicial como parametro y puede ser de cualquier tipo. 
-    // Set se puede usar con un valor nuevo, !bool, o con una funcion (VER ABAJO EN ONCLICK).
+	// useState: se usa para manejar estados en componentes, tiene un valor y una funcion set para actualizarlo (rerender). se da el valor inicial como parametro y puede ser de cualquier tipo. 
+    // Set se puede usar con un valor nuevo, !bool, o con una funcion (VER ABAJO EN ONCLICK). Para arryos y objetos, ver al final.
 	const [nombre, setNombre] = useState("");   // usado para onchange
 	const [contador, setContador] = useState(0);// usado para onclick y useEffect
 	const [mensaje, setMensaje] = useState(""); // usado para onSubmit
@@ -23,7 +24,6 @@ function Manejadores() {
 	// useEffect: Hay 3 tipos: ()=>{} -> se ejecuta con cada rerender. ()=>{},[] -> se ejecuta solo al montar el componente(refresh o con APis). ()=>{},[contador] -> se ejecuta al montar y cada vez que contador cambie.
 	useEffect(() => {
 		document.title = `Contador: ${contador}`;
-
         // Funcion de limpieza, util para eventListener, set Interval, etc. Se ejecuta al desmontar el componente o antes de ejecutar el efecto de nuevo. 
         return () => {}
 	}, [contador]);
@@ -51,7 +51,7 @@ function Manejadores() {
 	};
 
 	const manejarSubmit = (e) => {
-		e.preventDefault();
+		e.preventDefault();	//evita el comportamiento por defecto del formulario.
         // Uso del set con nuevo valor.
 		setMensaje(`Formulario enviado. Hola ${nombre || "anonimo"}`);
         // Ejemplo de uso de useRef para acceder a un elemento del DOM.
@@ -59,6 +59,11 @@ function Manejadores() {
         inputRef.current.style.backgroundColor = "yellow";
 	};
 
+	const manejadorAnidaodo = (e) => {
+		// Ejemplo de manejador anidado, se puede usar para manejar eventos dentro de otros eventos, como un click dentro de un div.
+		e.stopPropagation(); // para evitar que el evento se propague al padre. y solo se ejecute el manejador del hijo.
+		alert("Manejador anidado");
+	}
 
 
 	return (
@@ -81,6 +86,10 @@ function Manejadores() {
 
 			<p>Valor actual (onChange): {nombre}</p>
 			<p>{mensaje}</p>
+
+			<div onClick={() => alert("Div clickeado")}>
+				<button onClick={manejadorAnidaodo}>Manejador anidado</button>
+			</div>
 		</section>
 	);
 }
