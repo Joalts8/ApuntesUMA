@@ -28,6 +28,22 @@ function Manejadores() {
         return () => {}
 	}, [contador]);
 
+	// useReducer: se usa para manejar estados complejos con una funcion reductora. Se da la funcion reductora y el estado inicial como parametros.
+	const [tareas, dispatch] = useReducer(funcionReducer, ["estado", "inicial"]);
+	// Funcion reductora, recibe el estado actual y una accion, y devuelve el nuevo estado. accion tiene tipo y parametro, tipo es el tipo de accion y parametro es el valor que se quiere actualizar.
+	const funcionReducer = (state, action) => {
+			switch (action.type) {
+				case "tal":
+					return [...state, action.parametro];
+			}
+	};
+	// Funcion para dispatch, se llama con el tipo de accion y el parametro. Se hacen tantas como se necesiten. Manejador
+	const handleAddTarea = (parm) => {
+		dispatch({
+			type: 'tal',
+			parametro: parm
+		});
+	}
 
 
     // Funciones de los manejadores
@@ -100,4 +116,4 @@ export default Manejadores;
 // Update function para objetos y arrays:
 // Para objetos como se cambia una propiedad sin modificar el objeto con set((obj) => ({...obj, prop: nuevoValor})). normalmente event.target.value.
 // Para arrays, se puede usar set((arr) => [...arr, nuevoElemento]) para añadir un elemento al final, o set((arr) => arr.filter(el, i => i !== index)) para eliminar un elemento.
-// Para ambos, on change para cambiar estados de props de el objeto añadir y al pulsar boton se añade con esas propiedades.
+// Para ambos, on change para cambiar estados de props de el objeto añadir y al pulsar boton se añade con esas propiedades. 

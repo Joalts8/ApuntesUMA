@@ -6,7 +6,7 @@ import Manejadores from './Manejadores.jsx'
 // Componente principal de la aplicacion.
 
 //Contexto, se puede usar para compartir datos entre componentes sin necesidad de pasar props manualmente en cada nivel.
-export const TemaContext = createContext("claro");
+export const TemaContext = createContext("claro"); // valor por defecto del contexto, se puede cambiar con el Provider.
 
 // Creacion del componente App
 function App() {
@@ -23,7 +23,7 @@ function App() {
         <p>Hola</p>
       </div>
       <Component gente={gente} />
-      {/*Uso del contexto para compartir datos entre componentes*/}
+      {/*Uso del contexto para compartir datos entre componentes. value= cambia el valor del contexto */}
       <TemaContext.Provider value="oscuro">
         <Manejadores />
       </TemaContext.Provider>
