@@ -23,7 +23,8 @@ function App() {
         <p>Hola</p>
       </div>
       <Component gente={gente} />
-      {/*Uso del contexto para compartir datos entre componentes. value= cambia el valor del contexto */}
+      {/*Uso del contexto para compartir datos entre componentes. value= cambia el valor del contexto 
+        .Provider solo en versiones anteriores de React*/}
       <TemaContext.Provider value="oscuro">
         <Manejadores />
       </TemaContext.Provider>
