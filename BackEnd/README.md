@@ -15,6 +15,8 @@ Todo esta en src/main.
 - java/.../controller-> en esta carpeta estaran los controladores.
 - java/.../dao-> aqui estarán los repositorios.
 - java/.../entity-> aqui tendremos las entidades de la bd.
+- java/.../service-> aqui tendremos los servicios del BE.
+- java/.../dto-> aqui tendremos los objetos que se devuelven al FE.
 
 ---
 ## demo_2026

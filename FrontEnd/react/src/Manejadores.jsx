@@ -57,7 +57,7 @@ function Manejadores() {
         // Ejemplo de cambio de estado con el valor contrario al actual.
         setBool(!bool);
 
-        // Ejemplo de uso de useRef para acceder a un elemento del DOM.
+        // Ejemplo de uso de useRef para acceder a un elemento del DOM. Siempre en manejadores los refs
         inputRef.current.style.backgroundColor = "";
 	};
 
