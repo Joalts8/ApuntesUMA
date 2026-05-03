@@ -33,7 +33,7 @@ Este proyecto se centra en obtener información de una bd, mediante un repositor
 - AutenticaController.java-> Ejemplo de creacion y cierre de la sesion.
 - MoviesRepository.java-> Ejemplo de creación de un repositorio y  creacion de querys customs para /filtrar.
 - GenreEntity.java-> Ejemplo de entidad de la bd, los otros tambien tienen funciones.
-- MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre.
+- MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre y borrado en many to many.
 - application.propierties-> Ejemplo del uso de este archivo para configurar el proyecto.
 - header.jsp-> uso de la sesión para ver atributos durante toda la sesion del usuario.
 

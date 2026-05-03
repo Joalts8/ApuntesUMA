@@ -144,6 +144,7 @@ public class MoviesController {
         pelicula.setVoteCount(voteCount);
         pelicula.setHomepage(homepage);
 
+        // Las relaciones solo con el set se actualizan si no se añaden nuevas cosas
         SpokenLanguageEntity idioma = this.spokenLanguageRepository.findById(OriginalIdioma).get();
         pelicula.setOriginalLanguage(idioma);
 
