@@ -17,6 +17,7 @@ let tipo = typeof variable;                         // tipo de dato de la variab
 let formato = variable.toFixed(2);                  // formato de numero a 2 decimales
 variable=Math.floor(Math.random()*(10-1+1))+1;      // Math es un objeto con funciones matematicas, como random(), trunc(), round(), ceil(), floor(). Random entre 1 y 10, max-min+1, +min
 console.log(variable, `del tipo ${tipo}`);          // muestra por consola. Uso de tilde invertida para mostrar con ${}
+console.log(variable ?? "valor por defecto");       // operador de coalescencia nula, devuelve el valor de la variable si no es null ni undefined.
 setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despues de un tiempo especificado en milisegundos. Si se pasan argumentos a la funcion, se ponen despues del tiempo. Lo posterior se ejecuta antes de la funcion(Asincrono).
 //Para seguir orden, callback hell-> funciones dentro de funcion que espera. Ahora se usan promesas y async await para evitarlo.
 let intervalId = setInterval(ejemplo, 1000);        // Ejecuta la funcion cada cierto tiempo especificado en milisegundos

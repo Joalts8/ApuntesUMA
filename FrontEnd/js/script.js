@@ -67,4 +67,5 @@ function boton2(event) {
 function tecla(event) {
     console.log("Tecla presionada", event.key);     // event.key es la tecla presionada, event.code es el codigo de la tecla, shiftKey bool si shift esta presionado, ctrlKey bool si ctrl esta presionado.
     event.preventDefault();                         // Evita la accion por defecto del evento, como enviar un formulario al hacer click en un boton submit si falta algo.
+    //form.submit() para enviar el formulario manualmente, si se ha evitado el envio automatico con preventDefault.
 }
