@@ -22,6 +22,8 @@ setTimeout(ejemplo, 1000, variable);                // ejecuta la funcion despue
 //Para seguir orden, callback hell-> funciones dentro de funcion que espera. Ahora se usan promesas y async await para evitarlo.
 let intervalId = setInterval(ejemplo, 1000);        // Ejecuta la funcion cada cierto tiempo especificado en milisegundos
 clearInterval(intervalId);                          // Detener la ejecucion de una funcion con setInterval
+let parse=parseInt("123");                          // Convierte una cadena a un numero entero, devuelve NaN si no se puede convertir. Los envoltorios son más extrictos.
+isNaN(parse);                                       // Devuelve true si el valor es NaN, false si no lo es.
 
 //Array
 let array= [1, 2, 3, 4, 5];                    // declaracion de array
