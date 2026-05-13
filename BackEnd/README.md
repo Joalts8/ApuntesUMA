@@ -42,7 +42,7 @@ Este proyecto se centra en obtener información de una bd, mediante un repositor
 ## movies_TESAWRefactor
 Refactorizacion con DTO, Servives y mappers(paso de Entity a DTO). 
 - .jsp-> Ahora usan las clases DTO en vez de las Entity.
-- *Controller.java-> Ahora llaman a service para la logica de negocio.
+- Controller-> Ahora llaman a service para la logica de negocio.
 - /dto/Genre.java-> Ejemplo de dto, donde se usan los campos necesarios de la entidad.
 - mappers services y controllers
 
