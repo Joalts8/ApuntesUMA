@@ -17,6 +17,7 @@ Todo esta en src/main.
 - java/.../entity-> aqui tendremos las entidades de la bd.
 - java/.../service-> aqui tendremos los servicios del BE.
 - java/.../dto-> aqui tendremos los objetos que se devuelven al FE.
+- java/.../mapper-> aqui tendremos los mappers.
 
 ---
 ## demo_2026
@@ -36,6 +37,14 @@ Este proyecto se centra en obtener información de una bd, mediante un repositor
 - MovieEntity.java-> Ejemplo de la anotacion @join en relacion con genre y borrado en many to many.
 - application.propierties-> Ejemplo del uso de este archivo para configurar el proyecto.
 - header.jsp-> uso de la sesión para ver atributos durante toda la sesion del usuario.
+
+---
+## movies_TESAWRefactor
+Refactorizacion con DTO, Servives y mappers(paso de Entity a DTO). 
+- .jsp-> Ahora usan las clases DTO en vez de las Entity.
+- *Controller.java-> Ahora llaman a service para la logica de negocio.
+- /dto/Genre.java-> Ejemplo de dto, donde se usan los campos necesarios de la entidad.
+- mappers services y controllers
 
 ---
 ## Creación de un proyecto
