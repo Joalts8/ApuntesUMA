@@ -19,15 +19,16 @@ import java.util.List;
 import lombok.AllArgsConstructor;
 
 @Controller
-@AllArgsConstructor
+@AllArgsConstructor //Sustituye a la anotación @Autowired en los atributos y permite private final.
 @RequestMapping("/movies")
 public class MoviesController {
-
+    // Servicios en lugar de repositorios.
     private final MoviesService moviesService;
     private final GenresService genresService;
     private final SpokenLanguagesService spokenLanguagesService;
 
 
+    //Usa dto y para traer los datos llama a los servicios, que a su vez llaman a los repositorios.
     @GetMapping("/")
     public String doInit (@SessionAttribute(name = "user", required = false) User user,
                           Model model, HttpSession session) {
