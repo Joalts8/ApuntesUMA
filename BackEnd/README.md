@@ -45,8 +45,8 @@ Refactorizacion con DTO, Servives y mappers(paso de Entity a DTO).
 - MoviesControler.java-> Ahora llaman a service para la logica de negocio. Ejemplode la nueva anotación y de el uso con services.
 - MoviesRestControler.java-> Ejemplo de RestController donde solo se devuelven datos con get, para mod bd, no se hace return.
 - /dto/Genre.java-> Ejemplo de dto, donde se usan los campos necesarios de la entidad.
-- MoviesServices-> 
-- mappers
+- MoviesServices.java-> Ejemplo de service, unico nuevo es la anotación.
+- Mappers.java-> Traducen de entity a dto, para el return de services.
 
 ---
 ## Creación de un proyecto

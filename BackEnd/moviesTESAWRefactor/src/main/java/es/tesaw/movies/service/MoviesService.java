@@ -17,6 +17,9 @@ import lombok.AllArgsConstructor;
 import java.time.LocalDate;
 import java.util.List;
 
+// Servicio-> se encarga de la lógica de negocio, es decir, de procesar los datos que le llegan del controlador y de llamar a los repositorios para acceder a la base de datos y pasarlos a DTO y enviar el resultado al controlador.
+// Basicamente, coge el controlador de la otra versión y extrae la parte que accede a la base de datos y la parte que procesa los datos y la pone en este servicio. 
+// Usa entidades pero devuelve dtos gracias a los mappers.
 @Service
 @AllArgsConstructor
 public class MoviesService {
