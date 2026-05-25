@@ -49,6 +49,18 @@ Refactorizacion con DTO, Servives y mappers(paso de Entity a DTO).
 - Mappers.java-> Traducen de entity a dto, para el return de services.
 
 ---
+## ExpressSequelize
+Proyecto ejemplo de Express.js. Estara casi entero en el examen asique copipega. CUIDADO con los exports. Puto Js
+- app.js-> archivo principal, hay q cambiar en el esqueleto para poner el archivo de las rutas(copipega).
+
+- /routes/index.js-> archivo con los gets y posts, este ejemplo cambia algunas cosas para tener lo q no esta en el ejemplo de clase. En el examen copipega pero se cambia con las rutas y controladores necesarios.
+- /controllers/-> archivo con los controladores, la funcion base sirve para hacer las demás(ver en el ejemplo). Copipega de esa y se adapta junto al include y where; y las q no son de find.
+- /views/-> vistas, hacercopipega, muy parecido a jsp pero no hace falta reques.getAttribute.
+  - index-> tabla de clientes, sirve en el examen.
+  - 
+falta relacion y where, res y req
+
+---
 ## Creación de un proyecto
 
 ### Creación
