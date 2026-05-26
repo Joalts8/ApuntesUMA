@@ -52,12 +52,13 @@ Refactorizacion con DTO, Servives y mappers(paso de Entity a DTO).
 ## ExpressSequelize
 Proyecto ejemplo de Express.js. Estara casi entero en el examen asique copipega. CUIDADO con los exports. Puto Js
 - app.js-> archivo principal, hay q cambiar en el esqueleto para poner el archivo de las rutas(copipega).
-
 - /routes/index.js-> archivo con los gets y posts, este ejemplo cambia algunas cosas para tener lo q no esta en el ejemplo de clase. En el examen copipega pero se cambia con las rutas y controladores necesarios.
-- /controllers/-> archivo con los controladores, la funcion base sirve para hacer las demás(ver en el ejemplo). Copipega de esa y se adapta junto al include y where; y las q no son de find.
+- /controllers/-> archivo con los controladores, la funcion base sirve para hacer las demás(ver en el ejemplo). Copipega de esa y se adapta junto al include y where; y las que no son de find. Cuenta con listar, editar, crear,guardar y borrar.
 - /views/-> vistas, hacercopipega, muy parecido a jsp pero no hace falta reques.getAttribute.
   - index-> tabla de clientes, sirve en el examen.
-  - 
+  - cliente-> edicion de cliente, sirve en el examen.
+- /models-> modelos, el nombre es el que se debe usar en los controllers y relaciones.
+  - init-models-> aqui se definen las relaciones y sus nombres. CUIDADO en los includes.
 falta relacion y where, res y req
 
 ---
