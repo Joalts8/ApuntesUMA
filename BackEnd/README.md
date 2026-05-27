@@ -59,7 +59,6 @@ Proyecto ejemplo de Express.js. Estara casi entero en el examen asique copipega.
   - cliente-> edicion de cliente, sirve en el examen.
 - /models-> modelos, el nombre es el que se debe usar en los controllers y relaciones.
   - init-models-> aqui se definen las relaciones y sus nombres. CUIDADO en los includes.
-falta relacion y where, res y req
 
 ---
 ## Creación de un proyecto

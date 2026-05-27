@@ -18,6 +18,10 @@ function initModels(sequelize) {
   var PRODUCT_CODE = _PRODUCT_CODE(sequelize, DataTypes);
   var PURCHASE_ORDER = _PURCHASE_ORDER(sequelize, DataTypes);
 
+  //relacion 1 a m puesta solo para ver como seria el include
+  DISCOUNT_CODE.hasMany(CUSTOMER, { as: "relacion", foreignKey: "DISCOUNT_CODE"});
+  CUSTOMER.belongsTo(DISCOUNT_CODE, { as: "relacion", foreignKey: "DISCOUNT_CODE"});
+
 
   return {
     ADMINISTRADOR,
