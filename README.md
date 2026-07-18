@@ -2,6 +2,14 @@
 Apuntes variados Ing de Software usados para varias asignaturas centradas en la programación.
 
 ---
+## Temario.cpp
+Apuntes centrados en la asignatura Introduccion a la programación.
+
+IDE-> InteliJ
+
+---
+
+---
 ## [TemarioScala](./TemarioScala)
 Apuntes centrados en la asignatura Programación Avanzada 2, donde se centra en programacón funcional y concurrencias.
 
