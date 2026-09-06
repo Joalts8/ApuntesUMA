@@ -5,7 +5,7 @@ Apuntes variados Ing de Software usados para varias asignaturas centradas en la 
 ## Temario.cpp
 Apuntes centrados en la asignatura Introduccion a la programación.
 
-IDE-> InteliJ
+IDE-> vscode
 
 ---
 
@@ -26,4 +26,3 @@ IDE-> vscode
 Apuntes de la asignatura Tecnologías del Servidor para Aplicaciones Web, contiene SpringBoot.
 
 IDE-> InteliJ Ultimate-> licencia con github education /
-Hola Dondillo
