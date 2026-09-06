@@ -25,4 +25,8 @@ IDE-> vscode
 ## [BackEnd](./BackEnd)
 Apuntes de la asignatura Tecnologías del Servidor para Aplicaciones Web, contiene SpringBoot.
 
-IDE-> InteliJ Ultimate-> licencia con github education /
+IDE-> InteliJ Ultimate-> licencia con github education
+
+---
+## [Template](./Template)
+Plantilla para comenzar un proyecto basado en SDD con agentes.
