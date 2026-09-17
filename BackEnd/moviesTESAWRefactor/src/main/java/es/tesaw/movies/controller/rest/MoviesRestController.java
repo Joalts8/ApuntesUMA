@@ -41,7 +41,7 @@ public class MoviesRestController {
         return this.moviesService.buscarMovie(id);
     }
 
-    // PostMapping, sirve para crear un nuevo recurso. Info en el cuerpo de la petición. No devuelve nada.
+    // PostMapping, sirve para crear un nuevo recursoo hacer una operacion. Info en el cuerpo de la petición. No devuelve nada.
     // Uso de @RequestBody, donde la información viene en el cuerpo de la petición.
    @PostMapping("/")
    public void doGuardarNuevo (@RequestBody Movie movie) {
