@@ -15,6 +15,7 @@ public class MoviesRestController {
 
     private final MoviesService moviesService;
 
+    //GetMapping sirve para devolver información. Info en la url(ver Delete)
     @GetMapping("/")
     public List<Movie> doInit () {
             return this.moviesService.listarMovies();
@@ -28,25 +29,27 @@ public class MoviesRestController {
         return this.moviesService.listarMovies(filtro, generosIds);
     }
 
-    // DeleteMapping, sirve para borrar una película.
+    // DeleteMapping, sirve para borrar una película. Info en url. No devuelve nada.
+    //Uso de @PathVariable, donde forma parte de la url el parametro. Si tras ? como en las otras url no REST, con RequestParam.
     @DeleteMapping("/{id}")
     public void doBorrar(@PathVariable Integer id) {
             this.moviesService.borrarMovie(id);
     }
 
-    // getMapping, sirve para traer una película
     @GetMapping("/{id}")
     public Movie doEditar (@PathVariable("id") Integer id) {
         return this.moviesService.buscarMovie(id);
     }
 
-    // PostMapping, sirve para crear una película. 
+    // PostMapping, sirve para crear un nuevo recurso. Info en el cuerpo de la petición. No devuelve nada.
+    // Uso de @RequestBody, donde la información viene en el cuerpo de la petición.
    @PostMapping("/")
    public void doGuardarNuevo (@RequestBody Movie movie) {
         this.moviesService.guardarMovie(movie);
    }
 
-    // PutMapping, sirve para actualizar una película. 
+    // PutMapping, sirve para actualizar un recurso completo. Info en el cuerpo de la petición. No devuelve nada.
+    // PatchMapping, sirve para actualizar un recurso parcialmente. Info en el cuerpo de la petición.
     @PutMapping("/") 
     public void doGuardarEditar (@RequestBody Movie movie) {
         this.moviesService.guardarMovie(movie);
