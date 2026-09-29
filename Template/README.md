@@ -19,6 +19,10 @@ spec/
 │   ├── mission.md           ← qué construimos y para quién
 │   ├── roadmap.md           ← orden de las features
 │   └── tech-stack.md        ← tecnologías, convenciones y límites
+├── docs/                    ← documentación del proyecto
+│   ├── ADR/                 ← documentos de decisiones del proyecto
+│   │   └── ADR-NN.md        ← plantilla de ADR
+│   └── NNN-nombre-feature/  ← documentación activa de cada implementacion de la ia. Contexto para otra sesión
 ├── features/                ← una carpeta por feature
 │   └── NNN-nombre-feature/  ← plantilla para crear una feature con SDD
 ├── src/                     ← código fuente del proyecto
