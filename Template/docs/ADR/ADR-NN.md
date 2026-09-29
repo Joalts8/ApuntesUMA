@@ -1,4 +1,4 @@
-# ADR-NN: [Título corto de la decisión en voz activa
+# ADR-NN: [Título corto de la decisión en voz activa]
 
 * Estado: [propuesto | aceptado | rechazado | reemplazado por [ADR-XXXX]]
 * Fecha: [YYYY-MM-DD]
