@@ -10,16 +10,14 @@ contrato: si algo no está aquí, no se implementa.
 
 ## Proceso
 
-1. **Lee el contexto.** `docs/constitution.md` si existe, y las specs previas
-   de `specs/` para respetar convenciones y no contradecir lo ya acordado.
 2. **Entrevista al usuario.** Preguntas de **UNA en UNA**, máximo 6, esperando
    respuesta antes de la siguiente. Céntrate en casos límite, comportamiento
    ante errores y qué queda fuera. No propongas soluciones técnicas: si el
    usuario pregunta "¿cómo lo harías?", redirige al QUÉ.
    Prioriza preguntas cuya respuesta cambie lo que hay que construir; descarta
    las que tengan una respuesta obvia por defecto.
-3. **Elige el número.** Mira `specs/` y usa el siguiente libre con tres
-   dígitos: `specs/NNN-<nombre-en-kebab-case>/spec.md`.
+3. **Elige el número.** Mira `features/` y usa el siguiente libre con tres
+   dígitos: `features/NNN-<nombre-en-kebab-case>/spec.md`.
 4. **Redacta** usando `spec-template.md` de esta skill, sin saltarte
    secciones. Criterios de aceptación **siempre en notación EARS**, numerados
    como RF-1, RF-2, … Cada requisito debe ser verificable: si no se te ocurre

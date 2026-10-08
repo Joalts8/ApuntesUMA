@@ -4,17 +4,16 @@
 >
 > **Cómo usar esta plantilla:** copia esta carpeta a tu proyecto como `spec/`, rellena la `constitution/` una vez al arrancar y crea una carpeta por feature a partir de `features/NNN-nombre-feature/`. Sustituye todo lo que esté entre `<…>` y borra las notas en _cursiva_. No se aplica a agents.md.
 
-## Estructura
+## Estructura (Incompleta, no están todos las skills)
 
 ```
 spec/
-├── .opencode/               ← comandos y skills para los agentes
+├── .agents/                 ← comandos y skills para los agentes(Ver docs ya q algunos usan otras carpetas)
 │   ├── commands/
-│   │   └── web.md           ← comando custom(inutil pero mini ejemplo con el enlace a la doc)
+│   │   └── *.md             ← comando custom para SDD(Y sirven de ejemplo para crear customs)
 │   └── skills/
-│       └── nombre/
-│           ├── SKILL.md     ← instrucciones de la skill
-│           └── spec-template.md ← plantilla para las especificaciones(ver en /features)
+│       └── sdd/             ← carpeta de la skill con su nombre, esta es para sdd
+│           └── SKILL.md     ← instrucciones de la skill(y ejemplo para crearlas)
 ├── constitution/            ← reglas estables del proyecto
 │   ├── mission.md           ← qué construimos y para quién
 │   ├── roadmap.md           ← orden de las features
@@ -47,4 +46,6 @@ _La constitución y cada feature pueden ser un único archivo si el proyecto/fea
 
 **Creada por `[Brais Moure](https://github.com/mouredev)` en el curso de programacion con agentes y curso de SDD.**
 Yo unicamente he creado una template de proyecto basado en la suya y realizando pequeños cambios como estas 2 lineas y juntando las templates de ambos cursos.
-Al crear un proyecto con estas plantillas omite este readme y license
+
+
+A estas templates faltaría quitar la `licencia`, editar el `readme.md` y `agents.md` y usar /sdd-constitution para crear la constitution.
