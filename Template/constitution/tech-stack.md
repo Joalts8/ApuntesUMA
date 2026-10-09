@@ -20,10 +20,8 @@ _Mapa breve de dónde vive cada cosa. Solo lo que un recién llegado necesita pa
 
 ## Comandos
 
-- `<comando dev>` — arranca el entorno local.
+_Comsndod usados en el  proyecto_
 - `<comando test>` — ejecuta los tests.
-- `<comando lint>` — revisa el estilo.
-- `<comando build>` — compila para producción.
 
 ## Modelo de datos / dominio
 

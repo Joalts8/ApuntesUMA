@@ -9,9 +9,27 @@ _Features completadas, en orden de implementación._
 1. **NNN · <Nombre>** — <una línea de qué resuelve>.
 2. **NNN · <Nombre>** — <una línea de qué resuelve>.
 
-## Siguiente 🔜
+## En validación 
 
 _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
+
+3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+
+## En curso 🔜
+
+_Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
+
+3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+
+## En mejora 🔜
+
+_Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
+
+3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+
+## Siguiente 🔜
+
+_Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez. No hace falta q esté creada la spec, en ese caso especificar_
 
 3. **NNN · <Nombre>** — <una línea de qué resuelve>.
 

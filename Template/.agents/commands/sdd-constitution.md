@@ -1,12 +1,8 @@
 ---
-description: SDD · Propone la constitución del proyecto (principios innegociables)
-agent: plan
+description: SDD · Propone la constitución del proyecto
 ---
-Vamos a crear (o revisar, si ya existe) docs/constitution.md. Usa la skill sdd.
-Antes de proponer nada, lee AGENTS.md, MEMORY.md y el código del proyecto.
+Vamos a crear (o revisar, si ya existe) /constitution. Usa la skill sdd.
+Antes de proponer nada, lee AGENTS.md, README.md y el código del proyecto (si hay).
 Contexto adicional: $ARGUMENTS
-Proponme 6 principios innegociables, cortos y verificables, que cubran:
-simplicidad del stack, relación entre spec y código, separación entre lógica
-e interfaz, política de tests, protección de los datos del usuario e idioma
-del código y los textos. Máximo 15 líneas.
-NO escribas el archivo todavía: espera mi aprobación.
+Utiliza las plantillas/versión actual de `/constitution`. Si son las plantillas, pregunta al usuario las dudas que tengas y rellena los archivos. Si hay versión actual, revisala y indica si hay algo a cambiar o añadir, preguntando al usuario y pregunta las dudas o propuestas que tengas.
+En ambos casos lo máximo son 20 preguntas. Si necesitaras más, no dudes en decirlo y marcar lo incompleto. No inventes nada, si tienes propuestas debes preguntar.
