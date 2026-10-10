@@ -10,7 +10,7 @@ Cambio.
 ## Normas
 - Lee los archivos en `/constitution` y cada spec en `/features/NNN-nombre/spec.md` antes de empezar a trabajar en una feature, si no la has leido ya y las tienes en el contexto.
 - Si necesitas aclarar algo, en `/docs/NNN-feature/` estará la documentación de la implementación de la feature, separadas por tareas. Si no está, pregunta al usuario antes de asumir nada.
-- En `docs/NNN-feature/repare.md` se encuentran los problemas encontrados durantre la validación de la feature. Debe eliminarse tras su uso en una implementación posterior.
+- En `docs/NNN-feature/repare.md` se encuentran los problemas encontrados durantre la validación de la feature. Debe eliminarse tras su uso en una implementación posterior. Si existe, debes tenerlo en cuenta antes de implementar de nuevo la feature.
 - Nunca pases a la siguiente fase sin la aprobación explícita del usuario.
 - Un cambio de requisitos se hace primero en la spec, luego en el plan y las tareas, y por último en el código.
 - Cada spec vive en su carpeta: `/features/NNN-nombre` con `spec.md`, `plan.md` y `tasks.md`.
@@ -25,7 +25,7 @@ Cambio.
 - Si falla la validación, se debe mover la feature a "En curso" en `/constitution/roadmap.md` y arreglar lo que haya fallado.
 - Tras completar la implementación y validación, mover la feature a "Hecho" en `/constitution/roadmap.md`.
 - El archivo `/docs/NNN-feature/qa-note.md` dará un resumen de la validación de la feature y de como debe probarse. Debe ser fácil de seguir para podre probar manualmente la feature, y debe incluir los criterios de aceptación de la spec, los casos límite y los errores que se han probado. Si hay algo que no se ha podido probar, debe indicarse.   
-- Para realizar cambios en la spec, plan o tareas, se debe mover la feature a "En mejora" en `/constitution/roadmap.md`.
+- Para realizar cambios en la spec, plan o tareas, se debe mover la feature a "En mejora" en `/constitution/roadmap.md`. Si está aqui, no se mueve a "En curso", se implementa y se valida, y tras ello se mueve a "Hecho" en `/constitution/roadmap.md`.
 - Las plantillas funcionan asi: Sustituye todo lo que esté entre `<…>` y borra las notas en _cursiva_.
 
 

@@ -15,23 +15,23 @@ _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
 
 3. **NNN · <Nombre>** — <una línea de qué resuelve>.
 
-## En curso 🔜
+## En curso 
 
 _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
 
-3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+4. **NNN · <Nombre>** — <una línea de qué resuelve>-<estado: falló su validación?>.
 
 ## En mejora 🔜
 
 _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
 
-3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+5. **NNN · <Nombre>** — <una línea de qué resuelve>-<fase sdd: implementación/mejora>.
 
 ## Siguiente 🔜
 
-_Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez. No hace falta q esté creada la spec, en ese caso especificar_
+_Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez. No hace falta q esté creada la spec, en ese caso especificar q hace falta crearla_
 
-3. **NNN · <Nombre>** — <una línea de qué resuelve>.
+6. **NNN · <Nombre>** — <una línea de qué resuelve>-<estado: con o sin spec>.
 
 ## Backlog / ideas 💡
 

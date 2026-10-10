@@ -1,9 +1,21 @@
 ---
-description: SDD · Dónde estamos - fase actual y siguiente paso de una spec  (uso - /sdd-status 002)
+name: sdd-status
+description: Usa esta skill cuando se pregunte por fase actual y siguiente paso de una spec.
 ---
-Lee `/features/$1-*` y di usando la skill sdd.
-Dime en pocas líneas:
-1. En qué fase del flujo SDD está esta spec y su estado.
+# Estado de una Spec
+
+## Objetivo
+Validación de una spec revisando los test, que cumpla los requisitos y los criterios de aceptación
+
+## Entradas
+- Número de la feature, nombre o ambas cosas.
+
+## Proceso
+Lee la información de la feature y di en pocas líneas:
+1. En qué fase del flujo SDD está esta spec y su estado. Indica tambien si está en implementación tras validación fallada (si existe `repare.md`)
 2. Tareas hechas y pendientes (x de y).
 3. El siguiente paso exacto, con el comando /sdd-* que debo ejecutar.
-No modifiques ningún archivo.
+
+## Reglas
+- No modifiques ningún archivo.
+- Usa la skill sdd.
