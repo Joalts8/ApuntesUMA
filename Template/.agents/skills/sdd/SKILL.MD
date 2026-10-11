@@ -14,7 +14,8 @@ Cambio.
 - Nunca pases a la siguiente fase sin la aprobación explícita del usuario.
 - Un cambio de requisitos se hace primero en la spec, luego en el plan y las tareas, y por último en el código.
 - Cada spec vive en su carpeta: `/features/NNN-nombre` con `spec.md`, `plan.md` y `tasks.md`.
-- La spec manda: si algo no está en la spec, no se implementa. Si falta una decisión, para y pregunta. 
+- La spec manda: si algo no está en la spec, no se implementa. 
+- Si falta una decisión o necesitas más información, para y pregunta. 
 - Al crear una feature, se añade a `/constitution/roadmap.md` (si no está) en la sección "Siguiente" y se crea la carpeta `/features/NNN-nombre-feature` con `spec.md`, `plan.md` y `tasks.md`.
 - Si se pide implementar algo fuera de la spec, se actualiza `spec.md`, `plan.md` y `tasks.md` antes de implementarlo.
 - Al comenzar una implementación, se moverá la feature a "En curso" en `constitution/roadmap.md`.

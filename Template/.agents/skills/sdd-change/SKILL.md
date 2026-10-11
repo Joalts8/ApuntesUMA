@@ -1,6 +1,6 @@
 ---
-name: sdd-hange
-description: SDD · Nuevo requisito - primero la spec, luego el código
+name: sdd-change
+description: Utiliza esta skill cuando se quiera cambiar algo de una feature ya creada, es decir, modificar la especificación del flujo sdd.
 ---
 
 # Cambio de una Spec
@@ -21,9 +21,9 @@ Cambio en una feature existente con un nuevo requisito.
 3. Muéstrame el diff de la spec y espera mi aprobación. Esto se aplica entre los siguientes pasos.
 4. Aplica los cambios (si se han aceptado) y realiza la clarificación de `spec.md` .
 5. Aplica los cambios (si se han aceptado) y realiza la clarificación de `plan.md` .
-6. Aplica los cambios (si se han aceptado) y realiza la clarificación de `task.md` .
+6. Aplica los cambios (si se han aceptado) y realiza la clarificación de `task.md` . Además si hay acciones recurrentes, desmarcalas.
 
 ## Reglas
 - NO toques código.
 - Usa la skill sdd.
-- Ayudate de la skill sdd-clarufy
+- Ayudate de la skill sdd-clarify, sdd-spec, sdd-plan y sdd-task.

@@ -9,10 +9,10 @@
 ```
 spec/
 ├── .agents/                 ← comandos y skills para los agentes(Ver docs ya q algunos usan otras carpetas)
-│   ├── commands/
-│   │   └── *.md             ← comando custom para SDD(Y sirven de ejemplo para crear customs)
+│   ├── commands/            ← comando custom (no vale en agy, el cual yo uso)
 │   └── skills/
-│       └── sdd/             ← carpeta de la skill con su nombre, esta es para sdd
+│       └── sdd-spec/        ← carpeta de la skill con su nombre, esta es para crear spec.md
+|           ├──assets/       ← ubicación de la plantilla a usar   
 │           └── SKILL.md     ← instrucciones de la skill(y ejemplo para crearlas)
 ├── constitution/            ← reglas estables del proyecto
 │   ├── mission.md           ← qué construimos y para quién
@@ -22,10 +22,9 @@ spec/
 │   ├── ADR/                 ← documentos de decisiones del proyecto
 │   │   └── ADR-NN.md        ← plantilla de ADR
 │   └── NNN-nombre-feature/  ← documentación activa de cada implementacion de la ia. Contexto para otra sesión
-├── features/                ← una carpeta por feature
-│   └── NNN-nombre-feature/  ← plantilla para crear una feature con SDD
+├── features/                ← carpetas donde se encontraran las feature
+│   └── NNN-nombre-feature/  ← carpeta dedicada a cada feature con spec.md, plan.md y task.md
 ├── src/                     ← código fuente del proyecto
-│   └── .keep                ← mantiene la carpeta en el repositorio(ignorar)
 ├── AGENTS.md                ← instrucciones para los agentes
 ├── LICENSE                  ← licencia de la plantilla(eliminar en el proyecto)
 └── prompts.md               ← prompts reutilizables para sdd, automatizado en la skill

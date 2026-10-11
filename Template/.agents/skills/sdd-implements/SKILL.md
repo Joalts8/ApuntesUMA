@@ -1,6 +1,6 @@
 ---
-name: sdd-implement
-description: Skill que se usará cuando se quiera implementar una feature usando sdd.
+name: sdd-implements
+description: Skill que se usará cuando se quiera implementar una feature usando sdd a partir de sus tareas.
 ---
 
 # Implementación de una Spec
