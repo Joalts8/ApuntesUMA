@@ -65,9 +65,4 @@ Mal escrito, para contrastar:
 > Sin patrón EARS, sin criterio verificable, dos ideas en una frase y un
 > adjetivo no medible.
 
-## Al revisar una spec existente
 
-Si el usuario pide revisar en vez de crear, no reescribas: **detecta y lista**,
-numerado, en cuatro bloques — (1) ambigüedades, (2) contradicciones entre
-requisitos, (3) casos límite no cubiertos, (4) conflictos con la constitución.
-No propongas soluciones hasta que te lo pidan.

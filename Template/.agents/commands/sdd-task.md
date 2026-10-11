@@ -8,3 +8,14 @@ siguiendo el formato de la skill sdd:
 - Cada una con los RF que cubre y una línea "Hecho cuando:" verificable.
 - Checkboxes.
 - Intenta que no sean más de 10: si salen más, propón dividir la spec.
+
+
+
+
+
+
+
+
+## Tareas (tasks.md)
+Máximo 20-30 min por tarea, en orden de dependencia. Si salen más de 10, propón dividir
+la spec.

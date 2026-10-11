@@ -25,7 +25,7 @@ _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
 
 _Lo próximo a abordar. Idealmente una sola feature "en curso" a la vez._
 
-5. **NNN · <Nombre>** — <una línea de qué resuelve>-<fase sdd: implementación/mejora>.
+5. **NNN · <Nombre>** — <una línea de qué resuelve>-<fase sdd: implementación/validación>.
 
 ## Siguiente 🔜
 

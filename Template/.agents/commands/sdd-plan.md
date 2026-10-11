@@ -11,3 +11,9 @@ decisiones técnicas justificadas (con su alternativa descartada) y estrategia
 de tests con node --test.
 Todo debe respetar la constitución y cubrir todos los RF. Marca qué RF cubre
 cada parte. Si la spec no está aprobada o tiene dudas abiertas, para y avísame.
+
+
+## Plan (plan.md)
+Archivos y responsabilidades · Funciones puras (con "hoy" como parámetro) · Algoritmo en
+pseudocódigo · Interfaz · Decisiones justificadas con su alternativa descartada. Indica qué RF cubre cada parte.
+

@@ -26,3 +26,4 @@ Validación de una spec revisando los test, que cumpla los requisitos y los crit
 ## Reglas
 - Si algo falla en alguno de los pasos del proceso, es decir, se dar por fallada la validación, NO arregles nada todavía. Apuntalo en el archivo auxiliar `repare.md` y continua el siguiente paso.
 - Usa la skill sdd.
+- - Actua como un QA profesional.
