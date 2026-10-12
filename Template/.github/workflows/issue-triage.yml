@@ -1,0 +1,125 @@
+name: Issue Triage Bot
+
+on:
+  issues:
+    types: [opened, edited]
+
+permissions:
+  issues: write
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Triage and Label Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issue = context.payload.issue;
+            const title = issue.title.trim();
+            const body = (issue.body || '').trim();
+            const author = issue.user.login;
+
+            const existingLabels = issue.labels.map(l => l.name);
+            const labelsToAdd = new Set();
+            const labelsToRemove = new Set();
+
+            // 1. Clasificación por Título
+            const isBug = title.startsWith('[Bug]:');
+            const isFeature = title.startsWith('[Feature]:');
+
+            if (isBug) {
+              labelsToAdd.add('bug');
+            } else if (isFeature) {
+              labelsToAdd.add('enhancement');
+            }
+
+            // Etiqueta inicial de triaje si no tiene estado previo
+            if (!existingLabels.includes('status: triaged') && !existingLabels.includes('status: ready')) {
+              labelsToAdd.add('needs-triage');
+            }
+
+            // 2. Validación de completitud (Estilo PyTorch Triage Bot)
+            let missingSections = [];
+
+            if (isBug) {
+              // Comprobar si se rellenaron los pasos para reproducir
+              const stepsMatch = body.match(/## Pasos para reproducir\s*([\s\S]*?)(?=##|$)/i);
+              const stepsContent = stepsMatch ? stepsMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+              if (!stepsContent || stepsContent.length < 10) {
+                missingSections.push('Pasos para reproducir');
+              }
+
+              // Comprobar si se especificó el entorno
+              const envMatch = body.match(/## Entorno\s*([\s\S]*?)(?=##|$)/i);
+              const envContent = envMatch ? envMatch[1].replace(/<[^>]+>/g, '').replace(/-\s*\*\*.*?\*\*/g, '').trim() : '';
+              if (!envContent || envContent.length < 5) {
+                missingSections.push('Información del Entorno (SO, versión)');
+              }
+
+              // Comprobar descripción
+              const descMatch = body.match(/## Descripción\s*([\s\S]*?)(?=##|$)/i);
+              const descContent = descMatch ? descMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+              if (!descContent || descContent.length < 10) {
+                missingSections.push('Descripción detallada');
+              }
+            }
+
+            // 3. Aplicar etiquetas y comentar si falta información
+            if (missingSections.length > 0) {
+              labelsToAdd.add('needs-info');
+
+              // Evitar duplicar comentarios del bot si el issue fue editado
+              const comments = await github.rest.issues.listComments({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number
+              });
+
+              const botMarker = '<!-- pytorch-style-triage-bot -->';
+              const alreadyCommented = comments.data.some(c => c.body && c.body.includes(botMarker));
+
+              if (!alreadyCommented) {
+                const commentBody = `${botMarker}\n` +
+                  `¡Hola @${author}! 👋 Gracias por abrir esta incidencia.\n\n` +
+                  `Para que el equipo y la comunidad puedan investigar y reproducir el problema de forma ágil, parece que faltan algunos detalles clave:\n\n` +
+                  missingSections.map(s => `- ⚠️ **${s}**`).join('\n') +
+                  `\n\nPor favor, edita la descripción del issue completando estos campos. Una vez actualizado, retiraremos la etiqueta \`needs-info\` automáticamente. ¡Muchas gracias por tu colaboración! 🚀`;
+
+                await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  body: commentBody
+                });
+              }
+            } else {
+              // Si el issue está completo y tenía 'needs-info', retirarla
+              if (existingLabels.includes('needs-info')) {
+                labelsToRemove.add('needs-info');
+              }
+            }
+
+            // 4. Actualizar etiquetas en GitHub
+            const finalLabelsToAdd = Array.from(labelsToAdd).filter(l => !existingLabels.includes(l));
+            if (finalLabelsToAdd.length > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: issue.number,
+                labels: finalLabelsToAdd
+              });
+            }
+
+            for (const label of labelsToRemove) {
+              try {
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  name: label
+                });
+              } catch (e) {
+                // Etiqueta no presente
+              }
+            }
