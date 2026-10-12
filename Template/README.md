@@ -8,6 +8,10 @@
 
 ```
 spec/
+├── .github/                 ← configuración de GitHub (plantillas de PR, issues y bots)
+│   ├── ISSUE_TEMPLATE/      ← plantillas para reportar bugs y proponer features
+│   ├── workflows/           ← acciones automatizadas (bot de triaje y etiquetado)
+│   └── pull_request_template.md ← plantilla automática de Pull Requests
 ├── .agents/                 ← comandos y skills para los agentes(Ver docs ya q algunos usan otras carpetas)
 │   ├── commands/            ← comando custom (no vale en agy, el cual yo uso)
 │   └── skills/
@@ -26,8 +30,13 @@ spec/
 │   └── NNN-nombre-feature/  ← carpeta dedicada a cada feature con spec.md, plan.md y task.md
 ├── src/                     ← código fuente del proyecto
 ├── AGENTS.md                ← instrucciones para los agentes
-├── LICENSE                  ← licencia de la plantilla(eliminar en el proyecto)
-└── prompts.md               ← prompts reutilizables para sdd, automatizado en la skill
+├── LICENSE                  ← licencia de la plantilla( por la que se utilice)
+├── .gitignore               ← archivos que no se suben al repo(este esta vacio porq usa el de la raiz)
+├── .env                     ← variables de entornos a usar, NO se sube a github, sino .env.example en su lugar.
+├── CONTRIBUTING.md          ← Explica cómo otras personas pueden contribuir 
+├── CODE_OF_CONDUCT.md       ← Establece las normas de comportamiento y convivencia de la comunidad
+├── SECURITY.md              ← Indica cómo reportar vulnerabilidades
+└── README.md                ← resumen del proyecto para los usuarios.
 ```
 
 _La constitución y cada feature pueden ser un único archivo si el proyecto/feature es pequeño._
@@ -47,4 +56,4 @@ _La constitución y cada feature pueden ser un único archivo si el proyecto/fea
 Yo unicamente he creado una template de proyecto basado en la suya y realizando pequeños cambios como estas 2 lineas y juntando las templates de ambos cursos.
 
 
-A estas templates faltaría quitar la `licencia`, editar el `readme.md` y `agents.md` y usar /sdd-constitution para crear la constitution.
+A estas templates faltaría quitar/cambiar la `licencia`, editar el `readme.md` y `agents.md` y usar /sdd-constitution para crear la constitution.
