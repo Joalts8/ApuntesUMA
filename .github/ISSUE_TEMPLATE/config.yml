@@ -1,0 +1,15 @@
+# Configuración global del selector de Issues en GitHub
+# Documentación: https://docs.github.com/es/communities/using-templates-to-encourage-useful-issues-and-pull-requests/configuring-issue-templates-for-your-repository
+
+# Deshabilita la opción de abrir issues vacíos sin plantilla (fuerza el uso de las plantillas estructuradas)
+blank_issues_enabled: false
+
+# Enlaces de contacto adicionales que se mostrarán en la pantalla de "New Issue"
+contact_links:
+  - name: Reportar una vulnerabilidad de seguridad
+    url: https://github.com/<tu-usuario>/<tu-repositorio>/security/advisories/new
+    about: Por favor, NO abras issues públicos sobre fallos de seguridad. Revisa SECURITY.md y realiza un reporte privado y confidencial.
+  
+  - name: Preguntas, dudas y debates de la comunidad
+    url: https://github.com/<tu-usuario>/<tu-repositorio>/discussions
+    about: Para consultas sobre cómo usar el proyecto o ideas generales, participa en GitHub Discussions.
