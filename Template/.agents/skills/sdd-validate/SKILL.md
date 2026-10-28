@@ -32,7 +32,7 @@ Validación exhaustiva de una feature/spec revisando los tests, que cumpla los r
      - Cobertura de código (% de cobertura de los test (líneas, ramas y clases)).
    - Informa explícitamente al usuario y espera la confirmación.
    - **IMPORTANTE:** NO ejecutes el paso 8 ni toques `/docs/NNN-feature/qa-note.md` bajo ninguna circunstancia hasta recibir un mensaje explícito de confirmación en el chat. Da por finalizado tu turno aquí.
-9. **Tras recibir confirmación expresa del usuario:**
+8. **Tras recibir confirmación expresa del usuario:**
    - Redacta `/docs/NNN-feature/qa-note.md`, si ha acabado con éxito los tests y al menos el 70% de las tareas, RF y RNF, y criterios de finalización están cumplidos.
    - Sigue la norma de la skill `sdd`: debe incluir:
      1. Resumen de la validación y veredicto.
