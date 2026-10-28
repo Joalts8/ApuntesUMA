@@ -21,9 +21,7 @@ Opcional si hay tech-Stack junto a alguna cosa mas de ese archivo.
 
 ## Flujo de trabajo
 - Antes de una tarea no trivial, propón un plan y espera mi OK.
-- Una tarea a la vez; al terminar, dime qué cambiaste para que lo
-revise.
-- Si no estás seguro al 80%, pregunta. No inventes.
+- **Architectural Decision Records (ADRs):** Siempre que se deba tomar una decisión técnica o de diseño de arquitectura significativa (elección de librerías, cambios en el modelo de persistencia o seguridad, patrones de comunicación, etc.), es obligatorio documentarla creando un nuevo ADR en `docs/ADR/` siguiendo la plantilla `docs/ADR/ADR-NN.md`. El plan técnico (`plan.md`) debe referenciar el ADR correspondiente.
 
 ## Al terminar cualquier tarea
 - <Verificación obligatoria, p. ej. ejecutar los tests.>
