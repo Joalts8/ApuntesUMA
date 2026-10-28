@@ -21,17 +21,24 @@ Validación exhaustiva de una feature/spec revisando los tests, que cumpla los r
 1. Recorre `/features/NNN-nombre/spec.md` requisito por requisito. Para cada RF indica qué tests lo cubren y el resultado de ejecutarlo.
 2. Si algún RF no está cubierto o falla, dilo claramente, apúntalo en `repare.md`, da la validación por fallada y continúa.
 3. Revisa los requisitos no funcionales, y en caso de que uno no se cumpla, apúntalo en `repare.md` y da por fallida la validación.
-4. Revisa todo el código relacionado con la implementación y ejecuta los tests. Si falla algo, apúntalo en `repare.md` y da la validación por fallada.
+4. Revisa todo el código relacionado con la implementación y ejecuta los tests y extrae las métricas de cobertura. Si falla algo, apúntalo en `repare.md` y da la validación por fallada.
    - **Nota sobre tests de integración:** Los tests de integración que resulten omitidos (`skipped`) por estar el contenedor de BD apagado o por no poder conectarse a una API externa, etc; **NO penalizan el porcentaje de validación ni se consideran un fallo** para la emisión del veredicto o generación de `qa-note.md`.
 5. Después comprueba los criterios de finalización y emite un veredicto: ¿la spec está cumplida?
 6. Si no se cumplen, desmarca las tareas que fallan en `tasks.md`, documéntalas en `repare.md` y da la validación por fallada.
 7. **Comunica el veredicto en el chat y DETENTE:**
    - Detalla si la validación ha finalizado con éxito o ha fracasado, qué ha fallado y qué recomendaciones o mejoras se detectaron. 
-   - Informa explícitamente al usuario y esspera la confirmación.
+  - **Informa obligatoriamente de la cobertura técnica y funcional:**
+     - Cobertura de RF (% de requisitos con tests dedicados y su estado).
+     - Cobertura de código (% de cobertura de los test (líneas, ramas y clases)).
+   - Informa explícitamente al usuario y espera la confirmación.
    - **IMPORTANTE:** NO ejecutes el paso 8 ni toques `/docs/NNN-feature/qa-note.md` bajo ninguna circunstancia hasta recibir un mensaje explícito de confirmación en el chat. Da por finalizado tu turno aquí.
-8. **Tras recibir confirmación expresa del usuario:**
+9. **Tras recibir confirmación expresa del usuario:**
    - Redacta `/docs/NNN-feature/qa-note.md`, si ha acabado con éxito los tests y al menos el 70% de las tareas, RF y RNF, y criterios de finalización están cumplidos.
-   - Sigue la norma de la skill `sdd`: debe incluir el resumen de la validación y las instrucciones para que cualquier persona pueda probarla manualmente de la forma más simple posible (sin rodeos ni pasos superfluos, pero cubriendo todo lo necesario).
+   - Sigue la norma de la skill `sdd`: debe incluir:
+     1. Resumen de la validación y veredicto.
+     2. **Tabla de Trazabilidad de Requisitos Funcionales (EARS) y Cobertura de Tests**.
+     3. **Métricas de Cobertura Técnica de Código** (tablas con los porcentajes de cobertura).
+     4. Instrucciones para que cualquier persona pueda probarla manualmente de la forma más simple posible (sin rodeos ni pasos superfluos, pero cubriendo todo lo necesario).
 
 ## Reglas
 - **Comunicación en el chat:** Nunca limites tu respuesta a decir que se ha generado el archivo. Debes informar siempre en el chat del veredicto, de los fallos encontrados y de las mejoras sugeridas.
