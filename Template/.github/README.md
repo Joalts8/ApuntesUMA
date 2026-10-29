@@ -1,64 +1,83 @@
-# Guia de Plantillas para Pull Requests e Issues en UrbanPulse
+# Guía de Plantillas y Flujos de GitHub
 
-Este directorio contiene las plantillas estandarizadas para GitHub Web, GitHub CLI (`gh`) y herramientas automatizadas (como el MCP de GitHub).
+Este directorio contiene la configuración de GitHub del repositorio: plantillas estandarizadas para Pull Requests e Issues, enlaces de contacto y flujos de automatización para GitHub Web, GitHub CLI (`gh`), GitHub Actions y asistentes de IA.
 
 ---
 
-## Estructura de archivos
+## Estructura del directorio
 
 ```text
 .github/
-├── PULL_REQUEST_TEMPLATE.md       # Plantilla por defecto para Pull Requests
-├── pull_request_template.md       # Alternativa de PR soportada por GitHub
-└── ISSUE_TEMPLATE/                # Plantillas para nuevos Issues
-    ├── feature_request.md         # Plantilla para proponer funcionalidades
-    └── bug_report.md              # Plantilla para reportar incidencias/bugs
+├── ISSUE_TEMPLATE/
+│   ├── bug_report.md              # Plantilla para reportar incidencias/bugs ([Bug]: ...)
+│   ├── feature_request.md         # Plantilla para proponer nuevas funcionalidades ([Feature]: ...)
+│   ├── chore_or_refactor.md       # Plantilla para tareas técnicas, dependencias o refactor ([Chore]: ...)
+│   ├── documentation.md           # Plantilla para mejoras y erratas de documentación ([Docs]: ...)
+│   └── config.yml                 # Configuración del selector (deshabilita issues en blanco y enlaces de ayuda)
+├── workflows/
+│   └── issue-triage.yml           # GitHub Action: bot de triaje automático y etiquetado
+├── pull_request_template.md       # Plantilla predeterminada para Pull Requests
+└── README.md                      # Esta guía de uso y mantenimiento
 ```
 
 ---
 
-## 1. Como anadir tus propias plantillas
+## 1. Cómo personalizar o añadir plantillas
 
 ### Para Pull Requests:
-Edita directamente el fichero [`.github/PULL_REQUEST_TEMPLATE.md`](file:///.github/PULL_REQUEST_TEMPLATE.md) y pega el contenido que tengas preparado.
+Edita directamente [`pull_request_template.md`](pull_request_template.md). GitHub utiliza automáticamente este archivo como descripción inicial cuando cualquier colaborador abre un nuevo PR en el repositorio.
 
 ### Para Issues:
-Crea o edita archivos dentro de [`.github/ISSUE_TEMPLATE/`](file:///.github/ISSUE_TEMPLATE/). 
-Para que GitHub Web y GitHub CLI muestren el selector interactivo con titulo y descripcion, los archivos deben incluir cabeceras frontmatter YAML al principio. Por ejemplo:
+Crea o edita archivos Markdown dentro de [`ISSUE_TEMPLATE/`](ISSUE_TEMPLATE/). 
+Para que GitHub Web y GitHub CLI muestren el selector con título, descripción y etiquetas preasignadas, cada plantilla debe incluir cabeceras frontmatter en YAML al inicio:
 
 ```markdown
 ---
-name: Nombre descriptivo (ej. Reporte de Bug)
-about: Breve descripcion de para que sirve esta plantilla
-title: "prefijo: [Breve titulo]"
+name: Nombre descriptivo (ej. Bug report)
+about: Breve descripción del propósito de la plantilla
+title: "[Bug]: "
 labels: bug
 assignees: ''
 ---
 
-[Aqui va el contenido de tu plantilla]
+[Cuerpo de la plantilla]
 ```
 
-Si prefieres tener una unica plantilla predeterminada general para cualquier issue (sin selector web), puedes crear [`.github/ISSUE_TEMPLATE.md`](file:///.github/ISSUE_TEMPLATE.md).
+### Configuración adicional (`config.yml`):
+En [`ISSUE_TEMPLATE/config.yml`](ISSUE_TEMPLATE/config.yml) se define:
+- `blank_issues_enabled: false`: Obliga a seleccionar una plantilla estructurada y evita issues vacíos.
+- `contact_links`: Enlaces directos a reportes de seguridad privados (`SECURITY.md`) y foros de discusión (`GitHub Discussions`).
 
 ---
 
-## 2. Como usar las plantillas
+## 2. Cómo usar las plantillas
 
 ### Desde la Web de GitHub
-- **Pull Requests:** Al hacer clic en *New Pull Request*, GitHub autocompleta automaticamente la descripcion con el contenido de `.github/PULL_REQUEST_TEMPLATE.md`.
-- **Issues:** Al pulsar en *New Issue*, GitHub mostrara una pantalla para elegir la plantilla adecuada (Feature, Bug, etc.) y rellenara el formulario.
+- **Pull Requests:** Al pulsar en *New Pull Request*, GitHub autocompleta la descripción con el contenido de `pull_request_template.md`.
+- **Issues:** Al pulsar en *New Issue*, GitHub muestra el selector con las opciones configuradas (`Bug report`, `Feature request` o enlaces de soporte).
 
 ### Desde GitHub CLI (`gh`)
 - **Crear PR:**
   ```bash
-  # Abre el editor con la plantilla precargada automaticamente:
+  # Abre el editor predeterminado con la plantilla precargada:
   gh pr create
   ```
 - **Crear Issue:**
   ```bash
-  # Te permite elegir interactivamente entre las plantillas disponibles en ISSUE_TEMPLATE/:
+  # Permite elegir interactivamente la plantilla deseada:
   gh issue create
   ```
 
-### Desde el MCP de GitHub (Asistente de IA)
-Al solicitar la creacion de una PR o Issue via MCP (`create_pull_request`, `issue_write`), el asistente lee el contenido de estos ficheros en `.github/` y genera el cuerpo del mensaje respetando los apartados exactos de tu plantilla.
+### Desde Asistentes de IA y Agentes (Reglas en `AGENTS.md`)
+Los agentes de IA que operan en este proyecto (o mediante herramientas MCP) siguen las siguientes directrices al interactuar con `.github/`:
+- **Pull Requests:** Leen `pull_request_template.md` y rellenan obligatoriamente todas las secciones sin dejar etiquetas `<...>` vacías.
+- **Issues:** Utilizan el formato correspondiente de `ISSUE_TEMPLATE/` respetando siempre los prefijos en el título (`[Bug]: `, `[Feature]: `, `[Chore]: ` o `[Docs]: `).
+
+---
+
+## 3. Automatizaciones (GitHub Actions)
+
+El repositorio incluye el flujo [`workflows/issue-triage.yml`](workflows/issue-triage.yml) que se ejecuta al abrir o editar un issue:
+- **Etiquetado automático:** Asigna etiquetas como `bug`, `enhancement`, `chore`, `documentation` y `needs-triage` según el prefijo del título.
+- **Validación de completitud:** Comprueba que no se hayan dejado secciones obligatorias vacías ni con los textos de ejemplo `<...>`.
+- **Comentarios y advertencias:** Alerta amablemente al autor si faltan pasos para reproducir o detalles requeridos para agilizar el triaje.

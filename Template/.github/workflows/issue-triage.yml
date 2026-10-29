@@ -24,14 +24,20 @@ jobs:
             const labelsToAdd = new Set();
             const labelsToRemove = new Set();
 
-            // 1. Clasificación por Título
-            const isBug = title.startsWith('[Bug]:');
-            const isFeature = title.startsWith('[Feature]:');
+            // 1. Clasificación por Título (insensible a mayúsculas/minúsculas)
+            const isBug = /^\[bug\]:/i.test(title);
+            const isFeature = /^\[feature\]:/i.test(title);
+            const isDocs = /^\[docs\]:/i.test(title);
+            const isChore = /^\[chore\]:/i.test(title) || /^\[refactor\]:/i.test(title);
 
             if (isBug) {
               labelsToAdd.add('bug');
             } else if (isFeature) {
               labelsToAdd.add('enhancement');
+            } else if (isDocs) {
+              labelsToAdd.add('documentation');
+            } else if (isChore) {
+              labelsToAdd.add('chore');
             }
 
             // Etiqueta inicial de triaje si no tiene estado previo
@@ -43,9 +49,9 @@ jobs:
             let missingSections = [];
 
             if (isBug) {
-              // Comprobar si se rellenaron los pasos para reproducir
+              // Comprobar si se rellenaron los pasos para reproducir (limpiando números y viñetas de lista)
               const stepsMatch = body.match(/## Pasos para reproducir\s*([\s\S]*?)(?=##|$)/i);
-              const stepsContent = stepsMatch ? stepsMatch[1].replace(/<[^>]+>/g, '').trim() : '';
+              const stepsContent = stepsMatch ? stepsMatch[1].replace(/<[^>]+>/g, '').replace(/^\s*(\d+\.|[-*])\s*/gm, '').trim() : '';
               if (!stepsContent || stepsContent.length < 10) {
                 missingSections.push('Pasos para reproducir');
               }

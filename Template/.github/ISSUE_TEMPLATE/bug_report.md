@@ -19,8 +19,12 @@ labels: bug
 ## Resultado actual
 <Qué ocurrió en realidad.>
 
-## Evidencias
-<Capturas de pantalla, trazas de la consola, logs de error o código mínimo de reproducción.>
+## Evidencias o trazas
+<Capturas de pantalla o pasos breves.>
+
+```text
+<Pega aquí logs de error, trazas de la consola o salida del comando>
+```
 
 ## Entorno
 - **Sistema Operativo:** <ej. Windows 11 / Ubuntu 22.04 / macOS 14>

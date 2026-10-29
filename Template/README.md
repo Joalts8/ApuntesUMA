@@ -57,3 +57,5 @@ Yo unicamente he creado una template de proyecto basado en la suya y realizando 
 
 
 A estas templates faltaría quitar/cambiar la `licencia`, editar el `readme.md` y `agents.md` y usar /sdd-constitution para crear la constitution.
+Los 3 .md restantes en `/template` son opcionales. 
+En caso de la seguridad, ademas se harían ajusten en la seguridad del repositorio y si aplica crear `SECURITY.md` y abrir el canal privado para reportar fallos de seguridad.

@@ -5,6 +5,8 @@
 blank_issues_enabled: false
 
 # Enlaces de contacto adicionales que se mostrarán en la pantalla de "New Issue"
+# NOTA: Al instanciar esta plantilla en un proyecto real, sustituye '<tu-usuario>/<tu-repositorio>'
+# por las rutas correspondientes. Si no utilizas GitHub Discussions, puedes comentar ese enlace.
 contact_links:
   - name: Reportar una vulnerabilidad de seguridad
     url: https://github.com/<tu-usuario>/<tu-repositorio>/security/advisories/new
