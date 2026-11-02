@@ -6,7 +6,7 @@ description: Usa esta skill cuando el usuario pida crear y redactar una especifi
 # Generador de specs
 
 ## Objetivo
-Convierte una idea vaga en una especificación acordada. La spec es elcontrato: si algo no está aquí, no se implementa.
+Convierte una idea vaga en una especificación acordada. La spec es el contrato: si algo no está aquí, no se implementa.
 
 ## Entradas
 - Información de la nueva feature.
@@ -15,12 +15,13 @@ Convierte una idea vaga en una especificación acordada. La spec es elcontrato: 
 - Archivo `spec.md`.
 
 ## Proceso
-1. **Entrevista al usuario.** Preguntas de **UNA en UNA**, máximo 15, esperando respuesta antes de la siguiente. Céntrate en casos límite, comportamiento ante errores y qué queda fuera. No propongas soluciones técnicas: si el    usuario pregunta "¿cómo lo harías?", redirige al QUÉ. Prioriza preguntas cuya respuesta cambie lo que hay que construir; descarta las que tengan una respuesta obvia por defecto.
+1. **Entrevista al usuario.** Preguntas de **UNA en UNA**, máximo 15, esperando respuesta antes de la siguiente. Céntrate en casos límite, comportamiento ante errores y qué queda fuera. No propongas soluciones técnicas: si el usuario pregunta "¿cómo lo harías?", redirige al QUÉ. Prioriza preguntas cuya respuesta cambie lo que hay que construir; descarta las que tengan una respuesta obvia por defecto.
 2. **Elige el número.** Mira `features/` y usa el siguiente libre con tres dígitos: `features/NNN-<nombre-en-kebab-case>/spec.md`.
 3. **Redacta** usando la plantilla en `./assets`, sin saltarte secciones. Criterios de aceptación **siempre en notación EARS**, numerados como RF-1, RF-2, … Cada requisito debe ser verificable: si no se te ocurre cómo comprobarlo, está mal escrito.
 4. **Marca lo que no sepas** como `[NECESITA ACLARACIÓN: pregunta concreta]`. Nunca rellenes un hueco inventando: un hueco visible es información, una suposición silenciosa es deuda.
 5. **Pide aprobación explícita** al terminar. No pases al plan ni escribas código hasta tenerla.
-6. Indica si se necesitas mas preguntas para aclarar la spec, o si ya está lista para pasar al plan.
+6. **Realiza commit.** Tras recibir el OK explícito del usuario, haz commit de `spec.md` (y de `constitution/roadmap.md` si se registró la feature) siguiendo las reglas de commits establecidas.
+7. Indica si se necesitan más preguntas para aclarar la spec, o si ya está lista para pasar al plan.
 
 ## Reglas
 - No escribas código.
