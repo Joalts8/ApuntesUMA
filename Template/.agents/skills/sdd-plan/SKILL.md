@@ -19,10 +19,11 @@ Creación del plan a seguir para implementar una feature en el ciclo sdd.
 ## Proceso
 1. Lee la información de la feature.
 2. Identifica: Archivos que se crean/modifican y su responsabilidad, funciones a crear y requisitos relacionados, cómo se pinta en la interfaz, decisiones técnicas justificadas (con su alternativa descartada) y estrategia de tests.
-3. Rellena la plantilla en `./assets` según la información que tienes.
+3. Rellena la plantilla en `./assets` según la información que tienes, muestra un resumen al usuario y espera la aprobación.
+4. Tras recibir la aprobación, crea el archivo `/features/NNN-feature/plan.md` y realiza un commit siguiendo las norma establecida.
 
 ## Reglas
 - Si la spec no está aprobada o tiene dudas abiertas, para y avísame.
-- No escribas código
+- No escribas código.
 - Usa la skill sdd.
 - Debe cubrir todos los requisitos.

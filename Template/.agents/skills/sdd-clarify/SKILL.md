@@ -1,41 +1,47 @@
 ---
-name: sdd-clarify
-description: Utiliza esta skill cuando debas revisar los documentos de una features usando sdd, es decir spec, task y plan.
+name: sdd-clarif
+description: Utiliza esta skill cuando debas revisar los documentos de una feature usando sdd (spec, plan o tasks) para detectar y resolver ambigüedades o incoherencias.
 ---
 
 # Clarificación de una Spec
 
 ## Objetivo
-Validación de la correcta creación de `spec.md`, `plan.md` o `task.md`.
+Validación y resolución de dudas, ambigüedades o incoherencias en `spec.md`, `plan.md` o `tasks.md`.
 
 ## Entradas
 - Número de la feature, nombre o ambas cosas.
-- Archivo de la feature a revisar, si no se indica ninguno, suponer que es `spec.md`
+- Archivo de la feature a revisar (si no se indica ninguno, suponer que es `spec.md`).
 
 ## Salidas
-- Lista numerada.
-- Pregunta al usuario sobre si le parece bien y si quiere que se cambie lo detectado.
+- Lista numerada con los puntos detectados.
+- Pregunta al usuario sobre si le parece bien y qué cambios desea aplicar.
+- En caso de aprobación: archivo actualizado y commit correspondiente.
 
 ## Proceso
-0. Revisa el documento indicado y crea una lista con los siguientes elementos:
-Para spec:
-1. Ambigüedades restantes (requisitos que no se pueden verificar).
-2. Contradicciones entre requisitos.
-3. Casos límite no cubiertos.
-4. Conflictos con `/constitution`.
-Para task:
-1. Tareas faltantes.
-2. Tareas contradictorias
-3. Tareas bloqueantes no indicadas.
-4. Conflictos con `/constitution`, `spec.md` o `plan.md`.
-Para plan:
-1. Enfoque erroneo.
-2. Decisiones contradictorias
-3. Riesgos no tenidos en cuenta.
-4. Estrategia de test errornea
-5. Conflictos con `/constitution` o `spec.md`.
+1. Revisa el documento indicado y genera una lista estructurada con los siguientes elementos según aplique:
+   **Para `spec.md`:**
+   - Ambigüedades restantes (requisitos no verificables).
+   - Contradicciones entre requisitos.
+   - Casos límite no cubiertos.
+   - Conflictos con `/constitution`.
+   **Para `tasks.md`:**
+   - Tareas faltantes.
+   - Tareas contradictorias.
+   - Tareas bloqueantes no indicadas.
+   - Conflictos con `/constitution`, `spec.md` o `plan.md`.
+   **Para `plan.md`:**
+   - Enfoque erróneo o técnicamente inviable.
+   - Decisiones contradictorias.
+   - Riesgos no tenidos en cuenta.
+   - Estrategia de tests errónea o incompleta.
+   - Conflictos con `/constitution` o `spec.md`.
+2. Muestra la lista en el chat y pregunta al usuario si le parece bien y si desea que se apliquen las correcciones propuestas.
+3. Espera la confirmación y directrices explícitas del usuario.
+4. Si el usuario aprueba los cambios, aplícalos directamente en el archivo correspondiente (`spec.md`, `plan.md` o `tasks.md`).
+5. Tras aplicar las modificaciones aprobadas, realiza un commit individual siguiendo la norma establecida.
 
 ## Reglas
 - Usa la skill sdd.
-- Actua como un QA profesional.
-- Solo detecta, no resuelvas ni propongas nada.
+- Actúa como un QA profesional.
+- No modifiques ningún archivo de forma unilateral: detecta primero y espera siempre la aprobación explícita del usuario antes de tocar el documento.
+- Tras aplicar los cambios aceptados, es obligatorio realizar el commit correspondiente según la norma de `sdd`.
