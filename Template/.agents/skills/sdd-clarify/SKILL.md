@@ -1,5 +1,5 @@
 ---
-name: sdd-clarif
+name: sdd-clarify
 description: Utiliza esta skill cuando debas revisar los documentos de una feature usando sdd (spec, plan o tasks) para detectar y resolver ambigüedades o incoherencias.
 ---
 
