@@ -8,8 +8,6 @@ Apuntes centrados en la asignatura Introduccion a la programación.
 IDE-> vscode
 
 ---
-
----
 ## [TemarioScala](./TemarioScala)
 Apuntes centrados en la asignatura Programación Avanzada 2, donde se centra en programacón funcional y concurrencias.
 
