@@ -20,8 +20,8 @@ Opcional si hay tech-Stack junto a alguna cosa mas de ese archivo.
 - **Documentación de código:** <Comentar obligatoriamente con **Javadoc** o similares en otros lenguajes (como **Doxygen**) (clases, interfaces, métodos de servicio, mappers, parámetros `@param`, retornos `@return` y excepciones `@throws`). En clases de donde se utilicen anotaciones (como Lombok con `@Data`, `@AllArgsConstructor`, `@NoArgsConstructor`, etc.), **prevalecen las anotaciones frente al código boilerplate hecho a mano**; se documentará la clase a nivel global y sus campos clave, sin requerir documentar en getters/setters/constructores autogenerados por anotaciones.
 
 ## Flujo de trabajo
-- Antes de una tarea no trivial, propón un plan y espera mi OK.
-- **Architectural Decision Records (ADRs):** Siempre que se deba tomar una decisión técnica o de diseño de arquitectura significativa (elección de librerías, cambios en el modelo de persistencia o seguridad, patrones de comunicación, etc.), es obligatorio documentarla creando un nuevo ADR en `docs/ADR/` siguiendo la plantilla `docs/ADR/ADR-NN.md`. El plan técnico (`plan.md`) debe referenciar el ADR correspondiente.
+- <Antes de una tarea no trivial, propón un plan y espera mi OK.>
+- **Architectural Decision Records (ADRs):** Siempre que se deba tomar una decisión técnica o de diseño de arquitectura significativa (elección de librerías, cambios en el modelo de persistencia o seguridad, patrones de comunicación, etc.), es obligatorio documentarla creando un nuevo ADR en `docs/ADR/` usando la skill `adr` (que utiliza la plantilla en `.agents/skills/ADR/assets/ADR-NN.md`).
 
 ## Al terminar cualquier tarea
 - <Verificación obligatoria, p. ej. ejecutar los tests.>
