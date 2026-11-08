@@ -5,7 +5,7 @@ description: Usa esta skill cuando se pregunte por fase actual y siguiente paso 
 # Estado de una Spec
 
 ## Objetivo
-Validación de una spec revisando los test, que cumpla los requisitos y los criterios de aceptación
+Consultar y resumir la fase actual del flujo SDD, el progreso de tareas hechas y pendientes, y el siguiente paso o comando exacto a ejecutar para una feature.
 
 ## Entradas
 - Número de la feature, nombre o ambas cosas.

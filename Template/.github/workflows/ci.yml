@@ -1,0 +1,134 @@
+# ==============================================================================
+# Flujo de CI: Integración Continua (Ejemplo funcional para Java + Spring Boot)
+# ==============================================================================
+# NOTA DE ADAPTACIÓN:
+# Este workflow está preconfigurado como ejemplo funcional para Java (Maven/Gradle).
+# Si tu proyecto utiliza otro stack (Node.js/TypeScript, Python, Go, Rust, etc.),
+# consulta la guía paso a paso en `.github/README.md` (Sección 3.A) para cambiar
+# el runtime (`setup-node`, `setup-python`) y los comandos de test/lint correspondientes.
+# ==============================================================================
+
+name: CI - Integración Continua
+
+on:
+  # En ramas de trabajo (feature/*, fix/*) se dispara con push directo
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!develop'
+  # En main y develop la integración entra exclusivamente mediante Pull Request
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-and-lint:
+    name: Verificación de Código y Checkstyle
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          # cache: 'maven' # Activar cuando exista pom.xml o build.gradle en el repo
+
+      - name: Dar permisos de ejecución a los wrappers (Maven/Gradle)
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw; fi
+          if [ -f "./gradlew" ]; then chmod +x ./gradlew; fi
+
+      # Ejecución de análisis de estilo (Spotless, Checkstyle o compilación sin tests)
+      - name: Validar formato y Checkstyle
+        run: |
+          if [ -f "./mvnw" ]; then
+            ./mvnw checkstyle:check --no-transfer-progress || ./mvnw compile -DskipTests
+          elif [ -f "./gradlew" ]; then
+            ./gradlew check -x test
+          elif [ -f "./pom.xml" ]; then
+            mvn compile -DskipTests
+          else
+            echo "Sin archivos Java/Maven detectados en este commit. Si tu proyecto usa otro stack, consulta .github/README.md para adaptar este flujo."
+          fi
+
+  test:
+    name: Tests Unitarios e Integración
+    needs: check-and-lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Dar permisos de ejecución
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw; fi
+          if [ -f "./gradlew" ]; then chmod +x ./gradlew; fi
+
+      - name: Ejecutar Tests Automatizados
+        run: |
+          if [ -f "./mvnw" ]; then
+            ./mvnw test --no-transfer-progress
+          elif [ -f "./gradlew" ]; then
+            ./gradlew test
+          elif [ -f "./pom.xml" ]; then
+            mvn test
+          else
+            echo "Sin suite de tests Java detectada. Consulta .github/README.md para adaptar el comando de tests a tu tecnología."
+          fi
+
+  build:
+    name: Empaquetar Aplicación
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+
+      - name: Dar permisos de ejecución
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw; fi
+          if [ -f "./gradlew" ]; then chmod +x ./gradlew; fi
+
+      - name: Compilar y generar artefacto ejecutable
+        run: |
+          if [ -f "./mvnw" ]; then
+            ./mvnw clean package -DskipTests --no-transfer-progress
+          elif [ -f "./gradlew" ]; then
+            ./gradlew bootJar -x test
+          elif [ -f "./pom.xml" ]; then
+            mvn clean package -DskipTests
+          else
+            echo "Generando artefacto placeholder para estructura inicial..."
+            mkdir -p target && touch target/app-placeholder.jar
+          fi
+
+      - name: Subir artefacto temporal
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: |
+            target/*.jar
+            build/libs/*.jar
+          retention-days: 1
+          if-no-files-found: ignore

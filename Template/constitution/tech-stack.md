@@ -8,6 +8,7 @@ _Cómo está construido el proyecto y las reglas que todo el código debe respet
 - **Framework / runtime:** <p. ej. Node 22 + Express 5 / ninguno>
 - **Base de datos:** <p. ej. PostgreSQL con Prisma / no aplica>
 - **Tests:** <p. ej. Vitest / no hay suite — cómo se valida>
+- **Seguridad / DevSecOps:** <p. ej. Secret detection (TruffleHog), SAST (Semgrep), SCA (Trivy), Attack Surface (OWASP Noir), Pentest (Strix)>
 - **Despliegue:** <dónde y cómo se publica>
 
 ## Archivos / módulos clave

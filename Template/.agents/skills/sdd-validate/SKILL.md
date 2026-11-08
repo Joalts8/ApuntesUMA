@@ -20,7 +20,7 @@ Validación exhaustiva de una feature/spec revisando los tests, que cumpla los r
 ## Proceso
 1. Recorre `/features/NNN-nombre/spec.md` requisito por requisito. Para cada RF indica qué tests lo cubren y el resultado de ejecutarlo.
 2. Si algún RF no está cubierto o falla, dilo claramente, apúntalo en `repare.md`, da la validación por fallada y continúa.
-3. Revisa los requisitos no funcionales, y en caso de que uno no se cumpla, apúntalo en `repare.md` y da por fallida la validación.
+3. Revisa los requisitos no funcionales (incluyendo criterios de seguridad DevSecOps: sin secretos expuestos, sin vulnerabilidades críticas en dependencias ni fallos en escaneos SAST), y en caso de que uno no se cumpla, apúntalo en `repare.md` y da por fallida la validación.
 4. Revisa todo el código relacionado con la implementación y ejecuta los tests y extrae las métricas de cobertura. Si falla algo, apúntalo en `repare.md` y da la validación por fallada.
    - **Nota sobre tests de integración:** Los tests de integración que resulten omitidos (`skipped`) por estar el contenedor de BD apagado o por no poder conectarse a una API externa, etc; **NO penalizan el porcentaje de validación ni se consideran un fallo** para la emisión del veredicto o generación de `qa-note.md`.
 5. Después comprueba los criterios de finalización y emite un veredicto: ¿la spec está cumplida?

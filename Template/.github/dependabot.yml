@@ -1,0 +1,35 @@
+# ==============================================================================
+# Configuración de Dependabot para Actualizaciones Automáticas de Dependencias
+# Documentación: https://docs.github.com/es/code-security/dependabot
+# ==============================================================================
+# Dependabot creará Pull Requests automáticos en tu repositorio cuando haya
+# nuevas versiones o cuando se detecten vulnerabilidades de seguridad en librerías.
+# ==============================================================================
+
+version: 2
+updates:
+  # 1. Actualización automática de las GitHub Actions usadas en los workflows
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"
+      prefix-development: "ci"
+    open-pull-requests-limit: 5
+
+  # 2. Actualización automática de dependencias del proyecto
+  # Sustituye o ajusta el package-ecosystem al stack del proyecto:
+  # - Maven / Gradle: "maven" / "gradle"
+  # - Node.js: "npm" (funciona también para pnpm y yarn)
+  # - Python: "pip" (requirements.txt / pyproject.toml)
+  # - Docker: "docker"
+  # - Rust: "cargo"
+  # - Go: "gomod"
+  - package-ecosystem: "maven"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "chore(deps)"
+    open-pull-requests-limit: 5
