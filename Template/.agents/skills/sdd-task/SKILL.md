@@ -3,7 +3,7 @@ name: sdd-task
 description: Skill que se usará cuando se quiera crear las tareas para implementar una feature a partir de su spec y el plan usando sdd.
 ---
 
-# Division del plan en tareas
+# División del plan en tareas
 
 ## Objetivo
 Creación de `tasks.md` a partir de la spec y el plan.
@@ -21,7 +21,7 @@ Creación de `tasks.md` a partir de la spec y el plan.
 2. Rellena siguiendo la plantilla dentro de `./assets`.
 3. En cada tarea principal, indica los requisitos que corresponden a dicha tarea.
 4. Si falta algo en `plan.md` o `spec.md` para y pregunta.
-5. Muestra el desglose de tareas y pide aprobación explícita .
+5. Muestra el desglose de tareas y pide aprobación explícita.
 6. Tras recibir la aprobación, realiza un commit siguiendo las normas establecidas.
 
 ## Reglas

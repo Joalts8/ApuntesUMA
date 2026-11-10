@@ -1,48 +1,66 @@
 ---
 name: sdd-validate
-description: Usa esta skill para validar una spec en sdd. Se indicará el número de la feature, el nombre o ambos.
+description: Usa esta skill para validar una spec en SDD revisando tests, requisitos funcionales/no funcionales y criterios de aceptación, soportando modo interactivo y modo automático con subagente dedicado para qa-note.
 ---
 
 # Validación de una Spec
 
 ## Objetivo
-Validación exhaustiva de una feature/spec revisando los tests, que cumpla los requisitos funcionales y no funcionales (RF y RNF), y los criterios de aceptación.
+Validación exhaustiva de una feature/spec revisando los tests, el cumplimiento de los requisitos funcionales y no funcionales (RF y RNF), y los criterios de aceptación, con trazabilidad rigurosa y reporte de QA.
 
 ## Entradas
 - Número de la feature, nombre o ambas cosas.
-- Información extra.
+- Información extra provista por el usuario o entorno.
+- **Modo de ejecución:** `interactivo` (humano en chat) o `auto` (fábrica automática).
 
 ## Salidas
-- **Comunicación en el chat (obligatoria):** Veredicto claro (si la validación ha finalizado con éxito o ha fracasado), qué ha fallado exactamente o qué aspectos hay que mejorar, junto con un resumen de lo validado.
-- En caso de éxito en la validación, se genera `/docs/NNN-feature/qa-note.md` siguiendo las normas de `sdd`.
-- En caso de fallo en la validación, se genera el archivo auxiliar `/docs/NNN-feature/repare.md`.
+- **Comunicación del veredicto:** Dictamen claro (éxito o fallo), fallos detectados, métricas de cobertura técnica y funcional, y mejoras recomendadas.
+- En caso de éxito (o cumplimiento >= 70%): Archivo `/docs/NNN-nombre-feature/qa-note.md`.
+- En caso de fallo en la validación: Archivo auxiliar `/docs/NNN-nombre-feature/repair.md`.
 
 ## Proceso
-1. Recorre `/features/NNN-nombre/spec.md` requisito por requisito. Para cada RF indica qué tests lo cubren y el resultado de ejecutarlo.
-2. Si algún RF no está cubierto o falla, dilo claramente, apúntalo en `repare.md`, da la validación por fallada y continúa.
-3. Revisa los requisitos no funcionales (incluyendo criterios de seguridad DevSecOps: sin secretos expuestos, sin vulnerabilidades críticas en dependencias ni fallos en escaneos SAST), y en caso de que uno no se cumpla, apúntalo en `repare.md` y da por fallida la validación.
-4. Revisa todo el código relacionado con la implementación y ejecuta los tests y extrae las métricas de cobertura. Si falla algo, apúntalo en `repare.md` y da la validación por fallada.
-   - **Nota sobre tests de integración:** Los tests de integración que resulten omitidos (`skipped`) por estar el contenedor de BD apagado o por no poder conectarse a una API externa, etc; **NO penalizan el porcentaje de validación ni se consideran un fallo** para la emisión del veredicto o generación de `qa-note.md`.
-5. Después comprueba los criterios de finalización y emite un veredicto: ¿la spec está cumplida?
-6. Si no se cumplen, desmarca las tareas que fallan en `tasks.md`, documéntalas en `repare.md` y da la validación por fallada.
-7. **Comunica el veredicto en el chat y DETENTE:**
-   - Detalla si la validación ha finalizado con éxito o ha fracasado, qué ha fallado y qué recomendaciones o mejoras se detectaron. 
-  - **Informa obligatoriamente de la cobertura técnica y funcional:**
-     - Cobertura de RF (% de requisitos con tests dedicados y su estado).
-     - Cobertura de código (% de cobertura de los test (líneas, ramas y clases)).
-   - Informa explícitamente al usuario y espera la confirmación.
-   - **IMPORTANTE:** NO ejecutes el paso 8 ni toques `/docs/NNN-feature/qa-note.md` bajo ninguna circunstancia hasta recibir un mensaje explícito de confirmación en el chat. Da por finalizado tu turno aquí.
-8. **Tras recibir confirmación expresa del usuario:**
-   - Redacta `/docs/NNN-feature/qa-note.md`, si ha acabado con éxito los tests y al menos el 70% de las tareas, RF y RNF, y criterios de finalización están cumplidos.
-   - Sigue la norma de la skill `sdd`: debe incluir:
-     1. Resumen de la validación y veredicto.
-     2. **Tabla de Trazabilidad de Requisitos Funcionales (EARS) y Cobertura de Tests**.
-     3. **Métricas de Cobertura Técnica de Código** (tablas con los porcentajes de cobertura).
-     4. Instrucciones para que cualquier persona pueda probarla manualmente de la forma más simple posible (sin rodeos ni pasos superfluos, pero cubriendo todo lo necesario).
+
+1. **Revisión de Requisitos Funcionales (RF):**
+   - Recorre `/features/NNN-nombre-feature/spec.md` requisito por requisito en formato EARS. Para cada RF indica qué tests lo cubren y el resultado de ejecutarlos.
+   - Si algún RF no está cubierto o falla, regístralo detalladamente en `repair.md`, da la validación por fallida y continúa.
+
+2. **Revisión de Requisitos No Funcionales y DevSecOps:**
+   - Revisa seguridad y buenas prácticas: sin secretos expuestos, sin vulnerabilidades críticas en dependencias (Trivy/SCA) ni fallos en análisis estático (Semgrep/SAST).
+   - Si no se cumplen, anótalos en `repair.md` y da por fallida la validación.
+
+3. **Ejecución de Tests y Reglas de Infraestructura (BD vs APIs externas):**
+   - **Bases de datos levantadas obligatorias:** En la validación automática de la fábrica, los contenedores y bases de datos deben estar obligatoriamente iniciados. Los tests de persistencia y base de datos deben ejecutarse y pasar; no se permite omitir tests de BD.
+   - **Tests de APIs externas de terceros:** Si un test no puede conectarse a un servicio o API externa no simulada/de terceros, se clasificará como **"No comprobado / Pendiente de verificación externa"** (en lugar de darlo por verde o marcar toda la feature como rota); se reservará para que el revisor QA lo audite en la revisión manual y se reflejará explícitamente en `qa-note.md`.
+   - Extrae métricas de cobertura: porcentaje de líneas, ramas y clases cubiertas. Si falla algún test unitario o de lógica interna, regístralo en `repair.md`.
+
+4. **Evaluación de criterios de finalización y emisión de veredicto:**
+   - ¿Se cumplen los criterios de aceptación de la spec?
+   - Si no se cumplen, desmarca en `tasks.md` **únicamente** las tareas no completadas o que fallan (no corrijas ni reimplementes código en esta fase), documéntalas en `repair.md` y marca la validación como fallida.
+
+5. **Gestión según el Modo de Ejecución:**
+
+   ### A. Modo Humano (Interactivo)
+   1. Comunica el veredicto en el chat con las métricas de cobertura (cobertura de RF y cobertura de código de tests).
+   2. Actualiza `constitution/roadmap.md`: si la validación ha fallado, mueve la feature a "En curso" (indicando fallo de validación) salvo que esté en "En mejora"; si ha sido exitosa, a "Hecho" (o a "En validación" si quedan pendientes externos).
+   3. **DETENTE:** Espera confirmación explícita del usuario en el chat antes de generar o tocar `/docs/NNN-nombre-feature/qa-note.md`.
+   4. Tras recibir la confirmación expresa del usuario, redacta `/docs/NNN-nombre-feature/qa-note.md`.
+
+   ### B. Modo Auto (Fábrica Automática)
+   1. Comunica el veredicto y las métricas en el registro.
+   2. **Si la validación ha fallado:** Genera automáticamente `/docs/NNN-nombre-feature/repair.md` con los fallos, desmarca tareas falladas en `tasks.md`, actualiza `constitution/roadmap.md` a "En curso" (indicando fallo en validación) y detiene el flujo alertando para corrección.
+   3. **Si la validación es exitosa (o >= 70% con criterios base cumplidos):** Invoca directamente al subagente dedicado [`sdd-qa-writer`](../agents/sdd-qa-writer.md) (configurado con modelo de bajo coste como `flash` o `flash_lite`) cuya única responsabilidad es redactar y persistir `/docs/NNN-nombre-feature/qa-note.md`:
+      - El subagente recibe la estructura de la validación ya realizada.
+      - Genera el archivo `qa-note.md` conteniendo:
+        1. Resumen de la validación y veredicto.
+        2. Tabla de Trazabilidad de Requisitos Funcionales (EARS) y Cobertura de Tests.
+        3. Métricas de Cobertura Técnica de Código.
+        4. Casos marcados como "No comprobado" por dependencias de APIs externas para revisión manual.
+        5. Instrucciones manuales de prueba simples y accionables.
+      - Tras finalizar el subagente, mueve la feature a "Hecho" en `constitution/roadmap.md` (o a "En validación" si quedan pendientes externos).
 
 ## Reglas
-- **Comunicación en el chat:** Nunca limites tu respuesta a decir que se ha generado el archivo. Debes informar siempre en el chat del veredicto, de los fallos encontrados y de las mejoras sugeridas.
-- **Instrucciones manuales simples:** La guía de pruebas manuales en `qa-note.md` debe ser lo más simple posible para una persona, asegurando siempre que se cubra todo lo necesario para verificar la funcionalidad.
-- Si algo falla en alguno de los pasos del proceso, es decir, se da por fallada la validación, NO arregles nada todavía. Apúntalo en el archivo auxiliar `repare.md`, continúa el siguiente paso y repórtalo en el chat.
+- **Comunicación en el chat:** Siempre se informa del veredicto, de los fallos encontrados, del desglose de cobertura y de las mejoras sugeridas.
+- **Instrucciones manuales simples:** La guía de pruebas manuales en `qa-note.md` debe ser lo más simple posible para una persona, sin jerga innecesaria pero cubriendo todos los casos clave.
+- Si algo falla en algún paso del proceso, NO arregles nada todavía. Apúntalo en el archivo auxiliar `repair.md`, continúa el siguiente paso y repórtalo.
 - Usa la skill sdd.
 - Actúa como un QA profesional.

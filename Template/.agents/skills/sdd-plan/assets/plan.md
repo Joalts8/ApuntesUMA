@@ -27,8 +27,8 @@ _Qué puede salir mal o requerir cuidado, y cómo se mitiga._
 
 - **<Riesgo>** — <mitigación>.
 
-## Estrategia de tests
-_Estrategia que se seguiran para los test_
-- <Unitarios de core con fechas inyectadas (rachas: vacía, viva por ayer, rota, de 1 día, larga).>
-- <storage con tmp_path de pytest (inexistente, válido, corrupto).>
-- <Smoke test de CLI invocando el parser.>
+## Estrategia de tests (TDD)
+_Estrategia que se seguirá para los tests aplicando Test-Driven Development (Red-Green-Refactor)._
+- <Tests unitarios que se escribirán primero (Red) para cubrir los RF especificados.>
+- <Tests de integración (persistencia, servicios, endpoints) y mocks a utilizar.>
+- <Verificación de casos límite y manejo de errores.>

@@ -131,15 +131,24 @@ jobs:
       - name: Checkout del código
         uses: actions/checkout@v4
 
+      - name: Configurar Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Instalar Strix Agent
+        run: pipx install strix-agent
+
       - name: Ejecutar auditoría asistida por IA con Strix
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           STRIX_API_KEY: ${{ secrets.STRIX_API_KEY }}
+          LLM_API_KEY: ${{ secrets.OPENAI_API_KEY || secrets.ANTHROPIC_API_KEY || secrets.STRIX_API_KEY }}
         run: |
           mkdir -p security-reports
           echo "Iniciando Strix Pentesting en modo no-destructivo..."
-          echo "Reporte Strix de pentesting generado de ejemplo." > security-reports/strix-summary.txt
+          strix -n --target ./ 2>&1 | tee security-reports/strix-summary.txt || true
 
       - name: Subir informe de pentesting de Strix
         uses: actions/upload-artifact@v4

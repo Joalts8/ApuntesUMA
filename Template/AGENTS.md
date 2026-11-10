@@ -21,11 +21,13 @@ Opcional si hay tech-Stack junto a alguna cosa mas de ese archivo.
 
 ## Flujo de trabajo
 - <Antes de una tarea no trivial, propón un plan y espera mi OK.>
+- **Memoria de decisiones y Fábrica Autónoma:** Antes de proponer o consultar decisiones técnicas, revisa obligatoriamente `docs/approved-decisions.md` (catálogo global, inicializable desde `.agents/skills/sdd-decisions-review/assets/approved-decisions.md` si aún no existe) y secundariamente `docs/NNN-nombre-feature/decisions.md` de features no consolidadas. Si existe una decisión previa aplicable, adóptala de forma 100% autónoma sin detenerte a preguntar y sin registrarla de nuevo en `decisions.md`. Solo las **nuevas decisiones inéditas** se registran en `docs/NNN-nombre-feature/decisions.md`.
+- **Desarrollo guiado por pruebas (TDD):** Toda tarea de implementación debe seguir estrictamente la metodología **Test-Driven Development (TDD)** aplicando el ciclo Red-Green-Refactor (escribir primero el test que falla antes de tocar código de producción).
 - **Architectural Decision Records (ADRs):** Siempre que se deba tomar una decisión técnica o de diseño de arquitectura significativa (elección de librerías, cambios en el modelo de persistencia o seguridad, patrones de comunicación, etc.), es obligatorio documentarla creando un nuevo ADR en `docs/ADR/` usando la skill `adr` (que utiliza la plantilla en `.agents/skills/adr/assets/ADR-NN.md`).
 
 ## Al terminar cualquier tarea
 - <Verificación obligatoria, p. ej. ejecutar los tests.>
-- Verificar que los tests unitarios y de integración pasen. Los tests de integración reales se omiten limpiamente si la BD no está levantada, no se puede conectar a una API, etc; y no penalizan la tasa de éxito ni el qa-note.
+- Verificar que los tests unitarios y de integración pasen. En validaciones con la fábrica autónoma, las bases de datos locales deben estar levantadas obligatoriamente para ejecutar los tests de persistencia. Únicamente si un test depende de una API externa de terceros no simulada y no puede conectarse, se marcará limpiamente como "No comprobado" para su revisión manual en el `qa-note.md` sin penalizar en falso la ejecución local.
 
 ## Creación de Pull Requests e Issues
 - **Pull Requests:** Al preparar o crear un PR (con `gh pr create` o como propuesta), lee obligatoriamente `.github/pull_request_template.md` y completa todas sus secciones (descripción, tipo de cambio, issue relacionado, cambios detallados y checklist). Sustituye todos los campos `<...>` y no dejes secciones vacías.

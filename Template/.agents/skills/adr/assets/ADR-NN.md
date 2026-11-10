@@ -19,7 +19,7 @@ Optamos por **[Opción elegida]**, porque [justificación principal de por qué 
 * [Argumento clave 2 alineado a los atributos de calidad o negocio]
 
 ## Consecuencias
-* Buen, positivo o alivio: [e.g., Consultas relacionales directas y madurez del ecosistema]
+* Bueno, positivo o beneficio: [e.g., Consultas relacionales directas y madurez del ecosistema]
 * Malo, negativo o riesgo: [e.g., Mayor coste de escalabilidad vertical si el volumen crece exponencialmente]
 * Neutral / Compromiso: [e.g., El equipo requiere formación adicional en optimización de índices]
 

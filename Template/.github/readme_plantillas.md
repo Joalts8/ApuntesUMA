@@ -11,22 +11,23 @@ Este directorio contiene la configuración de GitHub del repositorio: plantillas
 
 ### Badges estándar de GitHub Actions:
 ```markdown
-[![CI - Integración Continua](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml)
-[![CD - Despliegue Continuo (Docker Hub & GHCR)](https://github.com/<OWNER>/<REPO>/actions/workflows/cd.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/cd.yml)
 [![DevSecOps & Security Analysis](https://github.com/<OWNER>/<REPO>/actions/workflows/security.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/security.yml)
+[![Issue Triage Bot](https://github.com/<OWNER>/<REPO>/actions/workflows/issue-triage.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/issue-triage.yml)
+<!-- Si configuras CI y CD siguiendo las secciones dedicadas de esta guía: -->
+[![CI - Integración Continua](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml)
+[![CD - Despliegue Continuo](https://github.com/<OWNER>/<REPO>/actions/workflows/cd.yml/badge.svg)](https://github.com/<OWNER>/<REPO>/actions/workflows/cd.yml)
 ```
 
-### Badges dinámicos con Shields.io (Workflows, Seguridad y Contenedores):
+### Badges dinámicos con Shields.io:
 ```markdown
 <!-- Estado de flujos -->
+[![Security Scan](https://img.shields.io/github/actions/workflow/status/<OWNER>/<REPO>/security.yml?label=DevSecOps&logo=githubactions)](https://github.com/<OWNER>/<REPO>/actions/workflows/security.yml)
 [![CI Status](https://img.shields.io/github/actions/workflow/status/<OWNER>/<REPO>/ci.yml?branch=main&label=CI&logo=githubactions)](https://github.com/<OWNER>/<REPO>/actions/workflows/ci.yml)
 [![CD Status](https://img.shields.io/github/actions/workflow/status/<OWNER>/<REPO>/cd.yml?label=CD%20Deploy&logo=docker)](https://github.com/<OWNER>/<REPO>/actions/workflows/cd.yml)
-[![Security Scan](https://img.shields.io/github/actions/workflow/status/<OWNER>/<REPO>/security.yml?label=DevSecOps&logo=githubactions)](https://github.com/<OWNER>/<REPO>/actions/workflows/security.yml)
 
 <!-- Imágenes en Registries -->
-[![Docker Pulls](https://img.shields.io/docker/pulls/<DOCKERHUB_USER>/springboot-app?logo=docker&logoColor=white)](https://hub.docker.com/r/<DOCKERHUB_USER>/springboot-app)
-[![Docker Image Version](https://img.shields.io/docker/v/<DOCKERHUB_USER>/springboot-app?sort=semver&logo=docker&logoColor=white)](https://hub.docker.com/r/<DOCKERHUB_USER>/springboot-app)
 [![GHCR Version](https://img.shields.io/badge/GHCR-ghcr.io%2F<OWNER>%2F<REPO>-blue?logo=github)](https://github.com/<OWNER>/<REPO>/pkgs/container/<REPO>)
+[![Docker Pulls](https://img.shields.io/docker/pulls/<DOCKERHUB_USER>/app?logo=docker&logoColor=white)](https://hub.docker.com/r/<DOCKERHUB_USER>/app)
 ```
 
 ---
@@ -42,14 +43,16 @@ Este directorio contiene la configuración de GitHub del repositorio: plantillas
 │   ├── documentation.md           # Plantilla para mejoras y erratas de documentación ([Docs]: ...)
 │   └── config.yml                 # Configuración del selector (deshabilita issues en blanco y enlaces de ayuda)
 ├── workflows/
-│   ├── issue-triage.yml           # GitHub Action: bot de triaje automático y etiquetado
-│   ├── ci.yml                     # GitHub Action: CI (ejemplo Java + Spring Boot, adaptable a cualquier stack)
-│   ├── cd.yml                     # GitHub Action: CD multi-registro (GHCR out-of-the-box y Docker Hub opcional)
-│   └── security.yml               # GitHub Action: DevSecOps (TruffleHog, Semgrep, Trivy, OWASP Noir, Strix)
+│   ├── issue-triage.yml           # GitHub Action: bot de triaje automático, validación y etiquetado
+│   └── security.yml               # GitHub Action: DevSecOps universal (TruffleHog, Semgrep, Trivy, OWASP Noir, Strix)
 ├── dependabot.yml                 # Configuración de Dependabot: PRs automáticos de dependencias y seguridad
 ├── pull_request_template.md       # Plantilla predeterminada para Pull Requests
-└── README.md                      # Esta guía de uso y mantenimiento
+└── readme_plantillas.md          # Esta guía de uso, mantenimiento y plantillas de CI/CD
 ```
+
+> [!TIP]
+> **¿Por qué `security.yml` e `issue-triage.yml` vienen incluidos directamente y CI/CD en secciones dedicadas?**  
+> La seguridad estática (secretos, SAST, SCA de contenedores) y el triaje de incidencias son **universales y agnósticos al lenguaje**, por lo que funcionan de serie en cualquier proyecto. En cambio, **CI y CD dependen 100% del stack tecnológico** (compilador, gestor de paquetes, runtime, framework y entorno de despliegue). A continuación encontrarás secciones dedicadas con plantillas completas listas para copiar y activar según tu tecnología.
 
 ---
 
@@ -62,7 +65,7 @@ Este directorio contiene la configuración de GitHub del repositorio: plantillas
   - **Obligatorio rellenar:**
     1. **Tipo de cambio:** Marcar con `[x]` si es `feat`, `fix`, `docs`, `refactor`, etc.
     2. **Descripción y motivación:** Explicar el qué y el porqué del cambio.
-    3. **Enlace a feature/issue:** Referenciar `Closes #NN` o la carpeta `features/NNN-nombre/`.
+    3. **Enlace a feature/issue:** Referenciar `Closes #NN` o la carpeta `features/NNN-nombre-feature/`.
     4. **Checklist de verificación:** Confirmar que los tests pasan en local, no se han roto contratos y la cobertura es adecuada.
 
 ### Plantillas de Issues: [`ISSUE_TEMPLATE/`](ISSUE_TEMPLATE/)
@@ -95,180 +98,353 @@ Los agentes que operan en el repositorio siguen estas pautas estrictas:
 
 ---
 
-## 2. Automatizaciones y Flujos de CI/CD/DevSecOps
+## 2. Workflows Incluidos de Serie
 
 ### Triaje de Incidencias: [`workflows/issue-triage.yml`](workflows/issue-triage.yml)
 Se dispara al abrir o editar issues:
-- Etiqueta automáticamente según el título (`bug`, `enhancement`, `chore`, `documentation`).
-- Valida que no se dejen secciones vacías con `<...>` y añade advertencias amistosas al autor si falta información.
-
-### Integración Continua (CI): [`workflows/ci.yml`](workflows/ci.yml)
-- **Disparo:** `push` en cualquier rama de trabajo / worktree (ej. `feature/*`, `fix/*`), y en `pull_request` contra `main` y `develop`.
-- **Trabajo realizado:**
-  1. `check-and-lint`: Setup JDK 21, wrappers de Maven/Gradle y análisis Checkstyle/compilación.
-  2. `test`: Ejecución de tests unitarios y de integración de Spring Boot.
-  3. `build`: Empaquetado del JAR ejecutable (`package` / `bootJar`).
-
-### Despliegue Continuo (CD): [`workflows/cd.yml`](workflows/cd.yml)
-- **Disparo:** Tras el merge (`push`) en `main` o `develop`, creación de tags de versión (`v*.*.*`), o manual (`workflow_dispatch`).
-- **Trabajo realizado:**
-  1. Compila o empaqueta la aplicación.
-  2. Construye la imagen Docker multi-plataforma con Buildx utilizando [`docker/Dockerfile`](../docker/Dockerfile).
-  3. Publica de forma predeterminada en **GitHub Container Registry (`ghcr.io`)** (funciona automáticamente sin configurar secretos) y, si se han proporcionado credenciales, también en **Docker Hub**.
-  4. Aplica el paso final de despliegue o notificación.
+- Clasifica y etiqueta automáticamente según el prefijo en el título (`bug`, `enhancement`, `chore`, `documentation`).
+- **Autocreación de etiquetas:** Si el repositorio es nuevo y carece de las etiquetas requeridas (`needs-triage`, `needs-info`, `chore`, etc.), el script las crea automáticamente con colores oficiales vía API de GitHub.
+- Valida que no se dejen secciones vacías o con placeholders `<...>` y añade una advertencia amistosa al autor solicitando la información faltante.
 
 ### DevSecOps & Seguridad: [`workflows/security.yml`](workflows/security.yml)
 - **Disparo:** `push` en ramas de trabajo, `pull_request` a `main`/`develop`, schedule semanal y manual (`workflow_dispatch`).
-- **Niveles de análisis:**
+- **Niveles de análisis universales:**
   1. **TruffleHog:** Escaneo profundo de secretos, tokens y claves privadas en el historial de commits.
-  2. **Semgrep (SAST):** Análisis estático de vulnerabilidades en el código, exportando informe SARIF a la pestaña *Security* de GitHub.
-  3. **Trivy (SCA):** Escaneo de CVEs en dependencias (`pom.xml`, `package.json`, `requirements.txt`, etc.) y en el Dockerfile.
-  4. **OWASP Noir:** Extracción y mapeo de la superficie de ataque y endpoints HTTP (Spring Boot / APIs Web).
-  5. **Strix (Pentest IA Opcional):** Ejecución bajo demanda (`workflow_dispatch`) o programada de auditoría dinámica asistida por IA si se configuran claves LLM.
-
-### Actualizaciones Automáticas: [`dependabot.yml`](dependabot.yml)
-- **Propósito:** Automatizar la creación de Pull Requests cuando se publiquen parches de seguridad o nuevas versiones de dependencias del proyecto y de GitHub Actions.
-- **Frecuencia:** Revisión semanal programada.
+  2. **Semgrep (SAST):** Análisis estático universal de vulnerabilidades en el código, exportando informe SARIF a la pestaña *Security* de GitHub.
+  3. **Trivy (SCA):** Escaneo de CVEs en dependencias (`package.json`, `pom.xml`, `requirements.txt`, etc.) y Dockerfiles.
+  4. **OWASP Noir:** Mapeo de superficie de ataque y detección de endpoints HTTP.
+  5. **Strix (Pentest IA Dinámico):** Ejecución bajo demanda (`workflow_dispatch` activando `run_strix`) mediante `strix-agent` en Python 3.12 para pruebas autónomas de penetración con LLMs.
 
 ---
 
-## 3. Guía de Modificación de los Workflows según Necesidades del Proyecto
+## 3. Sección Dedicada: Integración Continua (CI)
 
-Los flujos `.yml` están parametrizados como ejemplo funcional para Java + Spring Boot, pero son fácilmente adaptables a cualquier tecnología o flujo de trabajo. A continuación se detallan las modificaciones más habituales:
+Un flujo de CI robusto debe cumplir 3 fases esenciales:
+1. **Linting y Formato:** Garantiza estándares de estilo y sintaxis sin ejecutar tests pesados.
+2. **Suite de Tests:** Ejecuta pruebas unitarias y de integración, asegurando que el ciclo Red-Green-Refactor de TDD se respete.
+3. **Empaquetado (Build):** Compila y genera el artefacto distribuible (JAR, dist, binario, wheel) y lo sube como artefacto de Actions.
 
-### A. Modificar o Cambiar de Lenguaje / Runtime en `ci.yml`
+Para activarlo en tu proyecto, crea el archivo `.github/workflows/ci.yml` copiando la plantilla correspondiente a tu stack:
 
-1. **Cambiar la versión o distribución de Java:**
-   En el step `actions/setup-java@v4`:
-   ```yaml
-   with:
-     distribution: 'temurin' # Otras opciones: 'corretto', 'zulu', 'microsoft'
-     java-version: '17'      # Cambiar de '21' a '17' si el proyecto usa Java 17 LTS
-     cache: 'gradle'         # Si usas Gradle en vez de Maven
-   ```
+### Opción A: Node.js / TypeScript (npm / pnpm / yarn)
+```yaml
+name: CI - Integración Continua (Node.js)
 
-2. **Adaptar a Node.js / TypeScript / React / Angular:**
-   Reemplaza el step de setup de Java por `actions/setup-node@v4` y ajusta los comandos:
-   ```yaml
-   - uses: actions/setup-node@v4
-     with:
-       node-version: '20'
-       cache: 'npm' # o 'pnpm' / 'yarn'
-   - run: npm ci
-   - run: npm run lint
-   - run: npm test -- --coverage
-   - run: npm run build
-   ```
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!develop'
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
 
-3. **Adaptar a Python (FastAPI / Django):**
-   ```yaml
-   - uses: actions/setup-python@v5
-     with:
-       python-version: '3.11'
-       cache: 'pip'
-   - run: pip install -r requirements.txt
-   - run: pytest --cov
-   ```
+permissions:
+  contents: read
+
+jobs:
+  lint-and-typecheck:
+    name: Lint & Typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run lint --if-present
+      - run: npx tsc --noEmit --if-present
+
+  test:
+    name: Tests Unitarios y Cobertura
+    needs: lint-and-typecheck
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm test -- --coverage
+
+  build:
+    name: Compilar y Empaquetar
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build --if-present
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist-package
+          path: dist/
+          retention-days: 1
+          if-no-files-found: ignore
+```
+
+### Opción B: Java (Maven / Gradle + Spring Boot)
+```yaml
+name: CI - Integración Continua (Java)
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!develop'
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-and-lint:
+    name: Verificación y Estilo
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Dar permisos de ejecución
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw; fi
+          if [ -f "./gradlew" ]; then chmod +x ./gradlew; fi
+      - name: Validar formato / compilación
+        run: |
+          if [ -f "./mvnw" ]; then ./mvnw compile -DskipTests;
+          elif [ -f "./gradlew" ]; then ./gradlew check -x test;
+          else mvn compile -DskipTests; fi
+
+  test:
+    name: Tests Automatizados (TDD)
+    needs: check-and-lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      - name: Dar permisos y ejecutar tests
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw && ./mvnw test;
+          elif [ -f "./gradlew" ]; then chmod +x ./gradlew && ./gradlew test;
+          else mvn test; fi
+
+  build:
+    name: Empaquetar JAR
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Generar paquete
+        run: |
+          if [ -f "./mvnw" ]; then chmod +x ./mvnw && ./mvnw clean package -DskipTests;
+          elif [ -f "./gradlew" ]; then chmod +x ./gradlew && ./gradlew bootJar -x test;
+          else mvn clean package -DskipTests; fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: app-package
+          path: |
+            target/*.jar
+            build/libs/*.jar
+          retention-days: 1
+          if-no-files-found: ignore
+```
+
+### Opción C: Python (FastAPI / Django / pytest)
+```yaml
+name: CI - Integración Continua (Python)
+
+on:
+  push:
+    branches:
+      - '**'
+      - '!main'
+      - '!develop'
+  pull_request:
+    branches: [ main, develop ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint & Formato (Ruff / Flake8)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install ruff
+      - run: ruff check .
+
+  test:
+    name: Tests Automatizados (pytest)
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+      - run: pip install -r requirements.txt pytest pytest-cov
+      - run: pytest --cov=. --cov-report=xml
+```
 
 ---
 
-### B. Modificar la Estrategia de Ramas o Disparadores (`on:`)
+## 4. Sección Dedicada: Despliegue Continuo (CD) y Contenedores
 
-Si tu equipo usa otra convención de nombres (por ejemplo `dev` en lugar de `develop`, o solo `main`):
-1. **En `ci.yml` y `security.yml`:**
-   ```yaml
-   on:
-     push:
-       branches:
-         - '**'
-         - '!main'
-         - '!dev'          # Si la rama de desarrollo se llama dev
-     pull_request:
-       branches: [ main, dev ]
-   ```
-2. **Si NO usas worktrees ni ramas temporales con push directo:**
-   Puedes eliminar el bloque `push` y dejar que el CI se ejecute únicamente cuando se abran Pull Requests hacia `main` y `develop`.
+Un pipeline de CD estandarizado automatiza la creación de imágenes multi-arquitectura y la publicación en registros seguros tras la fusión en ramas protegidas.
+
+### Estructura recomendada para `.github/workflows/cd.yml`:
+
+```yaml
+name: CD - Despliegue Continuo (Docker Hub & GHCR)
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write  # Publicación en ghcr.io
+
+jobs:
+  build-and-push:
+    name: Construir y Publicar Imagen Docker
+    runs-on: ubuntu-latest
+    env:
+      DOCKERHUB_USER: ${{ secrets.DOCKERHUB_USERNAME }}
+      DOCKERHUB_PASS: ${{ secrets.DOCKERHUB_TOKEN }}
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: Configurar Docker QEMU (Multi-arquitectura)
+        uses: docker/setup-qemu-action@v3
+
+      - name: Configurar Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # Login condicional en Docker Hub si existen secretos
+      - name: Iniciar sesión en Docker Hub
+        if: env.DOCKERHUB_USER != ''
+        uses: docker/login-action@v3
+        with:
+          username: ${{ env.DOCKERHUB_USER }}
+          password: ${{ env.DOCKERHUB_PASS }}
+
+      # Login predeterminado en GitHub Container Registry (ghcr.io)
+      - name: Iniciar sesión en GitHub Container Registry (ghcr.io)
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Normalizar nombres de imágenes
+        id: prep
+        run: |
+          REPO_LC="${GITHUB_REPOSITORY,,}"
+          if [ -n "$DOCKERHUB_USER" ]; then
+            USER_LC="${DOCKERHUB_USER,,}"
+            echo "images<<EOF" >> $GITHUB_OUTPUT
+            echo "ghcr.io/${REPO_LC}" >> $GITHUB_OUTPUT
+            echo "${USER_LC}/app" >> $GITHUB_OUTPUT
+            echo "EOF" >> $GITHUB_OUTPUT
+          else
+            echo "images=ghcr.io/${REPO_LC}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Extraer metadatos y etiquetas para Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ steps.prep.outputs.images }}
+          tags: |
+            type=raw,value=latest,enable=${{ github.ref == 'refs/heads/main' }}
+            type=raw,value=develop,enable=${{ github.ref == 'refs/heads/develop' }}
+            type=semver,pattern={{version}}
+            type=sha,format=short
+
+      - name: Construir y Publicar Imagen en Registries
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ./docker/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    name: Despliegue en Entorno
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ejecutar paso de despliegue
+        run: |
+          echo "Imágenes publicadas en ghcr.io y Docker Hub."
+          # Personaliza aquí el despliegue a tu entorno:
+          # SSH: appleboy/ssh-action@master
+          # Kubernetes: azure/k8s-deploy@v5
+```
 
 ---
 
-### C. Personalizar el Flujo de Despliegue en `cd.yml`
+## 5. Acciones Manuales a Realizar en GitHub Web
 
-1. **Ubicación del Dockerfile:**
-   Por defecto, `cd.yml` busca el archivo en `docker/Dockerfile`. Si prefieres ubicarlo en la raíz del proyecto o en otra ruta, ajusta la propiedad `file:` en el step `docker/build-push-action@v5`:
-   ```yaml
-   with:
-     context: .
-     file: ./docker/Dockerfile # o ./Dockerfile
-   ```
-
-2. **Publicar en GitHub Container Registry (GHCR) vs Docker Hub:**
-   - **GHCR (Predeterminado):** Funciona sin configuración adicional. Las imágenes se publican bajo `ghcr.io/<usuario>/<repositorio>` usando el `GITHUB_TOKEN` automático.
-   - **Docker Hub (Opcional):** Si configuras los secretos `DOCKERHUB_USERNAME` y `DOCKERHUB_TOKEN` en tu repositorio, el pipeline iniciará sesión y publicará automáticamente también en Docker Hub sin que tengas que editar código.
-
-3. **Añadir el paso de despliegue real en tu infraestructura:**
-   En el job `deploy:`, sustituye los comandos de `echo` por la acción que use tu entorno:
-   - **SSH a VPS / Servidor propio:** Usando `appleboy/ssh-action@master` para ejecutar `docker compose pull && docker compose up -d`.
-   - **Kubernetes / Helm:** Usando `azure/k8s-deploy@v5`.
-   - **AWS / GCP / Azure:** Usando sus respectivas acciones oficiales.
-
----
-
-### D. Ajustar y Calibrar la Seguridad en `security.yml`
-
-1. **Ajustar severidad en Trivy:**
-   Si Trivy te bloquea por fallos de nivel medio o bajo, puedes filtrar para que solo reporte fallos críticos:
-   ```yaml
-   with:
-     severity: 'CRITICAL' # o 'CRITICAL,HIGH'
-   ```
-2. **Proyectos que NO son APIs Web (Apps de escritorio, CLI o librerías):**
-   - El step de **OWASP Noir** busca controladores HTTP. Si tu proyecto es una librería interna o app móvil nativa, puedes desactivar el job añadiendo en su cabecera:
-     ```yaml
-     noir-attack-surface:
-       if: false # Desactiva el análisis de endpoints HTTP
-     ```
-3. **Pentesting Asistido por IA con Strix (Opcional):**
-   - Este job se ejecuta **únicamente bajo demanda** (`workflow_dispatch`) marcando la casilla de ejecución o en el escaneo semanal si se han configurado secretos de API (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY` o `STRIX_API_KEY`).
-   - Sirve para auditar endpoints o código en busca de lógica vulnerable mediante agentes autónomos.
-
----
-
-## 4. Acciones Manuales a Realizar en GitHub Web
-
-Al trasladar esta plantilla a un repositorio nuevo en GitHub, debes realizar las siguientes configuraciones desde la interfaz web del repositorio:
+Al trasladar esta plantilla a un repositorio nuevo en GitHub, configura:
 
 ### 1. Secretos del Repositorio (`Settings > Secrets and variables > Actions`)
-Configura los siguientes secretos según los servicios externos que utilices:
-
 | Secreto | Requerido por | Descripción |
 | :--- | :--- | :--- |
-| `DOCKERHUB_USERNAME` | `cd.yml` | (Opcional) Usuario en Docker Hub. Si no se define, se publica solo en GHCR. |
-| `DOCKERHUB_TOKEN` | `cd.yml` | (Opcional) Personal Access Token de Docker Hub con permisos `Read & Write`. |
+| `DOCKERHUB_USERNAME` | `cd.yml` (al crear el workflow desde la plantilla) | (Opcional) Usuario en Docker Hub. Si no se define, se publica solo en GHCR. |
+| `DOCKERHUB_TOKEN` | `cd.yml` (al crear el workflow desde la plantilla) | (Opcional) Personal Access Token de Docker Hub con permisos `Read & Write`. |
 | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | `security.yml` (Strix) | (Opcional) Clave para activar el análisis dinámico de pentesting con IA. |
-| `STRIX_API_KEY` | `security.yml` (Strix) | (Opcional) Clave de la plataforma Strix en la nube si usas su servicio gestionado. |
+| `STRIX_API_KEY` | `security.yml` (Strix) | (Opcional) Clave de la plataforma Strix si usas su servicio gestionado. |
 
 ### 2. Reglas de Protección de Ramas (`Settings > Branches`)
-Para impedir que se suba código roto o sin verificar directamente a las ramas principales:
-1. Pulsa en **Add branch ruleset** o **Add rule** para `main` (y otra para `develop` si existe).
+1. Ve a **Settings > Branches** y añade una regla para `main` (y otra para `develop` si existe).
 2. Activa **Require a pull request before merging**.
-3. Activa **Require status checks to pass before merging** y marca como obligatorios los checks del pipeline (ej. `Verificación de Código y Checkstyle`, `Tests Unitarios e Integración`, `Escaneo de Secretos y SAST Universal`, `SCA de Dependencias`).
+3. Activa **Require status checks to pass before merging** y marca como obligatorios los checks del pipeline (`Escaneo de Secretos y SAST Universal`, `SCA de Dependencias y Vulnerabilidades`).
 
-### 3. Opciones de Seguridad del Repositorio (`Settings > Code security and analysis`)
-1. **Secret Scanning & Push Protection:** Activa ambas opciones para que GitHub bloquee inmediatamente cualquier intento de hacer `git push` con contraseñas o tokens desde la terminal.
-2. **Private Vulnerability Reporting:** En `Security > Advisories`, habilita los reportes privados para que la comunidad pueda avisarte de vulnerabilidades confidencialmente sin exponerlas en issues públicos.
+### 3. Opciones de Seguridad (`Settings > Code security and analysis`)
+1. **Secret Scanning & Push Protection:** Activa ambas opciones para bloquear intentos de push con credenciales.
+2. **Private Vulnerability Reporting:** En `Security > Advisories`, habilita los reportes privados confidenciales.
 
 ---
 
-## 5. Actualizaciones Automáticas y Pull Requests con Dependabot
+## 6. Actualizaciones Automáticas con Dependabot
 
-¿Puede GitHub crear Pull Requests automáticamente cuando una librería tiene fallos o queda obsoleta? **Sí, gracias a Dependabot.**
+El archivo [`.github/dependabot.yml`](dependabot.yml) revisa semanalmente si existen nuevas versiones de tus dependencias y de las GitHub Actions usadas en los flujos.
 
-### ¿Cómo funciona en esta plantilla?
-1. **Pull Requests de Seguridad (Vulnerability Alerts):**
-   - Ve a `Settings > Code security and analysis`.
-   - Activa **Dependabot alerts** y **Dependabot security updates**.
-   - **Resultado:** En cuanto se publica una vulnerabilidad conocida (CVE) que afecta a una librería de tu proyecto, Dependabot genera automáticamente un Pull Request con la versión corregida listo para que lo revises y fusiones.
-
-2. **Pull Requests de Mantenimiento Periódico:**
-   - El archivo [`.github/dependabot.yml`](dependabot.yml) incluido en esta plantilla revisa semanalmente si existen nuevas versiones de tus dependencias y de las GitHub Actions usadas en los flujos.
-   - Si existen versiones más recientes, abrirá un PR con la actualización de dependencias, permitiendo mantener el software siempre al día sin esfuerzo manual.
+* **Revisión de GitHub Actions:** Se ejecuta semanalmente para mantener las acciones de CI/CD al día.
+* **Dependencias de aplicación:** Por defecto viene configurado para `maven`. Si tu proyecto utiliza `npm`, `pip`, `docker` o `cargo`, ajusta el campo `package-ecosystem` como se indica en los comentarios del archivo.

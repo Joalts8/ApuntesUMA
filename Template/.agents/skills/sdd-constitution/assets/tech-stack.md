@@ -4,12 +4,12 @@ _Cómo está construido el proyecto y las reglas que todo el código debe respet
 
 ## Tecnologías
 
-- **Lenguaje:** <p. ej. TypeScript estricto>
-- **Framework / runtime:** <p. ej. Node 22 + Express 5 / ninguno>
-- **Base de datos:** <p. ej. PostgreSQL con Prisma / no aplica>
-- **Tests:** <p. ej. Vitest / no hay suite — cómo se valida>
-- **Seguridad / DevSecOps:** <p. ej. Secret detection (TruffleHog), SAST (Semgrep), SCA (Trivy), Attack Surface (OWASP Noir), Pentest (Strix)>
-- **Despliegue:** <dónde y cómo se publica>
+- **Lenguaje:** <p. ej. TypeScript estricto / Java 21 / Python 3.12>
+- **Framework / runtime:** <p. ej. Node 22 + Express 5 / Spring Boot 3.3 / FastAPI / ninguno>
+- **Base de datos:** <p. ej. PostgreSQL con Prisma / Hibernate / SQLite / no aplica>
+- **Tests:** <p. ej. Vitest / JUnit 5 / pytest — estrategia TDD>
+- **Seguridad / DevSecOps:** <p. ej. TruffleHog, Semgrep (SAST), Trivy (SCA), OWASP Noir, Strix>
+- **Despliegue:** <p. ej. Dockerfile multi-arch + GHCR / Docker Hub>
 
 ## Archivos / módulos clave
 
@@ -21,8 +21,12 @@ _Mapa breve de dónde vive cada cosa. Solo lo que un recién llegado necesita pa
 
 ## Comandos
 
-_Comsndod usados en el  proyecto_
-- `<comando test>` — ejecuta los tests.
+_Comandos usados habitualmente por humanos y por la fábrica autónoma en el proyecto._
+- `<comando dev>` — arranca el entorno de desarrollo o servidor local.
+- `<comando test>` — ejecuta la suite de tests automatizados.
+- `<comando build>` — compila o genera el artefacto final.
+- `<comando lint>` — analiza estilo y formato de código.
+- `<comando typecheck>` — verifica tipos estáticos (si aplica).
 
 ## Modelo de datos / dominio
 

@@ -12,6 +12,7 @@ _Selecciona las opciones que apliquen marcando con una `[x]`._
 ## Issue y especificación relacionada
 - Closes #<número-de-issue>
 - **Feature SDD:** `features/NNN-nombre-feature/` (o N/A)
+- **Decisiones de la feature:** `docs/NNN-nombre-feature/decisions.md` (o N/A)
 - **ADR relacionado:** `docs/ADR/ADR-NN.md` (o N/A)
 
 ## ¿Contiene cambios incompatibles (Breaking Changes)?

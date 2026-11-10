@@ -16,15 +16,15 @@ Auditar y verificar que todo el código fuente implementado, las especificacione
   - `roadmap.md` (estado de features y métricas de cobertura).
 - Archivo `AGENTS.md` (estándares, convenciones de commit y flujos de trabajo).
 - Código fuente en `src/` (y tests asociados).
-- Directorio de features: `features/NNN-nombre/` (`spec.md`, `plan.md`, `tasks.md`).
-- Directorio de documentación: `docs/NNN-feature/` (`NN-task.md`, `qa-note.md`, `repare.md` si aplica) y `docs/ADR/`.
+- Directorio de features: `features/NNN-nombre-feature/` (`spec.md`, `plan.md`, `tasks.md`).
+- Directorio de documentación: `docs/NNN-nombre-feature/` (`decisions.md`, `NN-task.md`, `qa-note.md`, `repair.md` si aplica), catálogo global `docs/approved-decisions.md` y `docs/ADR/`.
 
 ## Salidas
 - Informe detallado de revisión en el chat indicando:
    - Alineación con `mission.md` y `tech-stack.md` (ausencia de desvíos de alcance o violaciones técnicas).
    - Estado de trazabilidad (Código ↔ Tests ↔ Tareas ↔ Specs).
    - Tareas o funcionalidades implementadas en el código no registradas en `features/` o `docs/`.
-   - Specs o tareas marcadas como hechas sin documentación correspondiente en `docs/NNN-feature/`.
+   - Specs o tareas marcadas como hechas sin documentación correspondiente en `docs/NNN-nombre-feature/`.
    - Documentación de tareas (`NN-task.md`) faltante o desactualizada respecto al código implementado.
    - Veredicto final: `Conforme` o `Discrepancias detectadas` (con lista de acciones correctoras necesarias).
 
@@ -39,10 +39,11 @@ Auditar y verificar que todo el código fuente implementado, las especificacione
    - Revisa si el estado de las tareas en `tasks.md` (completadas vs pendientes) coincide con el estado reflejado en el roadmap.
 
 3. **Revisión de Documentación (`docs/`):**
-   - Para cada tarea completada en `tasks.md`, comprueba que exista su archivo resumen en `docs/NNN-feature/NN-task.md`.
+   - Si la feature tiene `docs/NNN-nombre-feature/decisions.md`, comprueba que registre las nuevas decisiones adoptadas y su estado de revisión periódica. Su ausencia no es un fallo si no se tomaron decisiones nuevas.
+   - Para cada tarea completada en `tasks.md`, comprueba que exista su archivo resumen en `docs/NNN-nombre-feature/NN-task.md`.
    - Comprueba que los resúmenes en `docs/` contengan las decisiones de diseño, problemas y soluciones implementadas.
-   - Si la feature figura como validada o finalizada, verifica la existencia y completitud de `docs/NNN-feature/qa-note.md`.
-   - Si existe `docs/NNN-feature/repare.md`, advierte de que la feature tiene fallos pendientes de subsanar o no se ha limpiado tras la reimplementación.
+   - Si la feature figura como validada o finalizada, verifica la existencia y completitud de `docs/NNN-nombre-feature/qa-note.md`.
+   - Si existe `docs/NNN-nombre-feature/repair.md`, advierte de que la feature tiene fallos pendientes de subsanar o no se ha limpiado tras la reimplementación.
 
 4. **Revisión de Código (`src/`) y Tests:**
    - Analiza el código fuente y las pruebas existentes.
@@ -62,5 +63,5 @@ Auditar y verificar que todo el código fuente implementado, las especificacione
 - No modifiques archivos automáticamente durante la revisión; solo informa y audita.
 - Usa la skill `sdd`.
 - Ninguna feature o código puede contravenir `mission.md` ni violar los límites duros de `tech-stack.md`.
-- Todo código debe originarse en una spec (`features/NNN-nombre/spec.md`) y estar desglosado en `plan.md` y `tasks.md`.
-- Toda tarea completada debe tener su correspondiente resumen en `docs/NNN-feature/NN-task.md`.
+- Todo código debe originarse en una spec (`features/NNN-nombre-feature/spec.md`) y estar desglosado en `plan.md` y `tasks.md`.
+- Toda tarea completada debe tener su correspondiente resumen en `docs/NNN-nombre-feature/NN-task.md`.

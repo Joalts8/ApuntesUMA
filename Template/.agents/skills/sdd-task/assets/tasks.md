@@ -1,10 +1,9 @@
 # NNN — <Nombre de la feature> — Tareas
 
-_Checklist accionable derivada del `plan.md`. Tareas principales y subtareas pequeñas y concretas; marca `[x]` al completarlas._
+_Checklist accionable derivada del `plan.md`. Tareas principales y subtareas pequeñas y concretas; marca `[x]` al completarlas. La verificación de los criterios de aceptación de la spec **no** se incluye aquí: la realiza la fase de validación (`sdd-validate`)._
 
 ## [ ] <Tarea NN principal.>-<depende de tarea NN(si aplica), NN,...>-<RF: NN-NN-NN-... RNF:...>
-- [ ] <Tarea subtarea .>-<Depende de NN(si aplica)>
-- [ ] Validar contra los criterios de aceptación de `spec.md`.
+- [ ] <Subtarea NN.M.>-<Depende de NN(si aplica)>
 
 
 ---

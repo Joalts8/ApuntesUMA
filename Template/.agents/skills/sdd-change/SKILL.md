@@ -16,7 +16,7 @@ Cambio en una feature existente con un nuevo requisito.
 - Cambio en `spec.md`, `plan.md`, `tasks.md`.
 
 ## Proceso
-1. Actualiza `spec.md` de la feature indicada, si pertenece a otra pregunta antes de hacer nada: añade nuevo RF (o cambio de uno existente) en EARS, sus casos límite y lo que queda fuera de alcance.
+1. Mueve la feature a "En mejora" en `constitution/roadmap.md` antes de tocar los documentos. Después actualiza `spec.md` de la feature indicada, si pertenece a otra pregunta antes de hacer nada: añade nuevo RF (o cambio de uno existente) en EARS, sus casos límite y lo que queda fuera de alcance.
 2. Indica qué partes de plan.md y tasks.md habría que cambiar después.
 3. Muéstrame el diff de la spec y espera mi aprobación. Esto se aplica entre los siguientes pasos.
 4. Aplica los cambios (si se han aceptado) y realiza la clarificación de `spec.md`.

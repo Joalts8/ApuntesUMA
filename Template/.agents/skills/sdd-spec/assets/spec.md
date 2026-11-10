@@ -1,5 +1,6 @@
 # Spec NNN — <Nombre de la funcionalidad>
 **Estado:** <propuesta | en curso | implementado ✅>
+**Origen:** <Ticket / Issue: #123 / PROJ-456 de Jira, GitHub Projects, Linear, etc. o N/A>
 
 ## Contexto y objetivo
 <Qué problema resuelve y por qué merece la pena. Un párrafo.>

@@ -106,15 +106,53 @@ jobs:
               }
             }
 
-            // 4. Actualizar etiquetas en GitHub
+            // 4. Actualizar etiquetas en GitHub asegurando que existan previamente
+            const labelDefs = {
+              'bug': { color: 'd73a4a', description: 'Algo no funciona correctamente' },
+              'enhancement': { color: 'a2eeef', description: 'Nueva funcionalidad o propuesta' },
+              'documentation': { color: '0075ca', description: 'Mejoras o correcciones en documentación' },
+              'chore': { color: 'e4e669', description: 'Mantenimiento, dependencias o refactorización' },
+              'needs-triage': { color: 'fbca04', description: 'Pendiente de revisión inicial por el equipo' },
+              'needs-info': { color: 'd93f0b', description: 'Falta información requerida para investigar' }
+            };
+
             const finalLabelsToAdd = Array.from(labelsToAdd).filter(l => !existingLabels.includes(l));
+            for (const label of finalLabelsToAdd) {
+              try {
+                await github.rest.issues.getLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  name: label
+                });
+              } catch (err) {
+                if (err.status === 404) {
+                  try {
+                    const def = labelDefs[label] || { color: 'ededed', description: `Etiqueta de triaje: ${label}` };
+                    await github.rest.issues.createLabel({
+                      owner: context.repo.owner,
+                      repo: context.repo.repo,
+                      name: label,
+                      color: def.color,
+                      description: def.description
+                    });
+                  } catch (createErr) {
+                    // Ignorar si se creó concurrentemente o falta permiso
+                  }
+                }
+              }
+            }
+
             if (finalLabelsToAdd.length > 0) {
-              await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: issue.number,
-                labels: finalLabelsToAdd
-              });
+              try {
+                await github.rest.issues.addLabels({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  labels: finalLabelsToAdd
+                });
+              } catch (addErr) {
+                console.error(`Error al añadir etiquetas: ${addErr.message}`);
+              }
             }
 
             for (const label of labelsToRemove) {
