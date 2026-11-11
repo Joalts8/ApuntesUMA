@@ -1,43 +1,48 @@
 ---
 name: odd-validate
-description: Ejecuta la validación técnica y funcional de features en ODD. Si supera las pruebas, genera summary.md y qa-note.md mediante odd-writer. Si falla, genera automáticamente repair.md, pasa a estado 'En reparación', ejecuta el bucle de reparación TDD (3+1) y limpia el reporte transitorio tras el éxito.
+description: Ejecuta la validación técnica y funcional de features en ODD. Audita que no haya código de producción no registrado, actualiza el roadmap, emite summary.md y qa-note.md mediante odd-writer, o gestiona el bucle de reparación transitorio repair.md con resiliencia 3+1.
 ---
 
-# Skill `/odd-validate`: Validación y Bucle Automático de Reparación
+# Skill `/odd-validate`: Validación, Auditoría de Código y Reparación
 
 ## Propósito
-Asegurar la calidad técnica y funcional de una feature desarrollada en Carril Amarillo o Rojo, auditando la ejecución de tests, linters y cobertura, y gestionando de forma autónoma el ciclo de recuperación en caso de anomalías.
+Asegurar la calidad técnica y funcional de una feature, verificar que no existan implementaciones huérfanas o no registradas en la especificación, actualizar automáticamente `constitution/roadmap.md` y resolver de forma autónoma cualquier fallo detectado mediante el bucle `repair.md`.
 
 ---
 
 ## Procedimiento Operativo
 
-### Paso 1: Ejecución de la Suite de Verificación
-1. Ejecuta la suite de pruebas unitarias y de integración (`mvn test`, `pytest`, `npm test` o equivalente).
-2. Ejecuta el análisis estático de código y linter (`checkstyle`, `eslint`, `ruff`).
-3. Comprueba que todos los criterios de aceptación EARS de la feature se encuentren cubiertos por al menos un test.
+### Paso 1: Transición en Roadmap y Verificaciones Técnicas
+1. **Roadmap:** Mueve la feature a `En validación` en `constitution/roadmap.md`.
+2. **Suite de Pruebas:** Ejecuta la batería de tests unitarios y de integración (`mvn test`, `pytest`, `npm test`...).
+3. **Análisis Estático y Linter:** Ejecuta linter y formateador de código.
+4. **Auditoría de Implementaciones No Registradas:**
+   - Comprueba que todos los archivos nuevos o métodos expuestos respondan directamente a un Criterio de Aceptación EARS (`RF-XX`) de `feature.md`.
+   - Si se detecta código de producción huérfano (no contemplado en la spec), el validador exige su justificación, eliminación o incorporación formal vía `/odd-clarify`.
 
 ---
 
 ### Paso 2: Bifurcación de Resultados
 
-#### Escenario A: Validación Superada con Éxito (Todo en Verde)
+#### Escenario A: Validación Exitosa (Todo en Verde y Sin Código Huérfano)
 1. Invoca al subagente `odd-writer` para redactar:
    - `docs/NNN-nombre/summary.md`: Resumen ejecutivo de la implementación.
-   - `docs/NNN-nombre/qa-note.md`: Guía de pruebas manuales y trazabilidad de requisitos.
+   - `docs/NNN-nombre/qa-note.md`: Guía de pruebas manuales y matriz de trazabilidad.
 2. Actualiza el estado en `features/NNN-nombre/feature.md` a `Completada`.
-3. Notifica al usuario el éxito de la entrega.
+3. **Roadmap:** Mueve la feature a `Hecho` en `constitution/roadmap.md`, indicando el porcentaje de cobertura de tests.
+4. Notifica al usuario el veredicto favorable.
 
-#### Escenario B: Validación Fallida (Tests Rotos o Requisitos Incumplidos)
-1. **Generación de `repair.md`:** Delega en `odd-writer` la redacción de `docs/NNN-nombre/repair.md` a partir de la plantilla `.agents/skills/odd-validate/assets/repair.md`:
-   - Lista de tests fallidos y excepciones mínimas.
-   - Causa raíz diagnosticada.
-   - Tareas de reparación asignadas (`R-01`, `R-02`...).
-2. **Cambio de Estado:** Actualiza el estado en `feature.md` a `En reparación`.
-3. **Bucle de Reparación TDD:**
-   - El agente implementador ejecuta las tareas de reparación `R-XX` mediante TDD.
-   - Aplica el **límite de resiliencia 3+1**: si tras 3 intentos una tarea no pasa el test, en el 4º intento se detiene y solicita asistencia al usuario.
-4. **Cierre Limpio de Reparación:**
-   - Una vez la suite completa está en verde, se actualiza `summary.md`.
-   - **Se elimina el archivo transitorio `repair.md`** para no dejar artefactos temporales en el repositorio.
-   - Se genera la `qa-note.md` definitiva y se marca la feature como `Completada`.
+#### Escenario B: Validación Fallida (Tests Rotos, Linters o Código Huérfano)
+1. **Generación de `repair.md`:** Invoca a `odd-writer` para generar `docs/NNN-nombre/repair.md` detallando:
+   - Tests o criterios fallidos y traza mínima.
+   - Diagnóstico de causa raíz.
+   - Tareas concretas de reparación (`R-01`, `R-02`...).
+2. **Roadmap:** Mueve la feature a `En reparación` en `constitution/roadmap.md`.
+3. Actualiza el estado en `feature.md` a `En reparación`.
+4. **Bucle de Reparación TDD:**
+   - El agente implementador ejecuta las tareas `R-XX` mediante TDD.
+   - Límite de resiliencia 3+1: tras 3 fallos consecutivos, al 4º se detiene y avisa.
+5. **Cierre Limpio:**
+   - Al volver a estar todo en verde, actualiza `summary.md`.
+   - **Elimina obligatoriamente `repair.md`** del repositorio.
+   - Mueve la feature a `Hecho` en `constitution/roadmap.md` y emite la `qa-note.md` definitiva.

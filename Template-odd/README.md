@@ -32,8 +32,10 @@ Para evitar duplicar código y configuraciones estándar en el repositorio, **`T
 | **`.github/ISSUE_TEMPLATE/`** | Plantillas para bugs, features y tareas técnicas (compatibles 100% con los carriles ODD). |
 | **`.github/pull_request_template.md`** | Plantilla de Pull Requests estandarizada. |
 | **`docker/Dockerfile`** | Dockerfile de referencia multi-etapa y hardening para producción. |
-| **Skill `/adr`** | Ubicada en `.agents/skills/adr/` de `Template-sdd`. Utilizarla para documentar decisiones del Carril Rojo sin duplicar su código. |
-| **Skills SDD (`sdd-*`)** | Si un cambio del Carril Rojo requiere la separación formal de artefactos (`spec.md`, `plan.md`, `tasks.md`), se pueden ejecutar directamente las skills SDD de `Template-sdd`. |
+| **Skill `/sdd-constitution`** | Reutilizada de `Template-sdd` para inicializar la constitución (`mission.md`, `tech-stack.md` y `roadmap.md`) al arrancar el proyecto. |
+| **Skill `/adr`** | Reutilizada de `Template-sdd` para registrar formalmente decisiones arquitectónicas (`docs/ADR/`) en el Carril Rojo. |
+| **Skill `/sdd-status`** | Reutilizada de `Template-sdd` para consultar el estado global de features y fases del proyecto. |
+| **Skills SDD Clásicas (`/sdd-spec`, `/sdd-plan`, `/sdd-task`, `/sdd-implement`, `/sdd-rev`)** | Se usan **exactamente igual y sin cambios** respecto a `Template-sdd`, únicamente cuando un Epic del Carril Rojo se aborda de forma monolítica con separación formal de archivos en lugar de descomposición orgánica. |
 | **Archivos Raíz** | `.gitignore`, `.env.example`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md` y `CODE_OF_CONDUCT.md`. |
 
 ---
