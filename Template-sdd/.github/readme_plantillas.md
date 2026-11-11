@@ -7,7 +7,7 @@ Este directorio contiene la configuración de GitHub del repositorio: plantillas
 ## Insignias de Estado (Badges de Ejemplo)
 
 > [!NOTE]
-> Al encontrarse esta carpeta dentro de `Template/.github` (no en la raíz del repositorio), los workflows no se activan de forma automática. Cuando copies o traslades esta plantilla a la raíz de tu proyecto final, sustituye `<OWNER>` y `<REPO>` por tu usuario/organización y nombre de repositorio en GitHub, y `<DOCKERHUB_USER>` por tu usuario de Docker Hub.
+> Al encontrarse esta carpeta dentro de `Template-sdd/.github` (no en la raíz del repositorio), los workflows no se activan de forma automática. Cuando copies o traslades esta plantilla a la raíz de tu proyecto final, sustituye `<OWNER>` y `<REPO>` por tu usuario/organización y nombre de repositorio en GitHub, y `<DOCKERHUB_USER>` por tu usuario de Docker Hub.
 
 ### Badges estándar de GitHub Actions:
 ```markdown
