@@ -49,7 +49,7 @@ Plantea un diseño técnico previo de alto nivel:
 - Ajusta detalles según el feedback recibido antes de redactar el plan formal.
 
 #### B. Modo Auto (Fábrica Automática)
-- Para evitar detener la cadena de automatización, invoca al subagente auditor [`sdd-plan-reviewer`](../agents/sdd-plan-reviewer.md):
+- Para evitar detener la cadena de automatización, invoca al subagente auditor [`sdd-plan-reviewer`](../agents/sdd-plan-reviewer.md) (configurado con modelo Flash y esfuerzo de razonamiento alto `high`):
   - El subagente revisor valida el diseño contra `constitution/tech-stack.md`, `mission.md` y `docs/approved-decisions.md`.
   - Verifica que no viole límites duros, no añada dependencias no autorizadas y respete TDD.
   - Si el subagente lo **aprueba**, la fábrica avanza inmediatamente al paso 4.
