@@ -26,5 +26,9 @@ Apuntes de la asignatura Tecnologías del Servidor para Aplicaciones Web, contie
 IDE-> InteliJ Ultimate-> licencia con github education
 
 ---
-## [Template](./Template)
-Plantilla para comenzar un proyecto basado en SDD con agentes.
+## [Template-sdd](./Template-sdd)
+Plantilla para comenzar un proyecto basado en Spec-Driven Development (SDD) con agentes de IA y fábrica de software autónoma. Aplica el ciclo formal de desarrollo dirigido por especificaciones (`spec.md` → `plan.md` → `tasks.md` → implementación TDD → validación QA), memoria técnica de decisiones (`approved-decisions.md`), subagentes auditores y flujos completos de DevSecOps / CI / CD.
+
+---
+## [Template-odd](./Template-odd)
+Plantilla ligera y adaptativa basada en Organic-Driven Development (ODD). Diseñada para eliminar la burocracia documental innecesaria, cuenta con clasificación automática en 3 carriles (Verde/Fast-Track, Amarillo/Feature Lean y Rojo/Epic), trazabilidad en cascada en un único archivo (`feature.md`), subagentes de redacción técnica de bajo consumo (`odd-writer`), bucle automático de autoreparación (`repair.md`) y gestión continua del roadmap.
