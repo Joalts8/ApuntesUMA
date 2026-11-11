@@ -1,79 +1,61 @@
-# Directrices del Agente para Organic-Driven Development (ODD)
+# AGENTS.md — <proyecto>
 
-Este documento define el protocolo operativo para cualquier agente de IA o fábrica de software autónoma que trabaje sobre este proyecto utilizando la metodología **Organic-Driven Development (ODD)**.
+<Qué es, en 2-3 frases. Arquitectura, tecnologías..>
 
----
+## Estructura del proyecto
+- `src/` — Código fuente de la aplicación
+- `features/` — Carpetas de features con su documento unificado `feature.md`
+- `docs/` — Documentación viva, memoria de decisiones (`approved-decisions.md`), `fast/` y entregables de feature
+- `[carpeta]/` — [qué contiene]
 
-## 1. Principios Operativos Fundamentales
+## Comandos
+Opcional si hay tech-stack junto a alguna cosa más de ese archivo.
+- Ejecutar: `<comando>`
+- Tests: `<comando>`
+- Lint/formato: `<comando>`
 
-1. **Eficiencia y Cero Burocracia:** No crees documentos ni estructuras complejas cuando una tarea puede resolverse con código limpio, un test y un registro ágil.
-2. **Desarrollo Guiado por Pruebas (TDD Obligatorio):**
-   - Escribe siempre el test unitario o de integración antes del código de producción (**Fase Roja**).
-   - Implementa el código estrictamente necesario para que pase (**Fase Verde**).
-   - Refactoriza para mantener legibilidad y calidad (**Fase Refactor**).
-3. **Resiliencia y Límite de Fallos (Regla 3+1):**
-   - Si un agente o subagente falla al implementar o pasar tests consecutivamente, se le permiten hasta **3 intentos de corrección autónoma**.
-   - Si tras el **4º intento** el test continúa fallando, debe detenerse inmediatamente, diagnosticar la causa raíz y notificar al agente principal o usuario solicitando asistencia.
-4. **Economía de Tokens y Especialización:**
-   - La redacción y persistencia de documentación en Markdown (`feature.md`, logs de `docs/fast/`, `summary.md`, `repair.md` y `qa-note.md`) **debe delegarse al subagente `odd-writer`** (`model: flash`, `effort: low`).
-   - El agente principal debe reservar su razonamiento para análisis arquitectónico, diseño de interfaces y lógica de negocio.
+## Estilo y convenciones
+<Versión del lenguaje, convenciones de nombres y código, idioma del código y mensajes de commit.>
+- **Código y nombres:** <Clases en PascalCase, métodos/variables en camelCase, constantes en UPPER_CASE.>
+- **Mensajes de commit:** <Obligatorio seguir el estándar de **Conventional Commits** con el **mensaje en español** (ejemplos: `feat: endpoint de autenticación`, `fix: corrección de cálculo de stock`, `test: pruebas unitarias de servicio de pedidos`, `docs: actualización de decisiones`).>
+- **Documentación de código:** <Comentar con formato estándar estilo **Javadoc** / **Doxygen** (o **TSDoc** / **JSDoc** en TypeScript/JavaScript) para clases, interfaces, servicios y métodos clave (`@param`, `@return`, `@throws`). En clases donde se utilicen anotaciones o decoradores (Lombok `@Data`, decoradores TypeScript, etc.), **prevalecen las anotaciones frente al boilerplate**; documentar la clase a nivel global y sus campos clave sin redundancia en getters/setters.>
 
----
+## Flujo de trabajo Organic-Driven Development (ODD)
 
-## 2. Clasificación Automática de Carriles
+### 1. Clasificación por Carriles y Modo de Operación
+* **Carril Verde (Fast-Track, < 50 líneas):** Bugs, chores o ajustes menores. TDD directo (test primero), 0 preguntas, sin `qa-note.md`. Registro ágil en `docs/fast/<YYYYMMDD>-<tipo>-<nombre>.md`.
+* **Carril Amarillo (Feature Lean, 50 - 500 líneas):** Documento unificado en `features/NNN-nombre/feature.md` con trazabilidad en cascada (`RF-XX` → `P-XX` → `T-XX`). Máximo 5 preguntas de clarificación en modo interactivo (en fábrica autónoma se aplican defaults). TDD secuencial, `summary.md` y `qa-note.md`.
+* **Carril Rojo (Epic / Arquitectura, > 500 líneas o breaking changes):** Descomposición orgánica en N features Lean de Carril Amarillo, o formalización mediante `/adr` (reutilizado desde `Template-sdd`).
 
-Ante cualquier ticket (Jira, GitHub Issues, Linear) o prompt del usuario, evalúa el impacto y selecciona el carril:
+### 2. Memoria de Decisiones (Compatible con Usuario y Fábrica Autónoma)
+Antes de diseñar o implementar cualquier cambio:
+1. **1er Nivel (Catálogo Global):** Consulta `docs/approved-decisions.md`. Si la regla existe, **se aplica de inmediato sin preguntar y queda prohibido duplicarla en la feature**.
+2. **2º Nivel (Decisiones de Features Previas):** Consulta `docs/` en busca de decisiones no consolidadas de features antecedentes para mantener coherencia.
+3. **3er Nivel (Decisiones Inéditas):**
+   - *Menores / Locales:* El agente o fábrica aplica la mejor práctica y la registra en `docs/NNN-nombre/decisions.md` (o en la sección de decisiones del log en `docs/fast/`).
+   - *Críticas / Arquitectónicas:* En modo usuario, se pregunta en chat. En modo fábrica autónoma, **se detiene la fábrica** y se emite una alerta bloqueante para revisión humana.
 
-| Criterio | Carril Verde (Fast-Track) | Carril Amarillo (Feature Lean) | Carril Rojo (Epic / Arquitectura) |
-| :--- | :--- | :--- | :--- |
-| **Líneas de código** | < 50 líneas | 50 - 500 líneas | > 500 líneas o transversal |
-| **Alcance** | Hotfix, chore, typo, ajuste menor | Feature estándar, nueva API, UI | Cambio de paradigma, nueva BD, breaking changes |
-| **Clarificación** | 0 preguntas | Máximo 5 preguntas clave | Hasta 10 preguntas exhaustivas |
-| **Documento** | `docs/fast/<YYYYMMDD>-<tipo>-<nombre>.md` | `features/NNN-nombre/feature.md` unificado | Separación formal `spec.md`, `plan.md`, `tasks.md` + ADR |
-| **QA / Validación** | Solo test unitario verde | `summary.md` + `qa-note.md` | `summary.md` + `qa-note.md` exhaustivo + ADR |
+### 3. Reducción de Costes y Delegación en Subagentes
+* La redacción y persistencia de todos los artefactos Markdown (`feature.md`, logs de `docs/fast/`, `summary.md`, `repair.md` y `qa-note.md`) **debe delegarse al subagente `odd-writer`** (`model: flash`, `effort: low`).
+* El agente principal o coordinador debe reservar su capacidad de razonamiento para análisis arquitectónico, lógica de negocio y tests.
 
----
+### 4. Desarrollo Guiado por Pruebas (TDD) y Resiliencia (Regla 3+1)
+* Toda tarea de código debe seguir el ciclo **Red-Green-Refactor** (el test unitario o de integración se escribe y falla antes de modificar producción).
+* **Límite 3+1:** Si un subagente o implementador falla 3 veces consecutivas al ejecutar o corregir tests, en el **4º intento debe detenerse obligatoriamente**, redactar un diagnóstico de causa raíz y solicitar asistencia técnica al usuario o agente coordinador.
 
-## 3. Árbol de Búsqueda y Memoria de Decisiones
+### 5. Validación y Bucle Automático de Reparación (`repair.md`)
+* Al terminar una feature, se ejecuta la validación (`/odd-validate`).
+* **Si pasa:** Se generan `docs/NNN-nombre/summary.md` y `qa-note.md` y se marca la feature como `Completada`.
+* **Si falla:** Se genera transitoriamente `docs/NNN-nombre/repair.md` con los fallos y tareas `R-XX`, el estado pasa a `En reparación` y se corrigen los fallos con TDD (máx 3+1). Al volver a verde, **se elimina `repair.md`** y se emite la `qa-note.md` definitiva.
 
-Antes de plantear una solución técnica o tomar una decisión de diseño:
+## Al terminar cualquier tarea
+- Verificar obligatoriamente que todos los tests unitarios y de integración pasen en verde.
+- En ejecuciones locales y fábrica autónoma, los servicios y bases de datos locales deben estar levantados para probar persistencia real. Solo APIs de terceros no simulables pueden marcarse como "No comprobado" en `qa-note.md` para verificación manual.
 
-```
-Surge una decisión técnica en el desarrollo
-                 │
-                 ▼
-¿Existe criterio en docs/approved-decisions.md?
-   ├── SÍ ──► Aplica la decisión inmediatamente.
-   │          (PROHIBIDO volver a registrarla en decisions.md).
-   │
-   └── NO ──► ¿Existe en docs/NNN-feature/decisions.md no revisadas?
-                ├── SÍ ──► Reutiliza el criterio previo para mantener coherencia.
-                │          (No duplicar el registro).
-                │
-                └── NO ──► Decisión inédita:
-                             ├── Menor/Local: Aplica mejor práctica y registra en docs/NNN/decisions.md.
-                             └── Crítica/Arquitectónica: Detén la fábrica, consulta al usuario y registra tras aprobación.
-```
+## Creación de Pull Requests e Issues
+- Reutilizar las plantillas estandarizadas de `Template-sdd`:
+  - **Pull Requests:** Seguir `.github/pull_request_template.md`.
+  - **Issues:** Utilizar `.github/ISSUE_TEMPLATE/` (`bug_report.md` o `feature_request.md`).
 
----
-
-## 4. Gestión de Tareas Relacionadas con Features Previas
-
-* **Feature previa en estado ABIERTA:** Invoca `/odd-clarify` para actualizar su `feature.md`. Aplica impacto en cascada sobre los Requisitos Funcionales (`RF-XX`), Enfoque (`P-XX`) y Tareas (`T-XX`) sin modificar tareas ya marcadas como completadas `[X]`.
-* **Feature previa en estado CERRADA:**
-  - Si es un ajuste menor (< 50 líneas): Tramítalo por **Carril Verde**, indicando en el log de `docs/fast/`: `Relacionado con: Feature NNN`.
-  - Si es una funcionalidad nueva: Tramítalo por **Carril Amarillo**, creando una nueva carpeta secuencial e indicando en `feature.md`: `Antecedentes: Feature NNN`. Consulta las decisiones tomadas en dicha feature antecedente.
-
----
-
-## 5. Protocolo de Validación y Reparación (`repair.md`)
-
-Al concluir la implementación en Carril Amarillo o Rojo, ejecuta `/odd-validate`:
-1. **Si todos los tests y linters pasan (Éxito):**
-   - Delega a `odd-writer` la redacción de `docs/NNN-nombre/summary.md` y `docs/NNN-nombre/qa-note.md`.
-   - Marca la feature como `Completada`.
-2. **Si se detectan fallos o incumplimientos (Fallo):**
-   - Delega a `odd-writer` la generación de `docs/NNN-nombre/repair.md` con los fallos exactos y tareas `R-XX`.
-   - Cambia el estado en `feature.md` a `En reparación`.
-   - Ejecuta las correcciones mediante TDD respetando el límite 3+1.
-   - Una vez en verde, actualiza `summary.md`, **elimina `repair.md`** y re-valida para emitir la `qa-note.md` definitiva.
+## Documentación
+- Referencias a la constitución del proyecto (`constitution/`), memoria global (`docs/approved-decisions.md`) y bitácoras ágiles (`docs/fast/`).

@@ -32,6 +32,8 @@ Para evitar duplicar código y configuraciones estándar en el repositorio, **`T
 | **`.github/ISSUE_TEMPLATE/`** | Plantillas para bugs, features y tareas técnicas (compatibles 100% con los carriles ODD). |
 | **`.github/pull_request_template.md`** | Plantilla de Pull Requests estandarizada. |
 | **`docker/Dockerfile`** | Dockerfile de referencia multi-etapa y hardening para producción. |
+| **Skill `/adr`** | Ubicada en `.agents/skills/adr/` de `Template-sdd`. Utilizarla para documentar decisiones del Carril Rojo sin duplicar su código. |
+| **Skills SDD (`sdd-*`)** | Si un cambio del Carril Rojo requiere la separación formal de artefactos (`spec.md`, `plan.md`, `tasks.md`), se pueden ejecutar directamente las skills SDD de `Template-sdd`. |
 | **Archivos Raíz** | `.gitignore`, `.env.example`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md` y `CODE_OF_CONDUCT.md`. |
 
 ---
@@ -97,16 +99,32 @@ VERDE     AMARILLO      ROJO
   5. **Entregables:** `docs/NNN-nombre/summary.md` y `docs/NNN-nombre/qa-note.md` (redactados por `odd-writer`).
 
 ### 🔴 Carril Rojo: Epic / Cambio Arquitectónico Complejo
-* **Objetivo:** Máxima seguridad y control en cambios troncales o de alta criticidad.
-* **Proceso:**
-  1. Separación documental formal (`spec.md`, `plan.md`, `tasks.md`).
-  2. Registro de ADR obligatorio en `docs/ADR/NN-titulo.md`.
-  3. Hasta 10 preguntas de clarificación exhaustivas.
-  4. Revisión técnica estricta con `odd-reviewer`.
+* **Objetivo:** Máxima seguridad y control en cambios troncales, breaking changes o migraciones de alto impacto (> 500 líneas).
+* **Gestión de la Arquitectura:** Se formaliza obligatoriamente mediante un **Architectural Decision Record** en `docs/ADR/NN-titulo.md` (utilizando la skill `/adr` de `Template-sdd`).
+* **¿Cómo se implementa en ODD?**
+  Existen dos estrategias complementarias según la preferencia del equipo:
+  1. **Descomposición Orgánica (Recomendada en ODD):** El cambio grande se define a alto nivel en el ADR y se descompone en **N features estándar (Carril Amarillo)**. Cada feature se ejecuta de forma independiente con su `feature.md`, TDD y trazabilidad en cascada, reduciendo el riesgo de cambios gigantes.
+  2. **Ejecución Formal SDD:** Si el cambio debe entregarse como un bloque indivisible y requiere separación documental estricta, se ejecutan las skills especializadas de `Template-sdd` (`/sdd-spec`, `/sdd-plan`, `/sdd-task`, `/sdd-implement`, `/sdd-validate`).
 
 ---
 
-## 5. Automatización de Flujos Especiales
+## 5. Compatibilidad Dual: Usuario Interactivo vs Fábrica Autónoma
+
+ODD está diseñado para operar con la misma lógica tanto si lo pilota un desarrollador en su editor como si corre en una fábrica de software autónoma (CI/CD nocturno o workers desatendidos):
+
+| Aspecto | Modo Usuario Interactivo | Modo Fábrica Autónoma (Desatendido) |
+| :--- | :--- | :--- |
+| **Entrada de trabajo** | Prompt libre en chat o comando `/odd` | Ticket de Jira / GitHub Issue / Linear leído por API |
+| **Clarificación** | Pregunta hasta 5 dudas al usuario en chat | Asume valores predeterminados (defaults) y convenciones globales |
+| **Decisiones Nivel 1 y 2** | Se aplican en automático sin preguntar | Se aplican en automático sin preguntar |
+| **Decisiones Nivel 3 (menores)** | Propone al usuario y registra en `decisions.md` | Aplica la mejor práctica y registra en `decisions.md` para auditoría |
+| **Decisiones Nivel 3 (críticas)** | Consulta al usuario antes de proceder | **Pausa la fábrica y emite alerta bloqueante** para revisión humana |
+| **Resiliencia en Tests (3+1)** | Pide ayuda al usuario si falla 4 veces | **Detiene el worker y emite diagnóstico** con traza del error |
+| **Validación y Reparación** | Avisa al usuario del progreso y emite QA | Bucle automático: `repair.md` → TDD → clean → commit |
+
+---
+
+## 6. Automatización de Flujos Especiales
 
 ### A) Evolutivos sobre Features Existentes
 ¿Qué ocurre cuando una nueva tarea está relacionada con una feature ya construida?
@@ -133,14 +151,14 @@ Para evitar el consumo excesivo de tokens y preservar la ventana de contexto del
 
 ---
 
-## 6. Comandos y Skills ODD Disponibles
+## 7. Comandos y Skills ODD Disponibles
 
-| Skill / Comando | Descripción |
-| :--- | :--- |
-| **`/odd`** | Orquestador principal: recibe el ticket/prompt, clasifica el carril y arranca el flujo. |
-| **`/odd-fast`** | Ejecuta el Carril Verde para fixes inmediatos con TDD y log en `docs/fast/`. |
-| **`/odd-feature`** | Ejecuta el Carril Amarillo: genera `feature.md`, TDD, `summary.md` y `qa-note.md`. |
-| **`/odd-clarify`** | Clarifica o amplía una feature abierta aplicando impacto en cascada. |
-| **`/odd-validate`** | Ejecuta suite de validación; emite `qa-note.md` si pasa, o inicia bucle `repair.md` si falla. |
-| **`/odd-decisions-review`** | Consolida periódicamente decisiones de features en `docs/approved-decisions.md`. |
-| **`/adr`** | Genera un Architectural Decision Record formal para cambios del Carril Rojo. |
+| Skill / Comando | Ubicación | Descripción |
+| :--- | :--- | :--- |
+| **`/odd`** | `.agents/skills/odd/` | Orquestador principal: recibe el ticket/prompt, clasifica el carril y arranca el flujo. |
+| **`/odd-fast`** | `.agents/skills/odd-fast/` | Ejecuta el Carril Verde para fixes inmediatos con TDD y log en `docs/fast/`. |
+| **`/odd-feature`** | `.agents/skills/odd-feature/` | Ejecuta el Carril Amarillo: genera `feature.md`, TDD, `summary.md` y `qa-note.md`. |
+| **`/odd-clarify`** | `.agents/skills/odd-clarify/` | Clarifica o amplía una feature abierta aplicando impacto en cascada. |
+| **`/odd-validate`** | `.agents/skills/odd-validate/` | Ejecuta suite de validación; emite `qa-note.md` si pasa, o inicia bucle `repair.md` si falla. |
+| **`/odd-decisions-review`** | `.agents/skills/odd-decisions-review/` | Consolida periódicamente decisiones de features en `docs/approved-decisions.md`. |
+| **`/adr`** | `Template-sdd/.agents/skills/adr/` | [Reutilizada de SDD] Genera un Architectural Decision Record para cambios del Carril Rojo. |
