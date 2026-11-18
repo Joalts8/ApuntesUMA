@@ -7,7 +7,7 @@ description: Úsala siempre que trabajes con Spec-Driven Development en este pro
 Constitución → Spec (o desde Ticket/Issue) → Clarificación → Plan (con diseño previo validado) → Tareas → Implementación (TDD) → Validación (QA) → Cambio.
 
 ## Normas
-- Lee los archivos en `/constitution` y cada spec en `/features/NNN-nombre-feature/spec.md` antes de empezar a trabajar en una feature, si no la has leído ya y las tienes en el contexto. Si `/constitution` no está creada, inicialízala con `/sdd-constitution`.
+- Lee los archivos en `constitution/` y cada spec en `features/NNN-nombre-feature/spec.md` antes de empezar a trabajar en una feature, si no la has leído ya y las tienes en el contexto. Si `constitution/` no está creada, inicialízala con la skill `sdd-constitution`.
 - **Origen de la spec:** Una spec puede originarse a partir de una idea del usuario o directamente desde un ticket/issue (Jira, GitHub Projects, Linear, etc.) indicado en el prompt. Si hay ticket, úsalo como punto de partida y enlázalo en la spec.
 - **División de specs sobredimensionadas:** Si durante la definición se detecta que una feature abarca demasiados flujos independientes, más de 8-10 RFs principales o anticipa más de 10 tareas técnicas, divídela en specs más pequeñas y atómicas acordadas con el usuario o el agente revisor.
 - **Revisión previa para el plan:** Antes de redactar cualquier plan, es obligatorio revisar lo ya existente: el código en `src/`, las specs en `/features` y el contexto histórico/ADRs en `/docs` para reutilizar componentes y mantener coherencia arquitectónica.

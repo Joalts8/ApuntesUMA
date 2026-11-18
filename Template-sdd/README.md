@@ -3,7 +3,7 @@
 > Plantilla genérica para documentar cualquier proyecto con desarrollo dirigido por especificación (SDD): primero se escribe la spec, luego el plan, luego las tareas, y solo entonces se toca el código.
 >
 > **Cómo usar esta plantilla:** Copia todos los archivos de esta carpeta directamente a la **raíz de tu nuevo repositorio** (es fundamental que carpetas como `.github/` y `.agents/` queden en la raíz para que GitHub Actions y los asistentes las detecten correctamente). 
-> Al iniciar el proyecto: ajusta la `licencia`, personaliza el `README.md` y `AGENTS.md`, y ejecuta `/sdd-constitution` para inicializar la constitución a partir de sus plantillas base. Los archivos restantes de documentación son opcionales. En seguridad, ajusta las opciones de GitHub y, si aplica, mantén `SECURITY.md` activando el canal privado para reportar vulnerabilidades. Rellena la constitución al arrancar y crea una carpeta por feature a partir de `features/NNN-nombre-feature/`. Sustituye todos los marcadores `<…>` en los archivos y borra las notas en _cursiva_.
+> Al iniciar el proyecto: ajusta la `licencia`, personaliza el `README.md` y `AGENTS.md`, e inicializa la constitución con la skill `sdd-constitution` a partir de sus plantillas base. Los archivos restantes de documentación son opcionales. En seguridad, ajusta las opciones de GitHub y, si aplica, mantén `SECURITY.md` activando el canal privado para reportar vulnerabilidades. Rellena la constitución al arrancar y crea una carpeta por feature a partir de `features/NNN-nombre-feature/`. Sustituye todos los marcadores `<…>` en los archivos y borra las notas en _cursiva_.
 
 ## Estructura
 
@@ -19,7 +19,7 @@
 │   ├── agents/              ← subagentes especializados (sdd-plan-reviewer, sdd-qa-writer)
 │   ├── commands/            ← comandos custom
 │   └── skills/              ← catálogo de skills SDD (sdd, sdd-spec, sdd-plan, sdd-task, sdd-implement, etc.)
-├── constitution/            ← reglas estables del proyecto (inicializable con /sdd-constitution)
+├── constitution/            ← reglas estables del proyecto (inicializable con la skill sdd-constitution)
 │   └── (vacía)              ← mission.md, roadmap.md y tech-stack.md se generan desde assets de la skill
 ├── docs/                    ← documentación y memoria técnica del proyecto
 │   ├── approved-decisions.md ← memoria técnica global (inicializable desde assets de sdd-decisions-review)
@@ -40,9 +40,21 @@
 ```
 
 > [!NOTE]
+> **Invocación de skills según tu CLI o entorno:**
+> - **OpenCode:** Invoca las skills anteponiendo `@` (ej. `@sdd-constitution`, `@sdd-spec`, `@adr`).
+> - **Claude Code / Antigravity CLI / Cursor:** Invoca las skills con `/` (ej. `/sdd-constitution`, `/sdd-spec`, `/adr`).
+> - **Lenguaje natural:** También puedes pedirlas directamente en el chat (*"ejecuta la skill sdd-constitution"*, *"crea un ADR con la skill adr"*).
+
+> [!IMPORTANT]
+> **Los subagentes están pensados para Antigravity CLI y hay que adaptarlos si usas otro CLI:**
+> - `.agents/agents/sdd-plan-reviewer.md` y `.agents/agents/sdd-qa-writer.md` usan campos propios de Antigravity/Gemini: `model: flash`, `effort: high|low`, `tools.read_tools/write_tools/subagent_tools` y referencias a `gemini-3.8-flash-high` en el texto. Claude Code, Cursor, Codex u OpenCode no interpretan esos campos: tradúcelos a su modelo y permisos equivalentes (en OpenCode, por ejemplo, `model: <proveedor>/<modelo>` y reglas `tools`/`permissions` en la definición del agente).
+> - La idea de fondo (`sdd-qa-writer` con modelo rápido y `effort: low` para redactar documentación, `sdd-plan-reviewer` con `effort: high` para auditar) se mantiene en cualquier CLI, pero debes apuntarlos a los modelos equivalentes de tu proveedor.
+> - Lo demás no depende del CLI y se reutiliza tal cual: skills (`SKILL.md` + `assets/`), `AGENTS.md`, `constitution/`, `features/` y `docs/`. Solo cambia cómo lo carga e invoca cada herramienta.
+
+> [!NOTE]
 > **`constitution/` y `docs/ADR/` se entregan inicialmente vacías (con `.keep`):**
-> - La constitución se genera al inicio del proyecto ejecutando la skill `/sdd-constitution`, que carga las plantillas base desde `.agents/skills/sdd-constitution/assets/`.
-> - Los ADRs se crean cuando surge una decisión arquitectónica usando la skill `/adr`, que utiliza la plantilla en `.agents/skills/adr/assets/ADR-NN.md`.
+> - La constitución se genera al inicio del proyecto ejecutando la skill `sdd-constitution`, que carga las plantillas base desde `.agents/skills/sdd-constitution/assets/`.
+> - Los ADRs se crean cuando surge una decisión arquitectónica usando la skill `adr`, que utiliza la plantilla en `.agents/skills/adr/assets/ADR-NN.md`.
 > - La memoria global `docs/approved-decisions.md` se inicializa a partir de `.agents/skills/sdd-decisions-review/assets/approved-decisions.md`.
 
 > [!IMPORTANT]
@@ -77,6 +89,7 @@ Debes crear los siguientes **Repository Secrets** según las integraciones que u
 | `DOCKERHUB_TOKEN` | CD (al crear `cd.yml` desde la plantilla) | (Opcional) Token de Docker Hub con permisos de lectura y escritura (`Read & Write`). |
 | `OPENAI_API_KEY` o `ANTHROPIC_API_KEY` | `security.yml` (Strix) | (Opcional) Clave de API de LLM para pruebas dinámicas de penetración asistidas por IA. |
 | `STRIX_API_KEY` | `security.yml` (Strix) | (Opcional) Clave de la plataforma Strix en la nube si usas su servicio gestionado. |
+| `VIRUSTOTAL_API_KEY` | `security.yml` (VirusTotal) | (Opcional) API key gratuita de VirusTotal para verificar la reputación de las dependencias npm. Sin ella, el job de cadena de suministro se omite con un aviso. |
 
 > [!NOTE]
 > `GITHUB_TOKEN` es generado automáticamente por GitHub en cada ejecución de Actions con permisos para subir imágenes a GitHub Container Registry (`ghcr.io`) y cargar reportes SARIF a la pestaña *Security*. No tienes que crearlo manualmente.

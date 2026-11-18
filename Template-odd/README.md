@@ -32,8 +32,8 @@ Para evitar duplicar código y configuraciones estándar en el repositorio, **`T
 | **`.github/ISSUE_TEMPLATE/`** | Plantillas para bugs, features y tareas técnicas (compatibles 100% con los carriles ODD). |
 | **`.github/pull_request_template.md`** | Plantilla de Pull Requests estandarizada. |
 | **`docker/Dockerfile`** | Dockerfile de referencia multi-etapa y hardening para producción. |
-| **Skill `/sdd-constitution`** | Reutilizada de `Template-sdd` para inicializar la constitución (`mission.md`, `tech-stack.md` y `roadmap.md`) al arrancar el proyecto desde cero. |
-| **Skill `/adr`** | Reutilizada de `Template-sdd` para registrar formalmente Architectural Decision Records (`docs/ADR/`) en el Carril Rojo. |
+| **Skill `sdd-constitution`** | Reutilizada de `Template-sdd` para inicializar la constitución (`mission.md`, `tech-stack.md` y `roadmap.md`) al arrancar el proyecto desde cero. |
+| **Skill `adr`** | Reutilizada de `Template-sdd` para registrar formalmente Architectural Decision Records (`docs/ADR/`) en el Carril Rojo. |
 | **Skills SDD Monolíticas (`/sdd-spec`, `/sdd-plan`, `/sdd-task`, `/sdd-implement`, `/sdd-validate`)** | Se usan tal cual desde `Template-sdd` únicamente si un Epic del Carril Rojo es indivisible y se aborda de forma monolítica con separación formal de archivos (no se requiere `/sdd-rev` pues `/odd-validate` asume la auditoría de código huérfano; tampoco `/sdd-status` ya que `/odd` gestiona el estado automáticamente en `roadmap.md`). **Nota sobre la regla 'Usa la skill sdd':** No es necesario modificar las skills de SDD; esa directriz queda cubierta automáticamente porque `Template-odd/AGENTS.md` y `/odd` ya incorporan las normas transversales de TDD, resiliencia 3+1 y memoria de decisiones, o el agente lee `sdd/SKILL.md` como biblioteca de referencia documental. |
 | **Skills de Modificación SDD (`/sdd-clarify`, `/sdd-change`)** | Reutilizadas de `Template-sdd` cuando se requiere responder dudas o propagar cambios de requisitos sobre features que usan archivos separados (`spec.md`, `plan.md`, `tasks.md`), dado que `/odd-clarify` opera exclusivamente sobre el formato unificado `feature.md`. |
 | **Archivos Raíz** | `.gitignore`, `.env.example`, `LICENSE`, `SECURITY.md`, `CONTRIBUTING.md` y `CODE_OF_CONDUCT.md`. |
@@ -62,6 +62,12 @@ Cuando un proyecto ODD está en funcionamiento, su estructura de directorios que
 │   └── NNN-nombre-feature/  ← Carpeta de feature con su documento unificado 'feature.md'
 └── src/                     ← Código fuente del proyecto
 ```
+
+> [!IMPORTANT]
+> **Los subagentes están pensados para Antigravity CLI y hay que adaptarlos si usas otro CLI:**
+> - `.agents/agents/odd-writer.md` y `.agents/agents/odd-reviewer.md` usan campos propios de Antigravity/Gemini: `model: flash`, `effort: low|high` y `tools.read_tools/write_tools/subagent_tools`. Claude Code, Cursor, Codex u OpenCode no interpretan esos campos: tradúcelos a su modelo y permisos equivalentes (en OpenCode, por ejemplo, `model: <proveedor>/<modelo>` y reglas `tools`/`permissions` en la definición del agente).
+> - La estrategia de bajo consumo se mantiene en cualquier CLI, pero debes apuntar `odd-writer` al modelo rápido/barato de tu proveedor y `odd-reviewer` al de mayor razonamiento.
+> - Las skills `odd-*`, los `assets/` y los documentos de ODD no dependen del CLI: se reutilizan tal cual; solo cambia cómo los carga e invoca cada herramienta.
 
 ---
 
@@ -157,10 +163,10 @@ Para evitar el consumo excesivo de tokens y preservar la ventana de contexto del
 
 | Skill / Comando | Ubicación | Descripción |
 | :--- | :--- | :--- |
-| **`/odd`** | `.agents/skills/odd/` | Orquestador principal: recibe el ticket/prompt, clasifica el carril y arranca el flujo. |
-| **`/odd-fast`** | `.agents/skills/odd-fast/` | Ejecuta el Carril Verde para fixes inmediatos con TDD y log en `docs/fast/`. |
-| **`/odd-feature`** | `.agents/skills/odd-feature/` | Ejecuta el Carril Amarillo: genera `feature.md`, TDD, `summary.md` y `qa-note.md`. |
-| **`/odd-clarify`** | `.agents/skills/odd-clarify/` | Clarifica o amplía una feature abierta aplicando impacto en cascada. |
-| **`/odd-validate`** | `.agents/skills/odd-validate/` | Ejecuta suite de validación; emite `qa-note.md` si pasa, o inicia bucle `repair.md` si falla. |
-| **`/odd-decisions-review`** | `.agents/skills/odd-decisions-review/` | Consolida periódicamente decisiones de features en `docs/approved-decisions.md`. |
-| **`/adr`** | `Template-sdd/.agents/skills/adr/` | [Reutilizada de SDD] Genera un Architectural Decision Record para cambios del Carril Rojo. |
+| **`odd`** | `.agents/skills/odd/` | Orquestador principal: recibe el ticket/prompt, clasifica el carril y arranca el flujo. |
+| **`odd-fast`** | `.agents/skills/odd-fast/` | Ejecuta el Carril Verde para fixes inmediatos con TDD y log en `docs/fast/`. |
+| **`odd-feature`** | `.agents/skills/odd-feature/` | Ejecuta el Carril Amarillo: genera `feature.md`, TDD, `summary.md` y `qa-note.md`. |
+| **`odd-clarify`** | `.agents/skills/odd-clarify/` | Clarifica o amplía una feature abierta aplicando impacto en cascada. |
+| **`odd-validate`** | `.agents/skills/odd-validate/` | Ejecuta suite de validación; emite `qa-note.md` si pasa, o inicia bucle `repair.md` si falla. |
+| **`odd-decisions-review`** | `.agents/skills/odd-decisions-review/` | Consolida periódicamente decisiones de features en `docs/approved-decisions.md`. |
+| **`adr`** | `Template-sdd/.agents/skills/adr/` | [Reutilizada de SDD] Genera un Architectural Decision Record para cambios del Carril Rojo. |

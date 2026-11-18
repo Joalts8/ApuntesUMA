@@ -14,7 +14,7 @@ Consultar y resumir la fase actual del flujo SDD, el progreso de tareas hechas y
 Lee la información de la feature y `roadmap.md` y di en pocas líneas:
 1. En qué fase del flujo SDD está esta spec y su estado. Indica también si está en implementación tras validación fallada (si existe `repair.md`).
 2. Tareas hechas y pendientes (x de y).
-3. El siguiente paso exacto, con el comando /sdd-* que debo ejecutar.
+3. El siguiente paso exacto, indicando la skill sdd-* o acción correspondiente a ejecutar.
 
 ## Reglas
 - No modifiques ningún archivo.

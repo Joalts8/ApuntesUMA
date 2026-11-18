@@ -44,7 +44,7 @@ Este directorio contiene la configuración de GitHub del repositorio: plantillas
 │   └── config.yml                 # Configuración del selector (deshabilita issues en blanco y enlaces de ayuda)
 ├── workflows/
 │   ├── issue-triage.yml           # GitHub Action: bot de triaje automático, validación y etiquetado
-│   └── security.yml               # GitHub Action: DevSecOps universal (TruffleHog, Semgrep, Trivy, OWASP Noir, Strix)
+│   └── security.yml               # GitHub Action: DevSecOps universal (TruffleHog, Semgrep, Trivy, OWASP Noir, Strix, VirusTotal)
 ├── dependabot.yml                 # Configuración de Dependabot: PRs automáticos de dependencias y seguridad
 ├── pull_request_template.md       # Plantilla predeterminada para Pull Requests
 └── readme_plantillas.md          # Esta guía de uso, mantenimiento y plantillas de CI/CD
@@ -112,8 +112,30 @@ Se dispara al abrir o editar issues:
   1. **TruffleHog:** Escaneo profundo de secretos, tokens y claves privadas en el historial de commits.
   2. **Semgrep (SAST):** Análisis estático universal de vulnerabilidades en el código, exportando informe SARIF a la pestaña *Security* de GitHub.
   3. **Trivy (SCA):** Escaneo de CVEs en dependencias (`package.json`, `pom.xml`, `requirements.txt`, etc.) y Dockerfiles.
-  4. **OWASP Noir:** Mapeo de superficie de ataque y detección de endpoints HTTP.
-  5. **Strix (Pentest IA Dinámico):** Ejecución bajo demanda (`workflow_dispatch` activando `run_strix`) mediante `strix-agent` en Python 3.12 para pruebas autónomas de penetración con LLMs.
+  4. **OWASP Noir:** Mapeo de superficie de ataque y detección de endpoints HTTP (artefacto `noir-attack-surface-report`).
+  5. **Strix (Pentest IA Dinámico):** Ejecución bajo demanda mediante `strix-agent` en Python 3.12 para pruebas autónomas de penetración con LLMs (artefacto `strix-pentest-report`).
+  6. **VirusTotal (Cadena de Suministro):** Consulta la reputación de las URLs de dependencias declaradas en los `package-lock.json` y **falla el job** si alguna aparece marcada como maliciosa o sospechosa (artefacto `virustotal-supply-chain-report`).
+
+#### Interruptores de `workflow_dispatch`: cuándo poner cada opción a `true`
+
+En `Actions > DevSecOps & Security Analysis > Run workflow` el flujo expone tres opciones. **Solo se evalúan en ejecuciones manuales**: en `push`, `pull_request` y `schedule` se ignoran, y todo lo excepto Strix se ejecuta siempre.
+
+| Input | Por defecto | Ponlo a `true` cuando... | Déjalo en `false` cuando... |
+| :--- | :--- | :--- | :--- |
+| `run_strix` | `false` | Quieras un pentest dinámico asistido por IA de tu app desplegada o del código antes de una release importante. Es el análisis más caro y lento, y **consume crédito de API del LLM**. | No tengas configurada `OPENAI_API_KEY`/`ANTHROPIC_API_KEY`/`STRIX_API_KEY`, o no quieras gastar tokens en esa ejecución. |
+| `run_noir` | `true` | Quieras inventariar los endpoints HTTP expuestos, por ejemplo antes de revisar la superficie de ataque de un backend nuevo o tras añadir controladores. | El proyecto no tenga API/endpoints (CLI, librería, script) o el despliegue no necesite ese inventario. |
+| `run_virustotal` | `true` | Haya `package-lock.json` en el repo y quieras comprobar que las dependencias descargadas no están reportadas como maliciosas (sobre todo antes de una release o al adoptar dependencias nuevas). | No exista `VIRUSTOTAL_API_KEY` (el job pasa con aviso, pero gasta runner), el repo no use npm, o ya lo hayas ejecutado en el push reciente. |
+
+> [!IMPORTANT]
+> `Semgrep`, `Trivy` y `TruffleHog` **no tienen interruptor**: se ejecutan siempre en push, PR y schedule. Los interruptores no silencian un análisis ya en rojo; para desactivar uno de estos tres hay que editar el yml.
+
+Desde GitHub CLI, los tres a la vez:
+```bash
+gh workflow run security.yml -f run_strix=true -f run_noir=true -f run_virustotal=true
+```
+
+> [!NOTE]
+> Strix necesita `OPENAI_API_KEY`, `ANTHROPIC_API_KEY` o `STRIX_API_KEY`; VirusTotal necesita `VIRUSTOTAL_API_KEY`. Si falta la clave de VirusTotal el job termina en verde con un warning visible en el resumen, no oculta el fallo.
 
 ---
 
@@ -430,6 +452,7 @@ Al trasladar esta plantilla a un repositorio nuevo en GitHub, configura:
 | `DOCKERHUB_TOKEN` | `cd.yml` (al crear el workflow desde la plantilla) | (Opcional) Personal Access Token de Docker Hub con permisos `Read & Write`. |
 | `OPENAI_API_KEY` / `ANTHROPIC_API_KEY` | `security.yml` (Strix) | (Opcional) Clave para activar el análisis dinámico de pentesting con IA. |
 | `STRIX_API_KEY` | `security.yml` (Strix) | (Opcional) Clave de la plataforma Strix si usas su servicio gestionado. |
+| `VIRUSTOTAL_API_KEY` | `security.yml` (VirusTotal) | (Opcional) API key gratuita de VirusTotal para verificar la reputación de las dependencias npm. Sin ella, el job de cadena de suministro se omite con un aviso. |
 
 ### 2. Reglas de Protección de Ramas (`Settings > Branches`)
 1. Ve a **Settings > Branches** y añade una regla para `main` (y otra para `develop` si existe).
