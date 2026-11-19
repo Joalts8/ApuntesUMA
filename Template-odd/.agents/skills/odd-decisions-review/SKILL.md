@@ -8,6 +8,8 @@ description: Úsala para la revisión periódica de decisiones técnicas tomadas
 ## Propósito
 Auditar periódicamente las decisiones técnicas inéditas registradas tanto en la bitácora ágil de `docs/fast/` como en las carpetas de feature `docs/NNN-nombre/decisions.md`, identificando patrones transversales para promoverlos al catálogo global `docs/approved-decisions.md`.
 
+**No forma parte del bucle de una feature:** se ejecuta aparte, con la cadencia del equipo (por ejemplo, cada quincena). Requiere aprobación humana, así que no se lanza sola en modo `auto`.
+
 ---
 
 ## Procedimiento Operativo

@@ -1,48 +1,50 @@
 ---
 name: odd-validate
-description: Ejecuta la validación técnica y funcional de features en ODD. Audita que no haya código de producción no registrado, actualiza el roadmap, emite summary.md y qa-note.md mediante odd-writer, o gestiona el bucle de reparación transitorio repair.md con resiliencia 3+1.
+description: Valida features de ODD (carriles Amarillo y Rojo separable). Ejecuta tests, linter, matriz RF↔test y auditoría de código huérfano; en modo auto pasa la auditoría de odd-reviewer; delega en odd-writer (modelo bajo) el qa-note y el summary, actualiza roadmap y gestiona el bucle repair.md con resiliencia 3+1.
 ---
 
-# Skill `/odd-validate`: Validación, Auditoría de Código y Reparación
+# Skill `/odd-validate`: Validación, Auditoría y Reparación
 
 ## Propósito
-Asegurar la calidad técnica y funcional de una feature, verificar que no existan implementaciones huérfanas o no registradas en la especificación, actualizar automáticamente `constitution/roadmap.md` y resolver de forma autónoma cualquier fallo detectado mediante el bucle `repair.md`.
+Verificar técnica y funcionalmente una feature, garantizar que no exista código huérfano, actualizar `constitution/roadmap.md` y cerrar con `qa-note.md` o reparar mediante `repair.md`.
+
+> Para una feature del **Carril Rojo indivisible**, no uses esta skill: su validación es `/sdd-validate` (SDD puro), que también redacta su `qa-note.md` con modelo bajo.
 
 ---
 
 ## Procedimiento Operativo
 
-### Paso 1: Transición en Roadmap y Verificaciones Técnicas
-1. **Roadmap:** Mueve la feature a `En validación` en `constitution/roadmap.md`.
-2. **Suite de Pruebas:** Ejecuta la batería de tests unitarios y de integración (`mvn test`, `pytest`, `npm test`...).
-3. **Análisis Estático y Linter:** Ejecuta linter y formateador de código.
-4. **Auditoría de Implementaciones No Registradas:**
-   - Comprueba que todos los archivos nuevos o métodos expuestos respondan directamente a un Criterio de Aceptación EARS (`RF-XX`) de `feature.md`.
-   - Si se detecta código de producción huérfano (no contemplado en la spec), el validador exige su justificación, eliminación o incorporación formal vía `/odd-clarify`.
+### Paso 1: Verificaciones Técnicas y Funcionales
+1. **Roadmap:** mueve la feature a `En validación` en `constitution/roadmap.md`.
+2. **Suite de Pruebas:** ejecuta tests unitarios y de integración.
+3. **Linter y formateo:** ejecuta ambos y registra el resultado.
+4. **Matriz de Trazabilidad `RF`↔test:** recorre `feature.md` requisito por requisito y anota, por cada `RF-XX`, el test concreto que lo cubre y su resultado real. Un `RF` sin test es un fallo, no una omisión.
+5. **APIs externas no disponibles:** si un test solo falla por no poder conectar con un servicio de terceros no simulado, no lo cuentes como verde: márcalo como **"No comprobado / Pendiente de verificación externa"** y llévalo al `qa-note.md`. No omitas nunca tests de BD locales: los contenedores deben estar levantados.
+6. **Código huérfano:** comprueba que todo archivo o método público nuevo responda a un `RF-XX`. Lo que no, se justifica, se elimina o se incorpora vía `/odd-clarify`.
 
----
+### Paso 2: Auditoría Cruzada con `odd-reviewer`
+No firma la validación quien implementó, ni el mismo modelo.
+* **Modo `auto` (obligatorio):** invoca `odd-reviewer` (modelo distinto al implementador) con `feature.md`, la matriz `RF`↔test, la lista de archivos nuevos y el resultado de tests/linter. Debe confirmar que cada `RF` tiene un test real y que no queda código huérfano.
+  * `APROBADO` → continúa a la bifurcación.
+  * `REQUIERE AJUSTES` o `RECHAZADO` → se trata como **validación fallida** (Paso 3.B) aunque los tests estén en verde.
+* **Modo `gated` (opcional):** muestra la matriz y el veredicto; el usuario decide. Si hay un modelo distinto disponible, el dictamen del revisor se añade al informe.
 
-### Paso 2: Bifurcación de Resultados
+### Paso 3: Bifurcación
 
-#### Escenario A: Validación Exitosa (Todo en Verde y Sin Código Huérfano)
-1. Invoca al subagente `odd-writer` para redactar:
-   - `docs/NNN-nombre/summary.md`: Resumen ejecutivo de la implementación.
-   - `docs/NNN-nombre/qa-note.md`: Guía de pruebas manuales y matriz de trazabilidad.
-2. Actualiza el estado en `features/NNN-nombre/feature.md` a `Completada`.
-3. **Roadmap:** Mueve la feature a `Hecho` en `constitution/roadmap.md`, indicando el porcentaje de cobertura de tests.
-4. Notifica al usuario el veredicto favorable.
+#### A. Validación Exitosa
+1. Delega en `odd-writer` (modelo bajo) la redacción de:
+   * `docs/NNN-nombre/summary.md`, desde `.agents/skills/odd-validate/assets/summary.md`.
+   * `docs/NNN-nombre/qa-note.md`, desde `.agents/skills/odd-validate/assets/qa-note.md`, incluyendo la matriz `RF`↔test, la cobertura y los casos "No comprobado".
+2. Actualiza `feature.md` a `Estado: Completada`.
+3. Mueve a `Hecho` en `constitution/roadmap.md` con el porcentaje de cobertura.
+4. **Commit final** (`docs(feature): cierre de feature NNN`).
+5. Comunica el veredicto y el enlace al `qa-note.md`.
 
-#### Escenario B: Validación Fallida (Tests Rotos, Linters o Código Huérfano)
-1. **Generación de `repair.md`:** Invoca a `odd-writer` para generar `docs/NNN-nombre/repair.md` detallando:
-   - Tests o criterios fallidos y traza mínima.
-   - Diagnóstico de causa raíz.
-   - Tareas concretas de reparación (`R-01`, `R-02`...).
-2. **Roadmap:** Mueve la feature a `En reparación` en `constitution/roadmap.md`.
-3. Actualiza el estado en `feature.md` a `En reparación`.
-4. **Bucle de Reparación TDD:**
-   - El agente implementador ejecuta las tareas `R-XX` mediante TDD.
-   - Límite de resiliencia 3+1: tras 3 fallos consecutivos, al 4º se detiene y avisa.
-5. **Cierre Limpio:**
-   - Al volver a estar todo en verde, actualiza `summary.md`.
-   - **Elimina obligatoriamente `repair.md`** del repositorio.
-   - Mueve la feature a `Hecho` en `constitution/roadmap.md` y emite la `qa-note.md` definitiva.
+#### B. Validación Fallida
+1. `odd-writer` genera `docs/NNN-nombre/repair.md`, desde `.agents/skills/odd-validate/assets/repair.md`, con fallos, traza mínima, causa raíz y tareas `R-XX`.
+2. `Estado: En reparación` en `feature.md` y `En reparación` en el roadmap.
+3. **Bucle de Reparación TDD:** cada `R-XX` con test primero, commit por tarea y límite 3+1 (al 4º fallo, se detiene y se escala).
+4. **Cierre limpio:** vuelve a validar (incluida la auditoría del Paso 2); si todo está en verde, elimina `repair.md`, deja `Estado: Completada`, redacta el `qa-note.md` definitivo con `odd-writer` desde su asset, mueve a `Hecho` y haz el commit final.
+
+### Paso 4: Comunicación
+Informa siempre del veredicto, de los `RF` no cubiertos y de los casos "No comprobado". El `qa-note.md` no sustituye a ese resumen: es su versión persistida.

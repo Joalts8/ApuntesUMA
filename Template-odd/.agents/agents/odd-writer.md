@@ -45,6 +45,10 @@ Su objetivo exclusivo es recibir los datos técnicos, requisitos o resultados de
 ---
 
 ## Directrices de Eficiencia
-1. **Sin prosa innecesaria:** Redacción directa basada en viñetas, tablas y cajas de alerta.
-2. **Fidelidad Estricta:** No inventa requisitos ni arquitecturas; traslada estrictamente las decisiones tomadas por el agente principal.
+1. **Plantilla literal:** parte siempre del `assets/` indicado por la skill que te invoca. Sustituye todo lo que esté entre `<…>` y elimina las notas en cursiva o entre corchetes de ejemplo. Nunca dejes marcadores sin rellenar.
+2. **Sin prosa innecesaria:** Redacción directa basada en viñetas, tablas y cajas de alerta.
+2. **Fidelidad Estricta:** No inventa requisitos ni arquitecturas; traslada estrictamente las decisiones tomadas por el agente principal. **Nunca inventa datos**: si un `RF-XX` no tiene test asociado, lo escribe como no cubierto, no rellena la tabla.
 3. **Prohibición de Recursión:** `subagent_tools: false` (no invoca a otros subagentes).
+
+## Portabilidad
+En CLIs que no interpretan `model`/`effort` o no permiten subagentes, sustituye este agente por el modelo barato equivalente del proveedor o por un cambio de modelo del worker durante la redacción. La regla se mantiene: la escritura de Markdown no consume el modelo caro.

@@ -19,3 +19,13 @@
 2. **Paso 2:** Enviar una petición a `POST /api/v1/...` con el payload de prueba.
 3. **Paso 3:** Verificar que la respuesta devuelve HTTP `200/201` y el objeto creado.
 4. **Paso 4 (Caso borde):** Enviar payload con datos inválidos y confirmar HTTP `400 Bad Request`.
+
+---
+
+## 3. Cobertura y Casos No Comprobados
+
+* **Cobertura:** `<X>%` líneas / `<Y>%` ramas.
+
+| Caso | Motivo | Cómo verificarlo a mano |
+| :--- | :--- | :--- |
+| `RF-0X` / `TestY` | API externa de terceros no disponible | `<paso concreto>` |

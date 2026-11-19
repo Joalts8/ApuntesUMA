@@ -1,6 +1,6 @@
 # Feature NNN: <Título de la Feature>
 
-**Estado:** `Propuesta` | `Aprobada` | `En curso` | `En reparación` | `Completada`  
+**Estado:** `Propuesta` | `Aprobada` | `En curso` | `En mejora` | `En reparación` | `Bloqueada` | `Completada`  
 **Antecedentes / Relaciones:** `<Ninguna | Feature NNN / fast-log previo>`  
 **Origen:** `<Ticket Jira / GitHub Issue #123 / Petición>`  
 **Fecha:** `YYYY-MM-DD`  
@@ -12,15 +12,21 @@
 
 ---
 
-## 2. Requisitos y Criterios de Aceptación (EARS)
+## 2. Historias de Usuario
+* **HU-01:** Como `<rol>`, quiero `<acción>` para `<beneficio>`.
+* **HU-02:** Como `<rol>`, quiero `<acción>` para `<beneficio>`.
 
-* **RF-01:** Cuando `<evento o precondición>`, el sistema debe `<resultado esperado>`.
-* **RF-02:** Si `<condición de error>`, el sistema debe `<comportamiento seguro o mensaje>`.
+---
+
+## 3. Requisitos y Criterios de Aceptación (EARS)
+
+* **RF-01 (HU-01):** Cuando `<evento o precondición>`, el sistema debe `<resultado esperado>`.
+* **RF-02 (HU-01):** Si `<condición de error>`, el sistema debe `<comportamiento seguro o mensaje>`.
 * **RNF-01 (Rendimiento / Seguridad):** El tiempo de respuesta no debe superar `<X ms>` y los datos sensibles deben estar cifrados.
 
 ---
 
-## 3. Enfoque Técnico y Diseño Preliminar
+## 4. Enfoque Técnico y Diseño Preliminar
 
 > [!NOTE]
 > Las decisiones técnicas globales provienen de `docs/approved-decisions.md`. Solo las decisiones inéditas locales se registrarán en `docs/NNN-<nombre>/decisions.md`.
@@ -30,9 +36,14 @@
 
 ---
 
-## 4. Plan de Implementación en Cascada (TDD)
+## 5. Plan de Implementación en Cascada (TDD)
 
 - [ ] **T-01 (TDD - Rojo/Verde para P-01 / RF-01):** Crear test unitario/integración y escribir código mínimo necesario.
 - [ ] **T-02 (TDD - Rojo/Verde para P-02 / RF-02):** Crear test para validación/error e implementar control.
 - [ ] **T-03 (Refactor y Limpieza):** Extraer duplicidades, verificar nombres y asegurar coherencia arquitectónica.
 - [ ] **T-04 (Validación Final):** Ejecutar suite completa con `/odd-validate`.
+
+---
+
+## 6. Bloqueos y Decisiones Pendientes
+<Vacío por defecto. Solo con `Estado: Bloqueada`: qué decisión falta, opciones disponibles y qué desbloquea la feature.>

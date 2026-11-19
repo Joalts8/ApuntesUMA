@@ -32,3 +32,6 @@ Resolver cambios pequeños, correcciones inmediatas y tareas de mantenimiento t�
    utilizando la plantilla base `.agents/skills/odd-fast/assets/fast-log.md`.
 2. Si el cambio estaba relacionado con una feature previa, incluye el vínculo en el encabezado (`Relacionado con: Feature NNN`).
 3. **No se genera `qa-note.md`:** El test unitario automatizado es la validación suficiente para este carril.
+
+### Paso 5: Commit
+Haz un único commit final (`fix(...)` / `chore(...)` / `refactor(...)`) tras el registro en `docs/fast/`. No se registra en `constitution/roadmap.md`.

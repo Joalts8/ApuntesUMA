@@ -23,9 +23,10 @@ Opcional si hay tech-stack junto a alguna cosa más de ese archivo.
 ## Flujo de trabajo Organic-Driven Development (ODD)
 
 ### 1. Clasificación por Carriles y Modo de Operación
+* **Modo de ejecución:** se fija al arrancar la tarea. `gated` (persona: OK explícito antes de cada fase) o `auto` (fábrica: gate con el subagente `odd-reviewer`, siempre con un modelo distinto al que implementa). Sin indicación explícita, `gated`.
 * **Carril Verde (Fast-Track, < 50 líneas):** Bugs, chores o ajustes menores. TDD directo (test primero), 0 preguntas, sin `qa-note.md`. Registro ágil en `docs/fast/<YYYYMMDD>-<tipo>-<nombre>.md`.
-* **Carril Amarillo (Feature Lean, 50 - 500 líneas):** Documento unificado en `features/NNN-nombre/feature.md` con trazabilidad en cascada (`RF-XX` → `P-XX` → `T-XX`). Máximo 5 preguntas de clarificación en modo interactivo (en fábrica autónoma se aplican defaults). TDD secuencial, `summary.md` y `qa-note.md`.
-* **Carril Rojo (Epic / Arquitectura, > 500 líneas o breaking changes):** Descomposición orgánica en N features Lean de Carril Amarillo, o formalización mediante `/adr` (reutilizado desde `Template-sdd`).
+* **Carril Amarillo (Feature Lean, 50 - 500 líneas):** Documento unificado en `features/NNN-nombre/feature.md` con historias de usuario (`HU-XX`) y trazabilidad en cascada (`HU-XX` → `RF-XX` → `P-XX` → `T-XX`). Máximo 5 preguntas de clarificación en modo interactivo (en fábrica autónoma se aplican defaults). **Puerta obligatoria:** no se escribe código hasta que el documento tenga `Estado: Aprobada` (OK humano o dictamen de `odd-reviewer`). Implementación TDD con un subagente por tarea, `summary.md` y `qa-note.md`.
+* **Carril Rojo (Epic / Arquitectura, > 500 líneas o breaking changes):** ADR con `/adr` y descomposición en N features Lean de Carril Amarillo. Si el cambio **no es separable**, se ejecuta SDD puro para esa feature (`/sdd-spec` → `/sdd-validate`) con las puertas de SDD.
 
 ### 2. Memoria de Decisiones (Compatible con Usuario y Fábrica Autónoma)
 Antes de diseñar o implementar cualquier cambio:
@@ -33,10 +34,13 @@ Antes de diseñar o implementar cualquier cambio:
 2. **2º Nivel (Decisiones de Features Previas):** Consulta `docs/` en busca de decisiones no consolidadas de features antecedentes para mantener coherencia.
 3. **3er Nivel (Decisiones Inéditas):**
    - *Menores / Locales:* El agente o fábrica aplica la mejor práctica y la registra en `docs/NNN-nombre/decisions.md` (o en la sección de decisiones del log en `docs/fast/`).
-   - *Críticas / Arquitectónicas:* En modo usuario, se pregunta en chat. En modo fábrica autónoma, **se detiene la fábrica** y se emite una alerta bloqueante para revisión humana.
+   - *Críticas / Arquitectónicas:* En modo usuario, se pregunta en chat. En modo fábrica autónoma, se marca `Estado: Bloqueada` en `feature.md` con el diagnóstico en su sección 6 y **se detiene el worker** para revisión humana.
+
+> La consolidación periódica (`odd-decisions-review`) queda **fuera del bucle**: se ejecuta aparte, por ejemplo cada quincena.
 
 ### 3. Reducción de Costes y Delegación en Subagentes
-* La redacción y persistencia de todos los artefactos Markdown (`feature.md`, logs de `docs/fast/`, `summary.md`, `repair.md` y `qa-note.md`) **debe delegarse al subagente `odd-writer`** (`model: flash`, `effort: low`).
+* La redacción y persistencia de todos los artefactos Markdown (`feature.md`, logs de `docs/fast/`, `summary.md`, `repair.md` y `qa-note.md`) **debe delegarse al subagente `odd-writer`** (`model: flash`, `effort: low`). Si el CLI no soporta subagentes, se cambia el modelo del worker para esa redacción.
+* **Adaptación obligatoria del frontmatter:** los subagentes de `.agents/agents/` usan campos de Antigravity (`model: flash`, `effort`, `tools.read_tools/write_tools/subagent_tools`). Al iniciar el proyecto, tradúcelos al CLI que uses: `odd-writer` → modelo rápido/barato con permiso de escritura; `odd-reviewer` → modelo distinto y de mayor razonamiento, solo lectura.
 * El agente principal o coordinador debe reservar su capacidad de razonamiento para análisis arquitectónico, lógica de negocio y tests.
 
 ### 4. Desarrollo Guiado por Pruebas (TDD) y Resiliencia (Regla 3+1)
@@ -44,9 +48,11 @@ Antes de diseñar o implementar cualquier cambio:
 * **Límite 3+1:** Si un subagente o implementador falla 3 veces consecutivas al ejecutar o corregir tests, en el **4º intento debe detenerse obligatoriamente**, redactar un diagnóstico de causa raíz y solicitar asistencia técnica al usuario o agente coordinador.
 
 ### 5. Validación y Bucle Automático de Reparación (`repair.md`)
-* Al terminar una feature, se ejecuta la validación (`/odd-validate`).
-* **Si pasa:** Se generan `docs/NNN-nombre/summary.md` y `qa-note.md` y se marca la feature como `Completada`.
-* **Si falla:** Se genera transitoriamente `docs/NNN-nombre/repair.md` con los fallos y tareas `R-XX`, el estado pasa a `En reparación` y se corrigen los fallos con TDD (máx 3+1). Al volver a verde, **se elimina `repair.md`** y se emite la `qa-note.md` definitiva.
+* Al terminar una feature, se ejecuta la validación (`/odd-validate`). El `qa-note.md` lo redacta `odd-writer` con modelo bajo.
+* **Si pasa:** Se generan `docs/NNN-nombre/summary.md` y `qa-note.md`, se marca la feature como `Completada`, se mueve a `Hecho` y se hace el commit final.
+* **Si falla:** Se genera transitoriamente `docs/NNN-nombre/repair.md` con los fallos y tareas `R-XX`, el estado pasa a `En reparación` y se corrigen los fallos con TDD (máx 3+1). Al volver a verde, **se elimina `repair.md`**, se emite la `qa-note.md` definitiva y se cierra con commit.
+* **Carril Rojo indivisible:** su validación es `/sdd-validate` (SDD puro), que emite el `qa-note.md` con su subagente de redacción.
+* **Auditoría de validación (modo `auto`):** antes de emitir el `qa-note.md`, `odd-reviewer` (modelo distinto) revisa la matriz `RF`↔test y el código huérfano. Su `REQUIERE AJUSTES` equivale a validación fallida aunque los tests estén en verde.
 
 ## Al terminar cualquier tarea
 - Verificar obligatoriamente que todos los tests unitarios y de integración pasen en verde.
